@@ -4,7 +4,9 @@ Sodex MiniApp is a wechat mini app that allows the users to order deliveries(wil
 
 ## Dependencies
 Color Ui: https://github.com/weilanwl/ColorUI
-NodeJS + npm: https://nodejs.org/
+
+NodeJS + npm: https://nodejs.org/ 
+
 Wechat Cloud Service
 
 ## Languages
