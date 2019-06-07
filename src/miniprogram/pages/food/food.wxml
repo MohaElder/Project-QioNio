@@ -1,6 +1,6 @@
 <!--miniprogram/pages/food/food.wxml-->
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">SodexMiniApp</view>
+  <view slot="content">订餐</view>
 </cu-custom><!--标题栏-->
 
 <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
@@ -14,18 +14,21 @@
   <view class="cu-item shadow">
     <view class="image">
       <image src="http://pic.baike.soso.com/p/20140507/20140507172501-531527651.jpg" mode="widthFix"></image>
-      <view class="cu-tag bg-blue">库存充足</view>
+      <view class="cu-tag bg-blue" wx:if="{{order.stock > 5}}">库存充足</view>
+      <view class="cu-tag bg-red" wx:else>库存较少</view>
       <view class="cu-bar bg-shadeBottom">
       </view>
     </view>
     <view class="cu-list menu-avatar">
       <view class="cu-item">
         <view class="content flex-sub">
-          <view class="text-grey">牛肉面</view>
-          <text class="text-price text-xxl"> 35</text>
+          <view class="text-grey">{{order.name}}</view>
+          <text class="text-price text-xxl"> {{order.price}}</text>
         </view>
-        <button class="cu-btn bg-yellow round shadow margin-left" style="width:50%;" bindtap='purchase'>订购</button>
+        <button class="cu-btn bg-yellow round margin-left" style="width:50%;" bindtap='purchase' wx:if = "{{isOrdered == false}}">订购</button>
+        <button class="cu-btn block line-grey margin-left round margin-left" style="width:50%;" disabled wx:else>一天只能定一份饭哦</button>
       </view>
     </view>
+    
   </view>
 </view>

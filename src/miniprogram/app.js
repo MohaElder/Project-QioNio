@@ -3,35 +3,6 @@ App({
   onLaunch: function() {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    })
     // 获取系统状态栏信息
     wx.getSystemInfo({
       success: e => {
@@ -43,6 +14,24 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: {},
+    orderList:[
+      {
+        foodID: "FOOD001",
+        name: "Beef Noodle",
+        desc: "Very nice noodle",
+        price: 35,
+        imgURL: "http://pic.baike.soso.com/p/20140507/20140507172501-531527651.jpg",
+        stock:10
+      },
+      {
+        foodID: "FOOD002",
+        name: "Chicken Rice",
+        desc: "Very good rice",
+        price: 30,
+        imgURL: "http://recipe1.hoto.cn/pic/recipe/l/4b/c8/247883_8df070.jpg",
+        stock: 10
+      }
+    ]
   }
 })

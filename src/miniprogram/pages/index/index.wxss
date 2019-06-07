@@ -6,6 +6,20 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
+.uiSetting{
+
+align-items: center;
+
+justify-content: center;
+
+}
+.uiAvatar{
+  margin-top: 50rpx;
+}
+
+.uitext{
+  margin-left: 50rpx;
+}
 
 .userinfo, .uploader, .tunnel {
   margin-top: 40rpx;
