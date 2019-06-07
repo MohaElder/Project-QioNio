@@ -1,26 +1,86 @@
 <!--miniprogram/pages/self/self.wxml-->
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
   <view slot="content">SodexMiniApp</view>
-</cu-custom><!--标题栏-->
+</cu-custom>
+<!--标题栏-->
 
 <scroll-view scroll-y class="scrollPage">
   <view class="UCenter-bg">
-    <image src="/images/logo.png" class="png" mode="widthFix"></image>
-    <view class="text-xl">Anzhi Weng</view>
+    <view class="cu-avatar xl round" style="background-image:url({{user.info.avatarUrl}});"></view>
+    <view class="text-xl" style='margin-top:20rpx;'>{{user.info.nickName}}</view>
     <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
   </view>
-  <view class="padding flex text-center text-grey bg-white shadow-warp">
-    <view class="flex flex-sub flex-direction solid-right">
-<view class="text-xxl text-blue">5</view>
-      <view class="margin-top-sm">
-        <text class="cuIcon-attentionfill"></text> 反馈</view>
+
+  <view class="padding bg-white" wx:for="{{historyList}}">
+    <view class="flex">
+      <view class="flex-treble padding-sm margin-xs radius">
+        <text class='text-black'>{{item.name}}</text>
+      </view>
+      <view class="flex-sub padding-sm margin-xs radius">
+        <text class='text-xs text-black'>已完成</text>
+      </view>
     </view>
-    <view class="flex flex-sub flex-direction solid-right">
-      <view class="text-xxl text-blue">5</view>
-      <view class="margin-top-sm">
-        <text class="cuIcon-favorfill"></text> 订单</view>
+    <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
+      <view class="flex-treble padding-sm margin-xs radius">于 2019/7/7 订购</view>
+      <view class="flex-sub padding-sm margin-xs radius">
+        <text class='text-price'>{{item.price}}</text>
+      </view>
+    </view>
+    <view class="flex p-xs margin-bottom-sm mb-sm">
+      <view class="flex-treble padding-sm margin-xs radius"></view>
+      <view class="flex-sub padding-sm margin-xs radius">
+        <button class='cu-btn radius' bindtap="showModal" data-target="Modal">评价</button>
+      </view>
+    </view>
+
+
+  </view>
+
+</scroll-view>
+
+<view class="cu-modal {{modalName=='Modal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">评价你的用餐体验</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding bg-white">
+      <view class="flex">
+        <view class="flex-sub bg-grey padding-sm margin-xs radius">
+            <view class='body {{liked}}'>
+              <view style='height:200px;width:200px' class="svg like" catchtap="liked">
+              </view>
+              <view style='height:40px;width:40px' class="svg h h-1"></view>
+              <view style='height:40px;width:40px' class="svg h h-2"></view>
+              <view style='height:40px;width:40px' class="svg h h-3"></view>
+              <view style='height:40px;width:40px' class="svg h h-4"></view>
+              <view style='height:40px;width:40px' class="svg h h-5"></view>
+              <view style='height:40px;width:40px' class="svg h h-6"></view>
+              <view style='height:40px;width:40px' class="svg h h-7"></view>
+              <view style='height:40px;width:40px' class="svg h h-8"></view>
+              <view style='height:110px;width:110px' class="svg fly fly-1"></view>
+              <view style='height:110px;width:110px' class="svg fly fly-2"></view>
+
+            </view>
+          </view>
+        <view class="flex-sub bg-grey padding-sm margin-xs radius">            <view class='body {{liked}}'>
+              <view style='height:200px;width:200px' class="svg like" catchtap="liked">
+              </view>
+              <view style='height:40px;width:40px' class="svg h h-1"></view>
+              <view style='height:40px;width:40px' class="svg h h-2"></view>
+              <view style='height:40px;width:40px' class="svg h h-3"></view>
+              <view style='height:40px;width:40px' class="svg h h-4"></view>
+              <view style='height:40px;width:40px' class="svg h h-5"></view>
+              <view style='height:40px;width:40px' class="svg h h-6"></view>
+              <view style='height:40px;width:40px' class="svg h h-7"></view>
+              <view style='height:40px;width:40px' class="svg h h-8"></view>
+              <view style='height:110px;width:110px' class="svg fly fly-1"></view>
+              <view style='height:110px;width:110px' class="svg fly fly-2"></view>
+
+            </view></view>
+      </view>
     </view>
   </view>
-  
-  <view class="cu-tabbar-height"></view>
-</scroll-view>
+</view>

@@ -1,78 +1,52 @@
-Component({
-  options: {
-    addGlobalClass: true,
-  },
+//index.js
+const app = getApp()
+
+Page({
   data: {
-    starCount: 0,
-    forksCount: 0,
-    visitTotal: 0,
+    user: {},
+    historyList:[
+      {
+        name:"牛肉面",
+        price:35,
+        status:true
+      },
+      {
+        name: "鸡肉饭",
+        price: 35,
+        status: true
+      },
+      {
+        name: "猪肉汤",
+        price: 35,
+        status: true
+      }
+    ]
   },
-  attached() {
-    console.log("success")
-    let that = this;
-    wx.showLoading({
-      title: '数据加载中',
-      mask: true,
+
+  onLoad: function () {
+    var that = this;
+    that.setData({
+      user: app.globalData.user
     })
-    let i = 0;
-    numDH();
-    function numDH() {
-      if (i < 20) {
-        setTimeout(function () {
-          that.setData({
-            starCount: i,
-            forksCount: i,
-            visitTotal: i
-          })
-          i++
-          numDH();
-        }, 20)
-      } else {
-        that.setData({
-          starCount: that.coutNum(3000),
-          forksCount: that.coutNum(484),
-          visitTotal: that.coutNum(24000)
-        })
-      }
-    }
-    wx.hideLoading()
   },
-  methods: {
-    coutNum(e) {
-      if (e > 1000 && e < 10000) {
-        e = (e / 1000).toFixed(1) + 'k'
-      }
-      if (e > 10000) {
-        e = (e / 10000).toFixed(1) + 'W'
-      }
-      return e
-    },
-    CopyLink(e) {
-      wx.setClipboardData({
-        data: e.currentTarget.dataset.link,
-        success: res => {
-          wx.showToast({
-            title: '已复制',
-            duration: 1000,
-          })
-        }
-      })
-    },
-    showModal(e) {
-      this.setData({
-        modalName: e.currentTarget.dataset.target
-      })
-    },
-    hideModal(e) {
-      this.setData({
-        modalName: null
-      })
-    },
-    showQrcode() {
-      wx.previewImage({
-        urls: ['https://image.weilanwl.com/color2.0/zanCode.jpg'],
-        current: 'https://image.weilanwl.com/color2.0/zanCode.jpg' // 当前显示图片的http链接      
-      })
-    },
+
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+
+  liked(e) {
+    this.setData({
+      liked: this.data.liked ? '' : 'liked'
+    })
   }
+
+  
 })
