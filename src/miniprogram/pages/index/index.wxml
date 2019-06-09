@@ -6,8 +6,8 @@
 <view class="padding bg-white">
   <view class="flex">
     <view class="flex-treble padding-sm margin-xs radius">
-      <text class="text-black text-xxl text">就在这里 \n 吃个中饭</text>
-      <view class="text-grey text-sm radius" style='margin-top:20rpx;'>Learn More ></view>
+      <text class="text-black text-xxl text">以人为本 \n 促进健康</text>
+      <view class="text-grey text-sm radius" style='margin-top:20rpx;'>了解更多 ></view>
     </view>
         <view class="flex-twice padding-sm margin-xs radius">
 

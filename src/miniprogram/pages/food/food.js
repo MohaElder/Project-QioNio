@@ -12,11 +12,11 @@ Page({
     swiperList: [{
       id: 0,
       type: 'image',
-      url: 'https://wx2.sinaimg.cn/mw690/006tozhpgy1g03uqzlrfyj31dc0ww1g2.jpg'
+      url: 'http://bfsi.eletsonline.com/wp-content/uploads/2017/05/sodexo.jpg'
     }, {
       id: 1,
       type: 'image',
-      url: 'https://wx2.sinaimg.cn/mw690/006tozhpgy1g03ur2znb5j31dc0wwdw0.jpg'
+        url: 'https://ca.sodexo.com/files/live/sites/sdxcom-ca/files/Homepage/Stop-Hunger.PNG'
     }],
     order: {
       _id: "",
