@@ -19,7 +19,7 @@ Page({
       url: 'https://wx2.sinaimg.cn/mw690/006tozhpgy1g03ur2znb5j31dc0wwdw0.jpg'
     }],
     order: {
-      foodID: "",
+      _id: "",
       name: "",
       desc: "",
       price: "",
@@ -67,7 +67,7 @@ Page({
     var orderList = app.globalData.orderList;
     console.log(orderList);
     for (var i = 0; i < orderList.length; i++) {
-      if (orderList[i].foodID == options.foodID) {
+      if (orderList[i]._id == options.foodID) {
         that.setData({
           order: orderList[i]
         })

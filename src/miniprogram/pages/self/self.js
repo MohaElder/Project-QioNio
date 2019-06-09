@@ -3,6 +3,7 @@ const app = getApp()
 
 Page({
   data: {
+    isFilled:false,
     user: {},
     historyList:[
       {
@@ -42,9 +43,23 @@ Page({
     })
   },
 
-  liked(e) {
-    this.setData({
-      liked: this.data.liked ? '' : 'liked'
+  rateGood: function() {
+    var that = this;
+    that.setData({
+      isFilled:true
+    })
+    wx.showToast({
+      title: '评价成功！',
+    })
+  },
+
+  rateBad: function () {
+    var that = this;
+    that.setData({
+      isFilled: true
+    })
+    wx.showToast({
+      title: '评价成功！',
     })
   }
 

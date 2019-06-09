@@ -11,7 +11,7 @@
     <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
   </view>
 
-  <view class="padding bg-white" wx:for="{{historyList}}">
+  <view class="padding bg-white" wx:for="{{historyList}}" wx:key="name">
     <view class="flex">
       <view class="flex-treble padding-sm margin-xs radius">
         <text class='text-black'>{{item.name}}</text>
@@ -48,38 +48,18 @@
     </view>
     <view class="padding bg-white">
       <view class="flex">
-        <view class="flex-sub bg-grey padding-sm margin-xs radius">
-            <view class='body {{liked}}'>
-              <view style='height:200px;width:200px' class="svg like" catchtap="liked">
-              </view>
-              <view style='height:40px;width:40px' class="svg h h-1"></view>
-              <view style='height:40px;width:40px' class="svg h h-2"></view>
-              <view style='height:40px;width:40px' class="svg h h-3"></view>
-              <view style='height:40px;width:40px' class="svg h h-4"></view>
-              <view style='height:40px;width:40px' class="svg h h-5"></view>
-              <view style='height:40px;width:40px' class="svg h h-6"></view>
-              <view style='height:40px;width:40px' class="svg h h-7"></view>
-              <view style='height:40px;width:40px' class="svg h h-8"></view>
-              <view style='height:110px;width:110px' class="svg fly fly-1"></view>
-              <view style='height:110px;width:110px' class="svg fly fly-2"></view>
-
-            </view>
+        <view class="flex-sub padding-sm margin-xs radius">
+          <view class="action" bindtap="hideModal">
+            <text class="cuIcon-like" wx:if="{{!isFilled}}" bindtap='rateGood'></text>
+            <text class="cuIcon-check" wx:else></text>
           </view>
-        <view class="flex-sub bg-grey padding-sm margin-xs radius">            <view class='body {{liked}}'>
-              <view style='height:200px;width:200px' class="svg like" catchtap="liked">
-              </view>
-              <view style='height:40px;width:40px' class="svg h h-1"></view>
-              <view style='height:40px;width:40px' class="svg h h-2"></view>
-              <view style='height:40px;width:40px' class="svg h h-3"></view>
-              <view style='height:40px;width:40px' class="svg h h-4"></view>
-              <view style='height:40px;width:40px' class="svg h h-5"></view>
-              <view style='height:40px;width:40px' class="svg h h-6"></view>
-              <view style='height:40px;width:40px' class="svg h h-7"></view>
-              <view style='height:40px;width:40px' class="svg h h-8"></view>
-              <view style='height:110px;width:110px' class="svg fly fly-1"></view>
-              <view style='height:110px;width:110px' class="svg fly fly-2"></view>
-
-            </view></view>
+        </view>
+        <view class="flex-sub padding-sm margin-xs radius">
+          <view class="action" bindtap="hideModal">
+            <text class="cuIcon-bad" wx:if="{{!isFilled}}" bindtap='rateBad'></text>
+            <text class="cuIcon-check" wx:else></text>
+          </view>
+        </view>
       </view>
     </view>
   </view>

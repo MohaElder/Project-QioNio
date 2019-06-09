@@ -1,8 +1,10 @@
 //index.js
 const app = getApp()
 const db = wx.cloud.database();
+var user = {};
+var openid = "";
+var orderList = [];
 
-//const userSearcher = db.collection('user');
 Page({
   data: {
     user: {},
@@ -20,70 +22,78 @@ Page({
         url: 'https://wx2.sinaimg.cn/mw690/006tozhpgy1g03ur2znb5j31dc0wwdw0.jpg'
       }],
     orderList: []
-
   },
 
   onLoad: function() {
+    this.getOrderList();
+  },
+  
+  getOrderList: function (){
+    wx.cloud.callFunction({
+      name: 'getOrder'
+    })
+      .then(res => {
+        orderList = res.result.data;
+        app.globalData.orderList = res.result.data;
+      })
+      .catch(console.error)
+    console.log("Run Complete.")
     this.onGetOpenid()
-    this.upload();
   },
 
   upload: function () {
-    console.log("Running Upload")
-    console.log("openid inside Upload:" + app.globalData.openid)
+    var that = this;
     //var Time = util.formatTime(new Date());
-    db.collection('user').doc(app.globalData.openid).get({//建立或者更新数据库信息
+    db.collection('user').doc(openid).get({//建立或者更新数据库信息
       success: function (res) {
-        console.log("Found Match")
+        user = res.data.user;
         app.globalData.user = res.data.user;
-        console.log("Completed!")
-        var that = this;
         that.setData({
-          orderList: app.globalData.orderList,
-          user: app.globalData.user
+          orderList: orderList,
+          user: user
         })
         // res.data 包含该记录的数据
-        wx.showModal({
-          title: 'Status',
-          content: 'Login Complete!',
-        });
+        wx.showToast({
+          title: '您已登录！',
+        })
       },
       fail: function () {
-        console.log("No Match")
         wx.getUserInfo({
           success: function (res){
             var userInfo = res.userInfo;
-            var user = { info: userInfo, orderID:[]};
-            app.globalData.user = user;
+            var userTotal = { info: userInfo, orderID:[]};
+            app.globalData.user = userTotal;
+            user = userTotal;
             db.collection('user').add({
               data: {
-                _id:openid,
-                user: app.globalData.user
+                _id: openid,
+                user: user
               }
             })
             that.setData({
-              orderList: app.globalData.orderList,
-              user: app.globalData.user
+              orderList: orderList,
+              user: user
             })            
-            console.log(app.globalData.user)
-            wx.showModal({
-              title: 'Status',
-              content: 'Your profile has been created!',
-            });
+            wx.showToast({
+              title: '您已注册！',
+            })
           },
           fail: function (res) {
+            wx.showToast({
+              title: '未授权，注册失败！',
+            })
           }
         })
         // 获取用户信息
       }
     })
+    
   },
 
   toFood: function(e){
     var id = e.currentTarget.dataset.id;
     var name = e.currentTarget.dataset.name;
     var link = '../food/food?foodID=' + id;
-    console.log(link);
     wx.navigateTo({
       url: link,
     })
@@ -96,22 +106,18 @@ Page({
   },
 
   onGetOpenid: function () {
-    console.log("Getting Openid......")
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
       data: {},
       success: res => {
-        //console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-        //console.log(res.result.openid)
-        console.log("Got openID! openID: " + app.globalData.openid);
+        openid = res.result.openid;
+        app.globalData.openid = res.result.openid;
+        this.upload();
       },
       fail: err => {
-        //console.error('[云函数] [login] 调用失败', err)
-        wx.showModal({
-          title: '警告',
-          content: '出了点问题',
+        wx.showToast({
+          title: '出了点问题',
         })
       }
     })

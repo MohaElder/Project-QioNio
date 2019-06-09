@@ -13,7 +13,7 @@
 <view class="cu-card case {{isCard?'no-card':''}}">
   <view class="cu-item shadow">
     <view class="image">
-      <image src="http://pic.baike.soso.com/p/20140507/20140507172501-531527651.jpg" mode="widthFix"></image>
+      <image src="{{order.imageURL}}" mode="widthFix"></image>
       <view class="cu-tag bg-blue" wx:if="{{order.stock > 5}}">库存充足</view>
       <view class="cu-tag bg-red" wx:else>库存较少</view>
       <view class="cu-bar bg-shadeBottom">
