@@ -1,5 +1,5 @@
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">主页</view>
+  <view slot="content">Sodex - 生活质量服务</view>
 </cu-custom>
 <!--标题栏-->
 
@@ -34,7 +34,7 @@
     <view class="text-xl">
         <text class="text-black text-bold">今日菜谱</text>
       </view>
-      <view class="cu-card article {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
+      <view class="cu-card article {{isCard?'no-card':''}} solid-bottom" wx:for="{{orderList}}" wx:key="name">
         <view class="cu-item shadow">
           <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
         <text class="text-black" >{{item.name}}</text>
@@ -58,6 +58,5 @@
     </view>
   </view>
   <!--菜单-->
-
 </view>
 <!--Container-->
