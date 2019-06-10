@@ -1,5 +1,7 @@
 // miniprogram/pages/food/food.js
 
+const db = wx.cloud.database();
+const _ = db.command;
 const app = getApp();
 Page({
 
@@ -34,50 +36,98 @@ Page({
       content: '你确定要订购吗？',
       success: function(res) {
         if (res.confirm) {
-          var orderTemp = that.data.order;
-          orderTemp.stock -= 1;
-          that.setData({
-            order: orderTemp,
-            isOrdered: true
-          })
-          app.globalData.user.orderID = that.data.order.foodID;
-          console.log(app.globalData.user.orderID);
-          wx.showModal({
-            title: '订购成功！',
-            content: '前往订单页查看订单详情',
-            success: function(res) {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '../self/self',
-                })
-              }
-            }
-          })
-        } else if (res.cancel) {}
+          that.updateOrder();
+        } 
+        else if (res.cancel) {
+
+        }
       }
     })
 
+  },
+
+  updateOrder: function(){
+    var that = this;
+    var orderTemp = that.data.order;
+    db.collection('order').doc(orderTemp._id).get({//建立或者更新数据库信息
+      success: function (res) {
+        console.log("Found ID, updating...")
+        db.collection('order').doc(orderTemp._id).update({
+          data: {
+            stock: orderTemp.stock - 1,
+          }
+        })
+        console.log("Running updateUser...")
+        that.updateUser();
+        // res.data 包含该记录的数据
+      },
+      fail: function () {
+        wx.showToast({
+          title: 'FoodID not found!',
+        })
+      }
+    })
+  },
+
+  updateUser: function(){
+    var that = this;
+    var orderTemp = that.data.order;
+    db.collection('user').doc(app.globalData.openid).get( {//建立或者更新数据库信息
+      success: function (res) {
+        db.collection('user').doc(app.globalData.openid).update({
+          data: {
+            orderID: _.push(orderTemp._id),
+            isOrdered: true
+          }
+        })
+        console.log("User Updated!")
+        that.updateLocal();
+        // res.data 包含该记录的数据
+      },
+      fail: function () {
+        wx.showToast({
+          title: 'Error, openID not found!',
+        })
+      }
+    })
+  },
+
+  updateLocal: function(){
+    var that = this;
+    var orderTemp = that.data.order;
+    orderTemp.stock -= 1;
+    that.setData({
+      order: orderTemp,
+      isOrdered: true
+    })
+    wx.showModal({
+      title: '订购成功！',
+      content: '前往订单页查看订单详情',
+      success: function (res) {
+        if (res.confirm) {
+          wx.navigateTo({
+            url: '../self/self',
+          })
+        }
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options.foodID);
+    //console.log(options.foodID);
     var that = this;
     var orderList = app.globalData.orderList;
-    console.log(orderList);
+    //console.log(orderList);
     for (var i = 0; i < orderList.length; i++) {
       if (orderList[i]._id == options.foodID) {
         that.setData({
+          isOrdered: app.globalData.user.isOrdered,
           order: orderList[i]
         })
         i = orderList.length;
       }
-    }
-    if (app.globalData.user.orderID != "") {
-      that.setData({
-        isOrdered: true
-      })
     }
 
   },

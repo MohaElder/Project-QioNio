@@ -61,7 +61,7 @@ Page({
         wx.getUserInfo({
           success: function (res){
             var userInfo = res.userInfo;
-            var userTotal = { info: userInfo, orderID:[]};
+            var userTotal = { info: userInfo, orderID:[], isOrdered: false};
             app.globalData.user = userTotal;
             user = userTotal;
             db.collection('user').add({
