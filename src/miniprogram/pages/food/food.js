@@ -75,12 +75,12 @@ Page({
     db.collection('user').doc(app.globalData.openid).get( {//建立或者更新数据库信息
       success: function (res) {
         var user = res.data;
-        user.user.isOrdered = true;
+        user.isOrdererd = true;
         console.log(user);
         db.collection('user').doc(app.globalData.openid).update({
           data: {
             orderID: _.push(orderTemp._id),
-            user: true
+            user: user
           }
         })
         console.log("User Updated!")
@@ -119,14 +119,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    console.log(app.globalData.user.isOrdererd);
     //console.log(options.foodID);
     var that = this;
     var orderList = app.globalData.orderList;
     //console.log(orderList);
     for (var i = 0; i < orderList.length; i++) {
       if (orderList[i]._id == options.foodID) {
+        //console.log(app.globalData.user.user.isOrdered);
         that.setData({
-          isOrdered: app.globalData.user.isOrdered,
+          isOrdered: app.globalData.user.isOrdererd,
           order: orderList[i]
         })
         i = orderList.length;

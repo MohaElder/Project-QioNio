@@ -44,6 +44,7 @@ Page({
       })
       .catch(console.error)
     console.log("Run Complete.")
+
     this.onGetOpenid()
   },
 
@@ -63,6 +64,7 @@ Page({
         wx.showToast({
           title: '您已登录！',
         })
+        
       },
       fail: function () {
         that.setData({
@@ -78,7 +80,7 @@ Page({
     //console.log(res);
     var that = this;
     var userInfo = res.detail.userInfo;
-    var userTotal = { info: userInfo, orderID: [], isOrdered: false };
+    var userTotal = { info: userInfo};
     app.globalData.user = userTotal;
     user = userTotal;
     db.collection('user').add({
