@@ -24,6 +24,12 @@ Page({
     orderList: []
   },
 
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+
   onLoad: function() {
     this.getOrderList();
   },
@@ -48,9 +54,10 @@ Page({
       success: function (res) {
         user = res.data.user;
         app.globalData.user = res.data.user;
+        console.log(app.globalData.user)
         that.setData({
           orderList: orderList,
-          user: user
+          user: user,
         })
         // res.data 包含该记录的数据
         wx.showToast({
@@ -58,36 +65,36 @@ Page({
         })
       },
       fail: function () {
-        wx.getUserInfo({
-          success: function (res){
-            var userInfo = res.userInfo;
-            var userTotal = { info: userInfo, orderID:[], isOrdered: false};
-            app.globalData.user = userTotal;
-            user = userTotal;
-            db.collection('user').add({
-              data: {
-                _id: openid,
-                user: user
-              }
-            })
-            that.setData({
-              orderList: orderList,
-              user: user
-            })            
-            wx.showToast({
-              title: '您已注册！',
-            })
-          },
-          fail: function (res) {
-            wx.showToast({
-              title: '未授权，注册失败！',
-            })
-          }
+        that.setData({
+          modalName: "DialogModal1"
         })
         // 获取用户信息
       }
     })
     
+  },
+
+  register: function(res) {
+    //console.log(res);
+    var that = this;
+    var userInfo = res.detail.userInfo;
+    var userTotal = { info: userInfo, orderID: [], isOrdered: false };
+    app.globalData.user = userTotal;
+    user = userTotal;
+    db.collection('user').add({
+      data: {
+        _id: openid,
+        user: user
+      }
+    })
+    that.setData({
+      orderList: orderList,
+      user: user,
+      modalName: null
+    })
+    wx.showToast({
+      title: '您已注册！',
+    })
   },
 
   toFood: function(e){

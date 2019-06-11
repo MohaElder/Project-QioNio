@@ -74,10 +74,13 @@ Page({
     var orderTemp = that.data.order;
     db.collection('user').doc(app.globalData.openid).get( {//建立或者更新数据库信息
       success: function (res) {
+        var user = res.data;
+        user.user.isOrdered = true;
+        console.log(user);
         db.collection('user').doc(app.globalData.openid).update({
           data: {
             orderID: _.push(orderTemp._id),
-            isOrdered: true
+            user: true
           }
         })
         console.log("User Updated!")

@@ -60,3 +60,24 @@
   <!--菜单-->
 </view>
 <!--Container-->
+
+    <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">注册</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      第一次打开小程序需要注册嗷
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" open-type="exit" target="miniProgram">取消</button>
+        <button class="cu-btn bg-green margin-left" open-type="getUserInfo" bindgetuserinfo="register">确定</button>
+
+      </view>
+    </view>
+  </view>
+</view>
