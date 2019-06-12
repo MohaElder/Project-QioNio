@@ -13,21 +13,13 @@ Page({
     takeSession: false,
     requestResult: '',
     swiperList: [{
-      id: 0,
-      type: 'image',
-      url: 'http://bfsi.eletsonline.com/wp-content/uploads/2017/05/sodexo.jpg'
+      imageURL: 'http://bfsi.eletsonline.com/wp-content/uploads/2017/05/sodexo.jpg',
+      desc:"今天吃肉"
       }, {
-        id: 1,
-        type: 'image',
-        url: 'https://ca.sodexo.com/files/live/sites/sdxcom-ca/files/Homepage/Stop-Hunger.PNG'
+        imageURL: 'https://ca.sodexo.com/files/live/sites/sdxcom-ca/files/Homepage/Stop-Hunger.PNG',
+        desc:"今天不做饭了"
       }],
     orderList: []
-  },
-
-  hideModal(e) {
-    this.setData({
-      modalName: null
-    })
   },
 
   onLoad: function() {
@@ -48,14 +40,33 @@ Page({
     this.onGetOpenid()
   },
 
+  onGetOpenid: function () {
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        openid = res.result.openid;
+        app.globalData.openid = res.result.openid;
+        this.upload();
+      },
+      fail: err => {
+        wx.showToast({
+          title: '出了点问题',
+        })
+      }
+    })
+  },
+
   upload: function () {
     var that = this;
     //var Time = util.formatTime(new Date());
     db.collection('user').doc(openid).get({//建立或者更新数据库信息
       success: function (res) {
-        user = res.data.user;
-        app.globalData.user = res.data.user;
-        console.log(app.globalData.user)
+        user = res.data;
+        //console.log(res.data)
+        app.globalData.user = res.data;
+        console.log("user in index" + res.data.user)
         that.setData({
           orderList: orderList,
           user: user,
@@ -80,18 +91,17 @@ Page({
     //console.log(res);
     var that = this;
     var userInfo = res.detail.userInfo;
-    var userTotal = { info: userInfo};
-    app.globalData.user = userTotal;
-    user = userTotal;
+    app.globalData.user = userInfo;
+    //console.log(user)
     db.collection('user').add({
       data: {
         _id: openid,
-        user: user
+       info: userInfo
       }
     })
     that.setData({
       orderList: orderList,
-      user: user,
+      user: {info:userInfo},
       modalName: null
     })
     wx.showToast({
@@ -112,24 +122,6 @@ Page({
     wx.navigateTo({
       url: '../self/self',
     })
-  },
-
-  onGetOpenid: function () {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        openid = res.result.openid;
-        app.globalData.openid = res.result.openid;
-        this.upload();
-      },
-      fail: err => {
-        wx.showToast({
-          title: '出了点问题',
-        })
-      }
-    })
-  },
+  }
 
 })

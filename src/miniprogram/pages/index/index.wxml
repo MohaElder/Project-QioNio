@@ -1,12 +1,12 @@
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">Sodex - 生活质量服务</view>
+  <view slot="content">Sodex - 来我这儿吃饭</view>
 </cu-custom>
 <!--标题栏-->
 
 <view class="padding bg-white">
   <view class="flex">
     <view class="flex-treble padding-sm margin-xs radius">
-      <text class="text-black text-xxl text">以人为本 \n 促进健康</text>
+      <text class="text-black text-xxl text">每天中饭 \n 来我家吃</text>
       <view class="text-grey text-sm radius" style='margin-top:20rpx;'>了解更多 ></view>
     </view>
         <view class="flex-twice padding-sm margin-xs radius">
@@ -21,8 +21,18 @@
     <view class="flex-sub padding-sm margin-xs radius">
       <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
         <swiper-item wx:for="{{swiperList}}" wx:key>
-          <image class="radius" src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-          <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+         <view class="cu-card case {{isCard?'no-card':''}}">
+  <view class="cu-item shadow">
+    <view class="image">
+      <image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg" mode="widthFix"></image>
+      <!--<view class="cu-tag bg-blue">史诗</view>-->
+      <view class="cu-bar bg-shadeBottom">
+        <text class="text-cut">{{item.desc}}</text>
+      </view>
+          </view>
+              </view>
+
+</view>
         </swiper-item>
       </swiper>
     </view>

@@ -29,6 +29,7 @@ Page({
       stock: 100
     }
   },
+
   purchase: function() {
     var that = this;
     wx.showModal({
@@ -51,7 +52,7 @@ Page({
     var orderTemp = that.data.order;
     db.collection('order').doc(orderTemp._id).get({//建立或者更新数据库信息
       success: function (res) {
-        console.log("Found ID, updating...")
+        console.log("Found FoodID, updating...")
         db.collection('order').doc(orderTemp._id).update({
           data: {
             stock: orderTemp.stock - 1,
@@ -76,7 +77,7 @@ Page({
       success: function (res) {
         var user = res.data;
         user.isOrdererd = true;
-        console.log(user);
+        console.log("user before updateUser" + user);
         db.collection('user').doc(app.globalData.openid).update({
           data: {
             orderID: _.push(orderTemp._id),
