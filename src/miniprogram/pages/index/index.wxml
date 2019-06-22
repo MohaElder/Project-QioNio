@@ -13,7 +13,7 @@
 
     </view>
     <view class="flex-sub padding-sm margin-xs radius" bindtap='toSelf'>
-      <view class="cu-avatar round " style="background-image:url({{user.info.avatarUrl}}); margin-left:10rpx;" ></view>
+      <view class="cu-avatar round " style="background-image:url({{userInfo.avatarUrl}}); margin-left:10rpx;" ></view>
       <view class="text-xs radius" style="margin-top:15rpx;">个人中心</view>
     </view>
   </view>

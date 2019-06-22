@@ -123,7 +123,7 @@ Page({
     for (var i = 0; i < orderList.length; i++) {
       if (orderList[i]._id == options.foodID) {
         that.setData({
-          isOrdered: app.globalData.user.isOrdered,
+          isOrdered: app.globalData.isOrdered,
           order: orderList[i]
         })
         i = orderList.length;

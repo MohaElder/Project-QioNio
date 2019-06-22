@@ -1,13 +1,12 @@
 //index.js
 const app = getApp()
 const db = wx.cloud.database();
-var user = {};
 var openid = "";
 var orderList = [];
 
 Page({
   data: {
-    user: {},
+    userInfo: {},
     isCard: true,
     logged: false,
     takeSession: false,
@@ -46,11 +45,11 @@ Page({
     //var Time = util.formatTime(new Date());
     db.collection('user').doc(openid).get({//建立或者更新数据库信息
       success: function (res) {
-        user = res.data.user;
-        app.globalData.user = res.data.user;
+        app.globalData.user = res.data;
+        app.globalData.isOrdered = res.data.isOrdered
         that.setData({
           orderList: orderList,
-          user: user
+          userInfo: res.data.info
         })
         // res.data 包含该记录的数据
         wx.showToast({
@@ -60,19 +59,18 @@ Page({
       fail: function () {
         wx.getUserInfo({
           success: function (res){
-            var userInfo = res.userInfo;
-            var userTotal = { info: userInfo, orderID:[], isOrdered: false};
-            app.globalData.user = userTotal;
-            user = userTotal;
+            app.globalData.userInfo = res.userInfo;
             db.collection('user').add({
               data: {
                 _id: openid,
-                user: user
+                info: res.userInfo,
+                orderID:[],
+                isOrdered: false
               }
             })
             that.setData({
               orderList: orderList,
-              user: user
+              userInfo: res.userInfo
             })            
             wx.showToast({
               title: '您已注册！',
