@@ -52,13 +52,11 @@ Page({
     var orderTemp = that.data.order;
     db.collection('order').doc(orderTemp._id).get({//建立或者更新数据库信息
       success: function (res) {
-        console.log("Found FoodID, updating...")
         db.collection('order').doc(orderTemp._id).update({
           data: {
             stock: orderTemp.stock - 1,
           }
         })
-        console.log("Running updateUser...")
         that.updateUser();
         // res.data 包含该记录的数据
       },
@@ -77,14 +75,11 @@ Page({
       success: function (res) {
         var user = res.data;
         user.isOrdererd = true;
-        console.log("user before updateUser" + user);
         db.collection('user').doc(app.globalData.openid).update({
           data: {
-            orderID: _.push(orderTemp._id),
-            user: user
+            orderID: _.push(orderTemp._id)
           }
         })
-        console.log("User Updated!")
         that.updateLocal();
         // res.data 包含该记录的数据
       },
@@ -120,14 +115,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(app.globalData.user.isOrdererd);
-    //console.log(options.foodID);
     var that = this;
     var orderList = app.globalData.orderList;
-    //console.log(orderList);
     for (var i = 0; i < orderList.length; i++) {
       if (orderList[i]._id == options.foodID) {
-        //console.log(app.globalData.user.user.isOrdered);
         that.setData({
           isOrdered: app.globalData.isOrdered,
           order: orderList[i]

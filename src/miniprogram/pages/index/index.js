@@ -12,10 +12,10 @@ Page({
     takeSession: false,
     requestResult: '',
     swiperList: [{
-      imageURL: 'http://bfsi.eletsonline.com/wp-content/uploads/2017/05/sodexo.jpg',
+      imageURL: "http://bfsi.eletsonline.com/wp-content/uploads/2017/05/sodexo.jpg",
       desc:"今天吃肉"
       }, {
-        imageURL: 'https://ca.sodexo.com/files/live/sites/sdxcom-ca/files/Homepage/Stop-Hunger.PNG',
+        imageURL: "https://ca.sodexo.com/files/live/sites/sdxcom-ca/files/Homepage/Stop-Hunger.PNG",
         desc:"今天不做饭了"
       }],
     orderList: []
@@ -34,7 +34,6 @@ Page({
         app.globalData.orderList = res.result.data;
       })
       .catch(console.error)
-    console.log("Run Complete.")
 
     this.onGetOpenid()
   },
@@ -104,28 +103,6 @@ Page({
       }
     })
     
-  },
-
-  register: function(res) {
-    //console.log(res);
-    var that = this;
-    var userInfo = res.detail.userInfo;
-    app.globalData.user = userInfo;
-    //console.log(user)
-    db.collection('user').add({
-      data: {
-        _id: openid,
-       info: userInfo
-      }
-    })
-    that.setData({
-      orderList: orderList,
-      user: {info:userInfo},
-      modalName: null
-    })
-    wx.showToast({
-      title: '您已注册！',
-    })
   },
 
   toFood: function(e){
