@@ -7,6 +7,15 @@
 
 Sodex MiniApp is a wechat mini app that allows the users to order deliveries(will add payment api in the future) and check announcements from Sodex.
 
+## Features
+1. A basic but complete offline purchase system supported with online database
+2. A simple CMS system
+3. Black list
+4. Admin panel
+5. Markdown Panel supported with online database and CMS system (Still Constructing)
+6. Light weight and easy to use 
+7. One step login system
+
 ## Dependencies
 Color Ui: https://github.com/weilanwl/ColorUI
 
