@@ -17,7 +17,7 @@
         <text class='text-black'>{{item.order.name}}</text>
       </view>
       <view class="flex-sub padding-sm margin-xs radius">
-        <text class='text-xs text-black' wx:if = "{{item.isFinished}} == true">已完成</text>
+        <text class='text-xs text-black' wx:if="{{item.isFinished}} == true">已完成</text>
         <text class='text-xs text-black' wx:else>待完成</text>
       </view>
     </view>

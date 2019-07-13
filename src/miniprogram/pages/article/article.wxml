@@ -1,13 +1,14 @@
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">订餐</view>
-</cu-custom><!--标题栏-->
+	<view slot="content">订餐</view>
+</cu-custom>
+<!--标题栏-->
 
 <view class="container">
 	<wemark md="{{md}}" link highlight type="wemark"></wemark>
 </view>
 
-	<view class="cu-form-group align-start">
-		<view class="title">文章编辑器</view>
-		<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaBInput" placeholder="输入内容"></textarea>
-	</view>
+<view class="cu-form-group align-start">
+	<view class="title">文章编辑器</view>
+	<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaBInput" placeholder="输入内容"></textarea>
+</view>
 <button bindtap="renderPage">submit</button>

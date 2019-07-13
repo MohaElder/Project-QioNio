@@ -6,22 +6,26 @@ page {
   flex-direction: column;
   justify-content: flex-start;
 }
-.uiSetting{
 
-align-items: center;
+.uiSetting {
 
-justify-content: center;
+  align-items: center;
+
+  justify-content: center;
 
 }
-.uiAvatar{
+
+.uiAvatar {
   margin-top: 50rpx;
 }
 
-.uitext{
+.uitext {
   margin-left: 50rpx;
 }
 
-.userinfo, .uploader, .tunnel {
+.userinfo,
+.uploader,
+.tunnel {
   margin-top: 40rpx;
   height: 140rpx;
   width: 100%;
@@ -59,7 +63,8 @@ justify-content: center;
   border: none;
 }
 
-.uploader, .tunnel {
+.uploader,
+.tunnel {
   height: auto;
   padding: 0 0 0 40rpx;
   flex-direction: column;
@@ -67,7 +72,8 @@ justify-content: center;
   box-sizing: border-box;
 }
 
-.uploader-text, .tunnel-text {
+.uploader-text,
+.tunnel-text {
   width: 100%;
   line-height: 52px;
   font-size: 34rpx;

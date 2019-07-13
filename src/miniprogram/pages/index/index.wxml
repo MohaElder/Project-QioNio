@@ -3,100 +3,102 @@
 </cu-custom>
 <!--标题栏-->
 
-<view wx:if = '{{isPrisoner == true}}'>
-<text>Black List</text>
-<image mode='widthFix' src='https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yb6iuh7uj311u0fr16w.jpg'></image>
+<view wx:if='{{isPrisoner == true}}'>
+  <text>Black List</text>
+  <image mode='widthFix' src='https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yb6iuh7uj311u0fr16w.jpg'></image>
 </view>
 <view wx:else>
-<view class="padding bg-white">
-  <view class="flex">
-    <view class="flex-treble padding-sm margin-xs radius">
-      <text class="text-black text-xxl text">Quality of Life Services</text>
-      <view class="text-grey text-sm radius" style='margin-top:20rpx;'>了解更多 ></view>
-    </view>
-        <view class="flex-twice padding-sm margin-xs radius">
-
-    </view>
-    <view class="flex-sub padding-sm margin-xs radius" bindtap='toSelf'>
-      <view class="cu-avatar round " style="background-image:url({{userInfo.avatarUrl}}); margin-left:10rpx;" ></view>
-      <view class="text-xs radius" style="margin-top:15rpx;">个人中心</view>
-    </view>
-  </view>
-  <view class="flex  p-xs margin-bottom-sm mb-sm">
-    <view class="flex-sub padding-sm margin-xs radius">
-      <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-        <swiper-item wx:for="{{swiperList}}" wx:key>
-         <view class="cu-card case {{isCard?'no-card':''}}">
-  <view class="cu-item shadow">
-    <view class="image">
-      <image src="{{item.imageURL}}" mode="widthFix"></image>
-      <view class="cu-bar bg-shadeBottom">
-        <text class="text-cut">{{item.desc}}</text>
+  <view class="padding bg-white">
+    <view class="flex">
+      <view class="flex-treble padding-sm margin-xs radius">
+        <text class="text-black text-xxl text">Quality of Life Services</text>
+        <view class="text-grey text-sm radius" style='margin-top:20rpx;'>了解更多 ></view>
       </view>
-          </view>
+      <view class="flex-twice padding-sm margin-xs radius">
+
+      </view>
+      <view class="flex-sub padding-sm margin-xs radius" bindtap='toSelf'>
+        <view class="cu-avatar round " style="background-image:url({{userInfo.avatarUrl}}); margin-left:10rpx;"></view>
+        <view class="text-xs radius" style="margin-top:15rpx;">个人中心</view>
+      </view>
+    </view>
+    <view class="flex  p-xs margin-bottom-sm mb-sm">
+      <view class="flex-sub padding-sm margin-xs radius">
+        <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true"
+          autoplay="true" interval="5000" duration="500">
+          <swiper-item wx:for="{{swiperList}}" wx:key>
+            <view class="cu-card case {{isCard?'no-card':''}}">
+              <view class="cu-item shadow">
+                <view class="image">
+                  <image src="{{item.imageURL}}" mode="widthFix"></image>
+                  <view class="cu-bar bg-shadeBottom">
+                    <text class="text-cut">{{item.desc}}</text>
+                  </view>
+                </view>
               </view>
 
-</view>
-        </swiper-item>
-      </swiper>
+            </view>
+          </swiper-item>
+        </swiper>
+      </view>
     </view>
-  </view>
-<!--上半部分-->
+    <!--上半部分-->
 
-  <view class="flex p-xs mb-sm margin-tb-xs">
-    <view class="flex-sub padding-sm margin-xs radius">
-    <view class="text-xl">
-        <text class="text-black text-bold">今日菜谱</text>
-      </view>
-      <view class="cu-card article {{isCard?'no-card':''}} solid-bottom" wx:for="{{orderList}}" wx:key="name">
-        <view class="cu-item shadow">
-          <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
-        <text class="text-black" >{{item.name}}</text>
-      </view>
-          <view class="content">
-            <image src="{{item.imageURL}}" mode="aspectFill"></image>
-            <view class="desc">
-              <view class="text-content">{{item.desc}}</view>
-              <view>
-                <text class="text-price text-xxl"> {{item.price}}</text>
-                <button class="cu-btn bg-yellow round shadow margin-left" style="width:50%;" bindtap='toFood' data-id="{{item._id}}">订购</button>
-              </view>
-        <view>
-          <view class="cu-tag bg-green light sm round" wx:if="{{item.stock > 5}}">库存充足</view>
-          <view class="cu-tag bg-red light sm round" wx:elif = "{{item.stock <= 0}}">库存告罄</view>
-          <view class="cu-tag bg-yellow light sm round" wx:elif="{{item.stock <= 5}}">库存较少</view>
+    <view class="flex p-xs mb-sm margin-tb-xs">
+      <view class="flex-sub padding-sm margin-xs radius">
+        <view class="text-xl">
+          <text class="text-black text-bold">今日菜谱</text>
         </view>
+        <view class="cu-card article {{isCard?'no-card':''}} solid-bottom" wx:for="{{orderList}}" wx:key="name">
+          <view class="cu-item shadow">
+            <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
+              <text class="text-black">{{item.name}}</text>
+            </view>
+            <view class="content">
+              <image src="{{item.imageURL}}" mode="aspectFill"></image>
+              <view class="desc">
+                <view class="text-content">{{item.desc}}</view>
+                <view>
+                  <text class="text-price text-xxl"> {{item.price}}</text>
+                  <button class="cu-btn bg-yellow round shadow margin-left" style="width:50%;" bindtap='toFood'
+                    data-id="{{item._id}}">订购</button>
+                </view>
+                <view>
+                  <view class="cu-tag bg-green light sm round" wx:if="{{item.stock > 5}}">库存充足</view>
+                  <view class="cu-tag bg-red light sm round" wx:elif="{{item.stock <= 0}}">库存告罄</view>
+                  <view class="cu-tag bg-yellow light sm round" wx:elif="{{item.stock <= 5}}">库存较少</view>
+                </view>
+              </view>
             </view>
           </view>
         </view>
       </view>
     </view>
+    <!--菜单-->
   </view>
-  <!--菜单-->
-</view>
-<!--Container-->
+  <!--Container-->
 
-    <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white justify-end">
-      <view class="content">注册</view>
-      <view class="action" bindtap="hideModal">
-        <text class="cuIcon-close text-red"></text>
+  <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">注册</view>
+        <view class="action" bindtap="hideModal">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">
+        第一次打开小程序需要注册嗷
+      </view>
+      <view class="cu-bar bg-white justify-end">
+        <view class="action">
+          <button class="cu-btn line-green text-green" open-type="exit" target="miniProgram">取消</button>
+          <button class="cu-btn bg-green margin-left" open-type="getUserInfo" bindgetuserinfo="register">确定</button>
+
+        </view>
       </view>
     </view>
-    <view class="padding-xl">
-      第一次打开小程序需要注册嗷
-    </view>
-    <view class="cu-bar bg-white justify-end">
-      <view class="action">
-        <button class="cu-btn line-green text-green" open-type="exit" target="miniProgram">取消</button>
-        <button class="cu-btn bg-green margin-left" open-type="getUserInfo" bindgetuserinfo="register">确定</button>
-
-      </view>
-    </view>
   </view>
-</view>
 
-<button bindtap = 'toAdmin' wx:if = "{{isAdmin == true}}">admin page</button>
-<button bindtap = 'toArticle' >article page</button>
+  <button bindtap='toAdmin' wx:if="{{isAdmin == true}}">admin page</button>
+  <button bindtap='toArticle'>article page</button>
 </view>

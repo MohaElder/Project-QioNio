@@ -1,5 +1,5 @@
 // miniprogram/pages/admin/admin.js
-const app = getApp()
+const app = getApp();
 var checkList = [];
 const db = wx.cloud.database();
 
@@ -19,8 +19,8 @@ Page({
     checkList = [];
     var that = this;
     wx.cloud.callFunction({
-      name: 'getCheck'
-    })
+        name: 'getCheck'
+      })
       .then(res => {
         for (var i = 0; i < res.result.data.length; i++) {
           if (res.result.data[i].userID == app.globalData.openid) {
@@ -32,49 +32,48 @@ Page({
           checkList: checkList
         });
       })
-      .catch(console.error)
+      .catch(console.error);
   },
 
-  confirm: function(options){
+  confirm: function (options) {
     var checkID = options.currentTarget.dataset.checkid;
     var that = this;
-      wx.showModal({
-        title: 'Info',
-        content: '确认完成订单？',
-        success: function (res) {
-          if (res.confirm) {
-            db.collection('check').doc(checkID).get({//建立或者更新数据库信息
-              success: function (res) {
-                db.collection('user').doc(res.data.userID).update({
-                  data: {
-                    isOrdered:false
-                  }
-                })
-              },
-            })
-            db.collection('check').doc(checkID).update({
-              data: {
-                isFinished:true
-              }
-            })
-
-            for( var i = 0; i<checkList.length; i++){
-              if(checkList[i]._id == checkID){
-                  checkList[i].isFinished = true
-              }
-                that.setData({
-                  checkList: checkList
-                })
+    wx.showModal({
+      title: 'Info',
+      content: '确认完成订单？',
+      success: function (res) {
+        if (res.confirm) {
+          db.collection('check').doc(checkID).get({ //建立或者更新数据库信息
+            success: function (res) {
+              db.collection('user').doc(res.data.userID).update({
+                data: {
+                  isOrdered: false
+                }
+              });
+            },
+          });
+          db.collection('check').doc(checkID).update({
+            data: {
+              isFinished: true
             }
-            
+          });
+
+          for (var i = 0; i < checkList.length; i++) {
+            if (checkList[i]._id == checkID) {
+              checkList[i].isFinished = true;
+            }
+            that.setData({
+              checkList: checkList
+            });
           }
-          else if (res.cancel) {
-            wx.showToast({
-              title: 'aaa',
-            })
-          }
+
+        } else if (res.cancel) {
+          wx.showToast({
+            title: 'aaa',
+          });
         }
-      })
+      }
+    });
   },
 
   /**
@@ -125,4 +124,4 @@ Page({
   onShareAppMessage: function () {
 
   }
-})
+});
