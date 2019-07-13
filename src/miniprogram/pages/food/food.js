@@ -1,15 +1,15 @@
 // miniprogram/pages/food/food.js
-
 const db = wx.cloud.database();
 const _ = db.command;
 const app = getApp();
+const util = require('../../utils/util.js');
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isOrdered: false,
     isCard: true,
     swiperList: [{
       id: 0,
@@ -52,12 +52,22 @@ Page({
     var orderTemp = that.data.order;
     db.collection('order').doc(orderTemp._id).get({//建立或者更新数据库信息
       success: function (res) {
-        db.collection('order').doc(orderTemp._id).update({
-          data: {
-            stock: orderTemp.stock - 1,
-          }
-        })
-        that.updateUser();
+        console.log(res.data);
+        if(res.data.stock > 0){
+          db.collection('order').doc(orderTemp._id).update({
+            data: {
+              stock: orderTemp.stock - 1,
+            }
+          })
+          that.updateUser();
+        }
+        else{
+          wx.showToast({
+            title: 'Out of Stock!',
+          });
+          
+        }
+
         // res.data 包含该记录的数据
       },
       fail: function () {
@@ -73,14 +83,13 @@ Page({
     var orderTemp = that.data.order;
     db.collection('user').doc(app.globalData.openid).get( {//建立或者更新数据库信息
       success: function (res) {
-        var user = res.data;
-        user.isOrdererd = true;
         db.collection('user').doc(app.globalData.openid).update({
           data: {
-            orderID: _.push(orderTemp._id)
+            orderID: _.push(orderTemp._id),
+            isOrdered:true
           }
         })
-        that.updateLocal();
+        that.updateCheck();
         // res.data 包含该记录的数据
       },
       fail: function () {
@@ -91,6 +100,25 @@ Page({
     })
   },
 
+updateCheck: function(){
+  var that = this;
+  var checkID = "moha";
+  for (var i = 0; i < 6; i++){
+    checkID += Number.parseInt(Math.random() * 10) ;
+  }
+  var time = util.formatTime(new Date());
+  db.collection("check").add({
+    data: {
+      _id: checkID,
+      userID: app.globalData.openid,
+      order: this.data.order,
+      time:time,
+      isFinished:false
+    }
+  })
+  that.updateLocal();
+        // res.data 包含该记录的数据
+},
   updateLocal: function(){
     var that = this;
     var orderTemp = that.data.order;
@@ -99,6 +127,7 @@ Page({
       order: orderTemp,
       isOrdered: true
     })
+    app.globalData.isOrdered = true;
     wx.showModal({
       title: '订购成功！',
       content: '前往订单页查看订单详情',

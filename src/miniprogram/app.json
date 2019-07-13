@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/food/food",
-    "pages/self/self"
+    "pages/self/self",
+    "pages/admin/admin",
+    "pages/article/article"
   ],
   "window": {
     "backgroundTextStyle": "light",

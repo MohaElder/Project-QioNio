@@ -1,34 +1,33 @@
 //index.js
 const app = getApp()
+var checkList = [];
 
 Page({
   data: {
     isFilled:false,
     user: {},
-    historyList:[
-      {
-        name:"牛肉面",
-        price:35,
-        status:true
-      },
-      {
-        name: "鸡肉饭",
-        price: 35,
-        status: true
-      },
-      {
-        name: "猪肉汤",
-        price: 35,
-        status: true
-      }
-    ]
+    checkList:[]
   },
 
   onLoad: function () {
+    checkList = [];
     var that = this;
-    that.setData({
-      user: app.globalData.user
+    wx.cloud.callFunction({
+      name: 'getCheck'
     })
+      .then(res => {
+        for (var i = 0; i < res.result.data.length; i++){
+          if(res.result.data[i].userID == app.globalData.openid){
+            checkList.push(res.result.data[i]);
+          }
+        }
+        //app.globalData.checkList = res.result.data;
+        that.setData({
+          user: app.globalData.user,
+          checkList: checkList
+        });
+      })
+      .catch(console.error)
   },
 
   showModal(e) {

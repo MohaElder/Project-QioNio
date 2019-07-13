@@ -1,5 +1,3 @@
-@import "./fly.wxss";
-
 .UCenter-bg {
   background-image: url(https://wx2.sinaimg.cn/mw690/006tozhpgy1g03uqei7xcj31dc0wwtwh.jpg);
   background-size: cover;

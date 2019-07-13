@@ -1,0 +1,4 @@
+/* miniprogram/pages/article/article.wxss */
+.container{
+	padding:20px;
+}

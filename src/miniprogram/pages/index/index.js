@@ -12,19 +12,27 @@ Page({
     takeSession: false,
     requestResult: '',
     swiperList: [{
-      imageURL: "http://bfsi.eletsonline.com/wp-content/uploads/2017/05/sodexo.jpg",
-      desc:"今天吃肉"
+      imageURL: "https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yfsu2vcmj30yg0hk7d4.jpg",
+      desc:"索迪斯为人民服务"
       }, {
-        imageURL: "https://ca.sodexo.com/files/live/sites/sdxcom-ca/files/Homepage/Stop-Hunger.PNG",
-        desc:"今天不做饭了"
+        imageURL: "https://wx4.sinaimg.cn/mw690/006tozhpgy1g4yfsu22g7j30yg0hkgsb.jpg",
+        desc:"我也不知道说啥就随便打点字吧"
       }],
-    orderList: []
+    orderList: [],
+    isAdmin: false,
+    isPrisoner: false
   },
 
   onLoad: function() {
     this.getOrderList();
   },
   
+  toAdmin: function(){
+    wx.navigateTo({
+      url: '../admin/admin?',
+    })
+  },
+
   getOrderList: function (){
     wx.cloud.callFunction({
       name: 'getOrder'
@@ -56,6 +64,31 @@ Page({
     })
   },
 
+  register: function (res) {
+    //console.log(res);
+    var that = this;
+    var userInfo = res.detail.userInfo;
+    app.globalData.user = userInfo;
+    //console.log(user)
+    db.collection('user').add({
+      data: {
+        _id: openid,
+        info: userInfo,
+        orderID: [],
+        isOrdered: false
+      }
+    })
+    that.setData({
+      orderList: orderList,
+      userInfo: userInfo,
+      modalName: null
+    })
+    wx.showToast({
+      title: '您已注册！',
+    })
+  },
+
+
   upload: function () {
     var that = this;
     //var Time = util.formatTime(new Date());
@@ -71,35 +104,12 @@ Page({
         wx.showToast({
           title: '您已登录！',
         })
-        
+        that.isAdmin();
       },
       fail: function () {
-        wx.getUserInfo({
-          success: function (res){
-            app.globalData.userInfo = res.userInfo;
-            db.collection('user').add({
-              data: {
-                _id: openid,
-                info: res.userInfo,
-                orderID:[],
-                isOrdered: false
-              }
-            })
-            that.setData({
-              orderList: orderList,
-              userInfo: res.userInfo
-            })            
-            wx.showToast({
-              title: '您已注册！',
-            })
-          },
-          fail: function (res) {
-            wx.showToast({
-              title: '未授权，注册失败！',
-            })
-          }
+        that.setData({
+          modalName: "DialogModal1"
         })
-        // 获取用户信息
       }
     })
     
@@ -118,6 +128,51 @@ Page({
     wx.navigateTo({
       url: '../self/self',
     })
-  }
+  },
+
+  toArticle: function () {
+    wx.navigateTo({
+      url: '../article/article',
+    })
+  },
+
+  isAdmin: function(){
+    var that = this;
+    db.collection('admin').doc(openid).get({//建立或者更新数据库信息
+      success: function (res) {
+        console.log("Is admin!")
+        that.setData({
+          isAdmin:true
+        })
+      },
+      fail: function () {
+        console.log("Not admin!")
+        that.isPrisoner()
+      }
+    })
+  },
+
+  isPrisoner: function(){
+    var that = this;
+    db.collection('gulagList').doc(openid).get({//建立或者更新数据库信息
+      success: function (res) {
+        console.log("Is prisoner!")
+        that.setData({
+          isPrisoner: true
+        })
+      },
+      fail: function () {
+        console.log("Not prisoner!")
+      }
+    })
+  },
+
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
+
+
 
 })

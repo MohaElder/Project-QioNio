@@ -1,12 +1,17 @@
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">Sodex - 来我这儿吃饭</view>
+  <view slot="content">Sodex - Quality of Life Services</view>
 </cu-custom>
 <!--标题栏-->
 
+<view wx:if = '{{isPrisoner == true}}'>
+<text>Black List</text>
+<image mode='widthFix' src='https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yb6iuh7uj311u0fr16w.jpg'></image>
+</view>
+<view wx:else>
 <view class="padding bg-white">
   <view class="flex">
     <view class="flex-treble padding-sm margin-xs radius">
-      <text class="text-black text-xxl text">每天中饭 \n 来我家吃</text>
+      <text class="text-black text-xxl text">Quality of Life Services</text>
       <view class="text-grey text-sm radius" style='margin-top:20rpx;'>了解更多 ></view>
     </view>
         <view class="flex-twice padding-sm margin-xs radius">
@@ -24,8 +29,7 @@
          <view class="cu-card case {{isCard?'no-card':''}}">
   <view class="cu-item shadow">
     <view class="image">
-      <image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg" mode="widthFix"></image>
-      <!--<view class="cu-tag bg-blue">史诗</view>-->
+      <image src="{{item.imageURL}}" mode="widthFix"></image>
       <view class="cu-bar bg-shadeBottom">
         <text class="text-cut">{{item.desc}}</text>
       </view>
@@ -59,7 +63,8 @@
               </view>
         <view>
           <view class="cu-tag bg-green light sm round" wx:if="{{item.stock > 5}}">库存充足</view>
-          <view class="cu-tag bg-red light sm round" wx:else>库存较少</view>
+          <view class="cu-tag bg-red light sm round" wx:elif = "{{item.stock <= 0}}">库存告罄</view>
+          <view class="cu-tag bg-yellow light sm round" wx:elif="{{item.stock <= 5}}">库存较少</view>
         </view>
             </view>
           </view>
@@ -90,4 +95,8 @@
       </view>
     </view>
   </view>
+</view>
+
+<button bindtap = 'toAdmin' wx:if = "{{isAdmin == true}}">admin page</button>
+<button bindtap = 'toArticle' >article page</button>
 </view>
