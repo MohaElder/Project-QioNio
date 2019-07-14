@@ -9,12 +9,12 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"nodeModules": true,
 		"autoAudits": false,
-		"checkInvalidKey": true,
-		"nodeModules": true
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.1",
+	"libVersion": "2.7.4",
 	"appid": "wxf91954df06159a6d",
 	"projectname": "SodexMiniapp",
 	"miniprogramRoot": "miniprogram/",

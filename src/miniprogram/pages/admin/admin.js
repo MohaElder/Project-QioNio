@@ -22,14 +22,9 @@ Page({
         name: 'getCheck'
       })
       .then(res => {
-        for (var i = 0; i < res.result.data.length; i++) {
-          if (res.result.data[i].userID == app.globalData.openid) {
-            checkList.push(res.result.data[i]);
-          }
-        }
         //app.globalData.checkList = res.result.data;
         that.setData({
-          checkList: checkList
+          checkList: res.result.data
         });
       })
       .catch(console.error);
@@ -45,31 +40,39 @@ Page({
         if (res.confirm) {
           db.collection('check').doc(checkID).get({ //建立或者更新数据库信息
             success: function (res) {
-              db.collection('user').doc(res.data.userID).update({
+              console.log(res.data);
+              wx.showLoading();
+              wx.cloud.callFunction({
+                name: 'finishCheck',
                 data: {
-                  isOrdered: false
+                  checkID: checkID,
+                  userID: res.data.user._openid
+                },
+                success: res => {
+                  for (var i = 0; i < checkList.length; i++) {
+                    if (checkList[i]._id == checkID) {
+                      checkList[i].isFinished = true;
+                    }
+                    that.setData({
+                      checkList: checkList
+                    });
+                  }
+                  wx.hideLoading();
+                },
+                fail: err => {
+                  wx.showToast({
+                    title: '出了点问题',
+                  });
                 }
               });
             },
           });
-          db.collection('check').doc(checkID).update({
-            data: {
-              isFinished: true
-            }
-          });
 
-          for (var i = 0; i < checkList.length; i++) {
-            if (checkList[i]._id == checkID) {
-              checkList[i].isFinished = true;
-            }
-            that.setData({
-              checkList: checkList
-            });
-          }
+
 
         } else if (res.cancel) {
           wx.showToast({
-            title: 'aaa',
+            title: 'Operation Canceled',
           });
         }
       }

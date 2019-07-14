@@ -18,6 +18,7 @@
     </view>
     <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
       <view class="flex-treble padding-sm margin-xs radius">于 {{item.time}} 订购</view>
+      <view class="flex-treble padding-sm margin-xs radius">购买者：{{item.user.info.nickName}}</view>
       <view class="flex-sub padding-sm margin-xs radius">
         <text class='text-price'>{{item.order.price}}</text>
       </view>

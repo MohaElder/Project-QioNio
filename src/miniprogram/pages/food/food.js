@@ -30,12 +30,12 @@ Page({
     }
   },
 
-  purchase: function () {
+  purchase: function() {
     var that = this;
     wx.showModal({
       title: '提醒',
       content: '你确定要订购吗？',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           that.updateOrder();
         } else if (res.cancel) {
@@ -46,41 +46,34 @@ Page({
 
   },
 
-  updateOrder: function () {
+  updateOrder: function() {
     var that = this;
     var orderTemp = that.data.order;
-    db.collection('order').doc(orderTemp._id).get({ //建立或者更新数据库信息
-      success: function (res) {
-        console.log(res.data);
-        if (res.data.stock > 0) {
-          db.collection('order').doc(orderTemp._id).update({
-            data: {
-              stock: orderTemp.stock - 1,
-            }
-          });
-          that.updateUser();
-        } else {
-          wx.showToast({
-            title: 'Out of Stock!',
-          });
-
-        }
-
-        // res.data 包含该记录的数据
+    wx.showLoading();
+    wx.cloud.callFunction({
+      name: 'updateOrder',
+      data: {
+        foodID:orderTemp._id,
+        stock: orderTemp.stock - 1
       },
-      fail: function () {
+      success: res => {
+        console.log('Yay!')
+        wx.hideLoading();
+        that.updateUser();
+      },
+      fail: err => {
         wx.showToast({
-          title: 'FoodID not found!',
+          title: '出了点问题',
         });
       }
     });
   },
 
-  updateUser: function () {
+  updateUser: function() {
     var that = this;
     var orderTemp = that.data.order;
     db.collection('user').doc(app.globalData.openid).get({ //建立或者更新数据库信息
-      success: function (res) {
+      success: function(res) {
         db.collection('user').doc(app.globalData.openid).update({
           data: {
             orderID: _.push(orderTemp._id),
@@ -90,7 +83,7 @@ Page({
         that.updateCheck();
         // res.data 包含该记录的数据
       },
-      fail: function () {
+      fail: function() {
         wx.showToast({
           title: 'Error, openID not found!',
         });
@@ -98,7 +91,7 @@ Page({
     });
   },
 
-  updateCheck: function () {
+  updateCheck: function() {
     var that = this;
     var checkID = "moha";
     for (var i = 0; i < 6; i++) {
@@ -108,7 +101,7 @@ Page({
     db.collection("check").add({
       data: {
         _id: checkID,
-        userID: app.globalData.openid,
+        user: app.globalData.user,
         order: this.data.order,
         time: time,
         isFinished: false
@@ -117,7 +110,8 @@ Page({
     that.updateLocal();
     // res.data 包含该记录的数据
   },
-  updateLocal: function () {
+
+  updateLocal: function() {
     var that = this;
     var orderTemp = that.data.order;
     orderTemp.stock -= 1;
@@ -129,7 +123,7 @@ Page({
     wx.showModal({
       title: '订购成功！',
       content: '前往订单页查看订单详情',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           wx.navigateTo({
             url: '../self/self',
@@ -141,7 +135,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this;
     var orderList = app.globalData.orderList;
     for (var i = 0; i < orderList.length; i++) {
@@ -158,49 +152,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 });

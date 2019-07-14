@@ -81,6 +81,7 @@ Page({
       userInfo: userInfo,
       modalName: null
     });
+    app.globalData.user = res.data;
     wx.showToast({
       title: '您已注册！',
     });
