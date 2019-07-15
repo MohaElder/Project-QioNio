@@ -17,15 +17,12 @@ Page({
    */
   onLoad: function (options) {
     checkList = [];
-    var that = this;
     wx.cloud.callFunction({
         name: 'getCheck'
       })
       .then(res => {
-        //app.globalData.checkList = res.result.data;
-        that.setData({
-          checkList: res.result.data
-        });
+        checkList = res.result.data;
+        this.renderTime();
       })
       .catch(console.error);
   },
@@ -37,10 +34,10 @@ Page({
       title: 'Info',
       content: '确认完成订单？',
       success: function (res) {
+        var they = that;
         if (res.confirm) {
           db.collection('check').doc(checkID).get({ //建立或者更新数据库信息
             success: function (res) {
-              console.log(res.data);
               wx.showLoading();
               wx.cloud.callFunction({
                 name: 'finishCheck',
@@ -53,7 +50,7 @@ Page({
                     if (checkList[i]._id == checkID) {
                       checkList[i].isFinished = true;
                     }
-                    that.setData({
+                    they.setData({
                       checkList: checkList
                     });
                   }
@@ -76,6 +73,24 @@ Page({
           });
         }
       }
+    });
+  },
+
+  renderTime: function(){
+    var temp = [];
+    var that = this;
+    for(var i = 0; i < checkList.length; i++){
+      var check_date = new Date(checkList[i].time.replace(/-/g, "/"));
+      var today_date = new Date();
+      var days = today_date.getTime() - check_date.getTime();
+      var day = parseInt(days / (1000 * 60 * 60 * 24));
+      if(day == 0){
+        temp.push(checkList[i]);
+      }
+    }
+    checkList = temp;
+    that.setData({
+      checkList: temp
     });
   },
 

@@ -11,21 +11,13 @@ Page({
    */
   data: {
     isCard: true,
-    swiperList: [{
-      id: 0,
-      type: 'image',
-      url: 'http://bfsi.eletsonline.com/wp-content/uploads/2017/05/sodexo.jpg'
-    }, {
-      id: 1,
-      type: 'image',
-      url: 'https://ca.sodexo.com/files/live/sites/sdxcom-ca/files/Homepage/Stop-Hunger.PNG'
-    }],
     order: {
       _id: "",
       name: "",
       desc: "",
       price: "",
       imageURL: "",
+      imageURLs: [],
       stock: 100
     }
   },

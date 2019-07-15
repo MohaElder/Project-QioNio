@@ -17,7 +17,7 @@
       </view>
     </view>
     <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
-      <view class="flex-treble padding-sm margin-xs radius">于 {{item.time}} 订购</view>
+      <!--<view class="flex-treble padding-sm margin-xs radius">于 {{item.time}} 订购</view>-->
       <view class="flex-treble padding-sm margin-xs radius">购买者：{{item.user.info.nickName}}</view>
       <view class="flex-sub padding-sm margin-xs radius">
         <text class='text-price'>{{item.order.price}}</text>
@@ -26,13 +26,11 @@
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-treble padding-sm margin-xs radius"></view>
       <view class="flex-sub padding-sm margin-xs radius">
-        <button class='cu-btn radius' bindtap="confirm" data-checkid='{{item._id}}'
-          wx:if="{{item.isFinished == false}}">确认完成</button>
+        <button class='cu-btn bg-green radius' bindtap="confirm" data-checkid='{{item._id}}'
+          wx:if="{{item.isFinished == false}}">未完成</button>
         <button class='cu-btn radius' disabled wx:else>已完成</button>
       </view>
     </view>
-
-
   </view>
 
 </scroll-view>

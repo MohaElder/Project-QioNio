@@ -6,19 +6,19 @@
 
 <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true"
   autoplay="true" interval="5000" duration="500">
-  <swiper-item wx:for="{{swiperList}}" wx:key>
-    <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-    <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover"
+  <swiper-item wx:for="{{order.imageURLs}}" wx:key>
+    <image src="{{item}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+    <video src="{{item}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover"
       wx:if="{{item.type=='video'}}"></video>
   </swiper-item>
-</swiper>
+</swiper> 
 
 <view class="cu-card case {{isCard?'no-card':''}}">
   <view class="cu-item shadow">
     <view class="image">
       <image src="{{order.imageURL}}" mode="widthFix"></image>
       <view class="cu-tag bg-blue" wx:if="{{order.stock > 5}}">库存充足</view>
-      <view class="cu-tag bg-red" wx:elif="{{item.stock <= 0}}">库存告罄</view>
+      <view class="cu-tag bg-red" wx:elif="{{order.stock <= 0}}">库存告罄</view>
       <view class="cu-tag bg-yellow" wx:elif="{{order.stock <= 5}}">库存较少</view>
       <view class="cu-bar bg-shadeBottom">
       </view>

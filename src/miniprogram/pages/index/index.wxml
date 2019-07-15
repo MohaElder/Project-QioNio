@@ -99,6 +99,6 @@
     </view>
   </view>
 
-  <button bindtap='toAdmin' wx:if="{{isAdmin == true}}">admin page</button>
-  <button bindtap='toArticle'>article page</button>
+  <button bindtap='toAdmin' wx:if="{{isAdmin == true}}">管理员界面</button>
+  <!--<button bindtap='toArticle'>article page</button>-->
 </view>

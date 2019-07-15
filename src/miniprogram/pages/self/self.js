@@ -17,7 +17,7 @@ Page({
       })
       .then(res => {
         for (var i = 0; i < res.result.data.length; i++) {
-          if (res.result.data[i].userID == app.globalData.openid) {
+          if (res.result.data[i].user._openid == app.globalData.openid) {
             checkList.push(res.result.data[i]);
           }
         }

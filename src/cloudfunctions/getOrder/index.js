@@ -16,6 +16,7 @@ exports.main = async (event, context) => {
       name: true,
       desc: true,
       imageURL: true,
+      imageURLs:true,
       price: true,
       stock: true
     })
