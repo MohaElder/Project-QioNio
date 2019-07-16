@@ -18,7 +18,10 @@ exports.main = async (event, context) => {
       imageURL: true,
       imageURLs:true,
       price: true,
-      stock: true
+      stock: true,
+      goodRateNum:true,
+      rateNum:true
+
     })
       .get()
     tasks.push(promise)

@@ -14,9 +14,6 @@
         <text class="text-black text-xxl text">Quality of Life Services</text>
         <view class="text-grey text-sm radius" style='margin-top:20rpx;'>了解更多 ></view>
       </view>
-      <view class="flex-twice padding-sm margin-xs radius">
-
-      </view>
       <view class="flex-sub padding-sm margin-xs radius" bindtap='toSelf'>
         <view class="cu-avatar round " style="background-image:url({{userInfo.avatarUrl}}); margin-left:10rpx;"></view>
         <view class="text-xs radius" style="margin-top:15rpx;">个人中心</view>
@@ -31,9 +28,6 @@
               <view class="cu-item shadow">
                 <view class="image">
                   <image src="{{item.imageURL}}" mode="widthFix"></image>
-                  <view class="cu-bar bg-shadeBottom">
-                    <text class="text-cut">{{item.desc}}</text>
-                  </view>
                 </view>
               </view>
 
@@ -45,32 +39,30 @@
     <!--上半部分-->
 
 
-    <view class="flex p-xs mb-sm margin-tb-xs">
-      <view class="padding-sm margin-xs radius justify-start align-start">
-        <view class="text-xl">
-          <text class="text-black text-bold">今日菜谱</text>
-        </view>
-        <view class="cu-card case {{isCard?'no-card':''}} solid-bottom" wx:for="{{orderList}}" wx:key="name">
+
+      <view class="padding-sm margin-xs radius">
+          <text class="text-xl text-black text-bold">今日菜谱</text>
+        <view class="cu-card case {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
           <view class="cu-item shadow">
             <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
             </view>
             <view class="content">
-              <image class = "radius" src="{{item.imageURL}}" mode="aspectFill"></image>
+              <image class = "radius" src="{{item.imageURL}}"></image>
               <view class="desc" style='margin-top:20rpx;'>
-                <view class="text-xl">{{item.name}}</view>
+                <view class="text-xl text-bold">{{item.name}}</view>
                 <view>
-                <text>100% 好评 ❤</text>
+                <text>{{item.goodRateNum/item.rateNum * 100}}% 满意</text>
                 </view>
-                <view class='flex align-start'>
-                                  <text class="text-price text-xxl flex-sub" style='margin-top:20rpx;'> {{item.price}}</text>
-                  <button class="cu-btn bg-yellow round flex-sub" bindtap='toFood' data-id="{{item._id}}">订购</button>
+                <view class='flex align-center' style='margin-top:20rpx;'>
+                <text class="text-price text-xxl flex-sub"> {{item.price}}</text>
+                  <button class=" flex-sm cu-btn bg-yellow" bindtap='toFood' data-id="{{item._id}}" style='margin-bottom:20rpx;'>订购</button>
                 </view>
               </view>
             </view>
           </view>
         </view>
       </view>
-    </view>
+
     <!--菜单-->
   </view>
   <!--Container-->
@@ -90,7 +82,6 @@
         <view class="action">
           <button class="cu-btn line-green text-green" open-type="exit" target="miniProgram">取消</button>
           <button class="cu-btn bg-green margin-left" open-type="getUserInfo" bindgetuserinfo="register">确定</button>
-
         </view>
       </view>
     </view>
@@ -103,19 +94,3 @@
 <!--                  <view class="cu-tag bg-green light sm round" wx:if="{{item.stock > 5}}">库存充足</view>
                   <view class="cu-tag bg-red light sm round" wx:elif="{{item.stock <= 0}}">库存告罄</view>
                   <view class="cu-tag bg-yellow light sm round" wx:elif="{{item.stock <= 5}}">库存较少</view>-->
-
-    <view class="flex">
-      <view class="flex-sub margin-xs radius"><image  class = "radius" style='width:80%; height:80%;' src='https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yfsu2vcmj30yg0hk7d4.jpg' mode='aspectFill'></image></view>
-      <view class="flex-sub margin-xs radius">
-      <view class="flex p-xs margin-bottom-sm mb-sm">
-      <view class="flex-sub margin-xs radius"><view class="text-xl">牛肉面</view></view>
-    </view>
-          <view class="flex p-xs margin-bottom-sm mb-sm">
-      <view class="flex-sub margin-xs radius"><view class="text-l">好评率: 100%</view></view>
-    </view>
-          <view class="flex p-xs margin-bottom-sm mb-sm">
-      <view class="flex-sm margin-xs radius"><view class="text-xl">35元</view></view>
-      <view class="flex-sub margin-xs radius"><button>购买</button></view>
-    </view>
-      </view>
-    </view>

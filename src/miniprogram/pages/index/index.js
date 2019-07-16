@@ -7,7 +7,7 @@ var orderList = [];
 Page({
   data: {
     userInfo: {},
-
+    card:false,
     logged: false,
     takeSession: false,
     requestResult: '',
