@@ -1,6 +1,9 @@
 //index.js
 const app = getApp();
 var checkList = [];
+var currentOrderID = "";
+var currentCheckID = "";
+
 
 Page({
   data: {
@@ -34,6 +37,8 @@ Page({
     this.setData({
       modalName: e.currentTarget.dataset.target
     });
+    currentCheckID = e.currentTarget.dataset.checkid;
+    currentOrderID = e.currentTarget.dataset.orderid;
   },
 
   hideModal(e) {
@@ -42,14 +47,31 @@ Page({
     });
   },
 
-  rateGood: function () {
+  rateGood: function (orderID,checkID) {
     var that = this;
-    that.setData({
-      isFilled: true
-    });
-    wx.showToast({
-      title: '评价成功！',
-    });
+    wx.showLoading({
+      title: '正在催促厨房阿姨',
+    })
+    wx.cloud.callFunction({
+      name:'rateCheck',
+      data:{
+        orderID: currentOrderID,
+        checkID: currentCheckID,
+        goodNum:1
+      },
+      success: res => {
+        console.log('Yay!')
+        wx.hideLoading();
+        wx.showToast({
+          title: '评价成功！',
+        });
+      },
+      fail: err => {
+        wx.showToast({
+          title: '出了点问题',
+        });
+      }
+    })
   },
 
   rateBad: function () {

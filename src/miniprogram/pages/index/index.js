@@ -7,7 +7,7 @@ var orderList = [];
 Page({
   data: {
     userInfo: {},
-    isCard: true,
+
     logged: false,
     takeSession: false,
     requestResult: '',
@@ -24,6 +24,9 @@ Page({
   },
 
   onLoad: function () {
+    wx.showLoading({
+      title: '启动核聚变锅炉',
+    })
     this.getOrderList();
   },
 
@@ -103,6 +106,7 @@ Page({
         wx.showToast({
           title: '您已登录！',
         });
+        wx.hideLoading();
         that.isAdmin();
       },
       fail: function () {

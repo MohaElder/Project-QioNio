@@ -17,7 +17,7 @@
         <text class='text-black'>{{item.order.name}}</text>
       </view>
       <view class="flex-sub padding-sm margin-xs radius">
-        <text class='text-xs text-black' wx:if="{{item.isFinished}} == true">已完成</text>
+        <text class='text-xs text-black' wx:if="{{item.isFinished == true}}">已完成</text>
         <text class='text-xs text-black' wx:else>待完成</text>
       </view>
     </view>
@@ -30,7 +30,7 @@
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-treble padding-sm margin-xs radius"></view>
       <view class="flex-sub padding-sm margin-xs radius">
-        <!--<button class='cu-btn radius' bindtap="showModal" data-target="Modal">评价</button>-->
+        <button wx:if = "{{item.isFinished == true}}" class='cu-btn radius' bindtap="showModal" data-target="Modal" data-orderid = "{{item.order._id}}" data-checkid = "{{item._id}}">评价</button>
       </view>
     </view>
 
