@@ -1,5 +1,5 @@
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">Sodex - Quality of Life Services</view>
+  <view slot="content">Sodexo</view>
 </cu-custom>
 <!--标题栏-->
 
@@ -11,10 +11,10 @@
   <view class="padding bg-white">
     <view class="flex">
       <view class="flex-treble padding-sm margin-xs radius">
-        <text class="text-black text-xxl text">Quality of Life Services</text>
-        <view class="text-grey text-sm radius" style='margin-top:20rpx;'>了解更多 ></view>
+        <text class="text-black text-xxl text">Quality of\n Life Services</text>
+        <view class="text-grey text-sm radius" style='margin-top:10rpx;' catchtap='navigate' data-pagename = "article">了解更多 ></view>
       </view>
-      <view class="flex-sub padding-sm margin-xs radius" bindtap='toSelf'>
+      <view class="flex-sm padding-sm margin-xs radius" bindtap='navigate' data-pagename = "self">
         <view class="cu-avatar round " style="background-image:url({{userInfo.avatarUrl}}); margin-left:10rpx;"></view>
         <view class="text-xs radius" style="margin-top:15rpx;">个人中心</view>
       </view>
@@ -27,7 +27,7 @@
             <view class="cu-card case {{isCard?'no-card':''}}">
               <view class="cu-item shadow">
                 <view class="image">
-                  <image src="{{item.imageURL}}" mode="widthFix"></image>
+                  <image class = "radius" src="{{item.imageURL}}" mode="widthFix"></image>
                 </view>
               </view>
 
@@ -39,7 +39,6 @@
     <!--上半部分-->
 
 
-
       <view class="padding-sm margin-xs radius">
           <text class="text-xl text-black text-bold">今日菜谱</text>
         <view class="cu-card case {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
@@ -47,15 +46,24 @@
             <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
             </view>
             <view class="content">
-              <image class = "radius" src="{{item.imageURL}}"></image>
+                              <view class="image">
+                  <image class = "radius" src="{{item.imageURL}}" mode="widthFix"></image>
+                        <view class="cu-tag bg-blue radius" wx:if="{{item.stock > 5}}">库存充足</view>
+      <view class="cu-tag bg-red radius" wx:elif="{{item.stock <= 0}}">库存告罄</view>
+      <view class="cu-tag bg-yellow radius" wx:elif="{{item.stock <= 5}}">库存较少</view>
+                </view>
               <view class="desc" style='margin-top:20rpx;'>
                 <view class="text-xl text-bold">{{item.name}}</view>
                 <view>
                 <text>{{item.goodRateNum/item.rateNum * 100}}% 满意</text>
                 </view>
-                <view class='flex align-center' style='margin-top:20rpx;'>
+                <view class='flex align-start' style='margin-top:20rpx;'>
                 <text class="text-price text-xxl flex-sub"> {{item.price}}</text>
-                  <button class=" flex-sm cu-btn bg-yellow" bindtap='toFood' data-id="{{item._id}}" style='margin-bottom:20rpx;'>订购</button>
+                        <button class="flex-sm cu-btn bg-grey" style="width:50%;" disabled
+          wx:if="{{item.stock <= 0 }}">卖光了，明天再来吧</button>
+                  <button class=" flex-sm cu-btn bg-yellow" wx:elif = "{{isOrdered == false}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购</button>
+                                    <button class=" flex-sm cu-btn bg-yellow" wx:elif = "{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
+                  <button class=" flex-sm cu-btn bg-grey" wx:else disabled>一天只能买一份饭哦</button>
                 </view>
               </view>
             </view>
@@ -64,6 +72,9 @@
       </view>
 
     <!--菜单-->
+
+      <button class = "cu-btn bg-green lg" bindtap='navigate' data-pagename = "admin" wx:if="{{isAdmin == true}}">管理员界面</button>
+
   </view>
   <!--Container-->
 
@@ -86,11 +97,4 @@
       </view>
     </view>
   </view>
-
-  <button bindtap='toAdmin' wx:if="{{isAdmin == true}}">管理员界面</button>
-  <!--<button bindtap='toArticle'>article page</button>-->
 </view>
-
-<!--                  <view class="cu-tag bg-green light sm round" wx:if="{{item.stock > 5}}">库存充足</view>
-                  <view class="cu-tag bg-red light sm round" wx:elif="{{item.stock <= 0}}">库存告罄</view>
-                  <view class="cu-tag bg-yellow light sm round" wx:elif="{{item.stock <= 5}}">库存较少</view>-->

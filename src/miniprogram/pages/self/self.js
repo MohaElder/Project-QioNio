@@ -50,7 +50,7 @@ Page({
   rateGood: function (orderID,checkID) {
     var that = this;
     wx.showLoading({
-      title: '正在催促厨房阿姨',
+      title: '正在烹煮唐僧肉',
     })
     wx.cloud.callFunction({
       name:'rateCheck',
@@ -60,28 +60,46 @@ Page({
         goodNum:1
       },
       success: res => {
-        console.log('Yay!')
         wx.hideLoading();
         wx.showToast({
-          title: '评价成功！',
+          title: '你可算评价好了',
         });
       },
       fail: err => {
         wx.showToast({
-          title: '出了点问题',
+          title: '出大问题',
         });
       }
     })
   },
 
-  rateBad: function () {
+  rateBad: function (orderID, checkID) {
     var that = this;
     that.setData({
       isFilled: true
     });
-    wx.showToast({
-      title: '评价成功！',
-    });
+    wx.showLoading({
+      title: '正在烹煮唐僧肉',
+    })
+    wx.cloud.callFunction({
+      name: 'rateCheck',
+      data: {
+        orderID: currentOrderID,
+        checkID: currentCheckID,
+        goodNum: 0
+      },
+      success: res => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '你可算评价好了',
+        });
+      },
+      fail: err => {
+        wx.showToast({
+          title: '出大问题',
+        });
+      }
+    })
   }
 
 

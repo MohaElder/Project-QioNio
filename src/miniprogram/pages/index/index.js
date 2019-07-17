@@ -1,42 +1,37 @@
 //index.js
 const app = getApp();
 const db = wx.cloud.database();
+const _ = db.command;
+const util = require('../../utils/util.js');
 var openid = "";
 var orderList = [];
 
 Page({
   data: {
     userInfo: {},
-    card:false,
-    logged: false,
-    takeSession: false,
-    requestResult: '',
+    card: false,
     swiperList: [{
-      imageURL: "https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yfsu2vcmj30yg0hk7d4.jpg",
-      desc: "索迪斯为人民服务"
+      imageURL: "https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yfsu2vcmj30yg0hk7d4.jpg"
     }, {
-      imageURL: "https://wx4.sinaimg.cn/mw690/006tozhpgy1g4yfsu22g7j30yg0hkgsb.jpg",
-      desc: "我也不知道说啥就随便打点字吧"
+      imageURL: "https://wx4.sinaimg.cn/mw690/006tozhpgy1g4yfsu22g7j30yg0hkgsb.jpg"
     }],
     orderList: [],
     isAdmin: false,
     isPrisoner: false
   },
 
-  onLoad: function () {
+  //页面每次打开运行
+  onLoad: function() {
     wx.showLoading({
-      title: '启动核聚变锅炉',
+      title: '调制猪排冰淇淋',
     })
     this.getOrderList();
+    this.onGetOpenid();
+    wx.hideLoading();
   },
 
-  toAdmin: function () {
-    wx.navigateTo({
-      url: '../admin/admin?',
-    });
-  },
-
-  getOrderList: function () {
+  //获取菜谱
+  getOrderList: function() {
     wx.cloud.callFunction({
         name: 'getOrder'
       })
@@ -45,11 +40,10 @@ Page({
         app.globalData.orderList = res.result.data;
       })
       .catch(console.error);
-
-    this.onGetOpenid();
   },
 
-  onGetOpenid: function () {
+  //获取用户openid
+  onGetOpenid: function() {
     // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
@@ -57,17 +51,18 @@ Page({
       success: res => {
         openid = res.result.openid;
         app.globalData.openid = res.result.openid;
-        this.upload();
+        this.sync();
       },
       fail: err => {
         wx.showToast({
-          title: '出了点问题',
+          title: '出大问题',
         });
       }
     });
   },
 
-  register: function (res) {
+  //用户注册
+  register: function(res) {
     var that = this;
     var userInfo = res.detail.userInfo;
     app.globalData.user = userInfo;
@@ -90,26 +85,26 @@ Page({
     });
   },
 
-
-  upload: function () {
+  //从数据库下载用户信息
+  sync: function() {
     var that = this;
     //var Time = util.formatTime(new Date());
     db.collection('user').doc(openid).get({ //建立或者更新数据库信息
-      success: function (res) {
+      success: function(res) {
         app.globalData.user = res.data;
         app.globalData.isOrdered = res.data.isOrdered;
         that.setData({
           orderList: orderList,
-          userInfo: res.data.info
+          userInfo: res.data.info,
+          isOrdered: res.data.isOrdered
         });
         // res.data 包含该记录的数据
         wx.showToast({
           title: '您已登录！',
         });
-        wx.hideLoading();
         that.isAdmin();
       },
-      fail: function () {
+      fail: function() {
         that.setData({
           modalName: "DialogModal1"
         });
@@ -118,7 +113,8 @@ Page({
 
   },
 
-  toFood: function (e) {
+  //携带FOODID跳转至Food页面
+  toFood: function(e) {
     var id = e.currentTarget.dataset.id;
     var name = e.currentTarget.dataset.name;
     var link = '../food/food?foodID=' + id;
@@ -127,36 +123,35 @@ Page({
     });
   },
 
-  toSelf: function () {
+  //跳转至给定参数界面
+  navigate: function(options) {
+    var pageName = options.currentTarget.dataset.pagename
+    var link = "../" + pageName + "/" + pageName;
     wx.navigateTo({
-      url: '../self/self',
+      url: link,
     });
   },
 
-  toArticle: function () {
-    wx.navigateTo({
-      url: '../article/article',
-    });
-  },
-
-  isAdmin: function () {
+  //判断是否是Admin=>是否显示Admin按钮
+  isAdmin: function() {
     var that = this;
     db.collection('admin').doc(openid).get({ //建立或者更新数据库信息
-      success: function (res) {
+      success: function(res) {
         that.setData({
           isAdmin: true
         });
       },
-      fail: function () {
+      fail: function() {
         that.isPrisoner();
       }
     });
   },
 
-  isPrisoner: function () {
+  //判断是否在黑名单内=>是否显示黑名单界面
+  isPrisoner: function() {
     var that = this;
     db.collection('gulagList').doc(openid).get({ //建立或者更新数据库信息
-      success: function (res) {
+      success: function(res) {
         that.setData({
           isPrisoner: true
         });
@@ -164,9 +159,109 @@ Page({
     });
   },
 
+  //隐藏注册弹窗
   hideModal(e) {
     this.setData({
       modalName: null
+    });
+  },
+
+  //显示购买弹窗
+  purchase: function(options) {
+    var that = this;
+    wx.showModal({
+      title: '看清楚了伙计',
+      content: '你确定要订购吗？一天只能买一份饭嗷！',
+      success: function(res) {
+        if (res.confirm) {
+          that.updateOrder(options.currentTarget.dataset.index);
+        } else if (res.cancel) {
+
+        }
+      }
+    });
+
+  },
+
+  //更新数据库菜谱（仓库）信息
+  updateOrder: function(index) {
+    var that = this;
+    var orderTemp = orderList[index];
+
+    wx.showLoading({
+      title: '正在调制孟婆汤',
+    })
+    wx.cloud.callFunction({
+      name: 'updateOrder',
+      data: {
+        foodID: orderTemp._id,
+        stock: orderTemp.stock - 1
+      },
+      success: res => {
+        that.updateUser(orderTemp);
+        that.updateCheck(orderTemp);
+        that.updateLocal();
+        wx.hideLoading();
+      },
+      fail: err => {
+        wx.showToast({
+          title: '出大问题',
+        });
+      }
+    });
+  },
+
+  //更新数据库用户信息
+  updateUser: function(order) {
+    var that = this;
+    var orderTemp = that.data.order;
+
+    db.collection('user').doc(openid).update({
+      data: {
+        orderID: _.push(order._id),
+        isOrdered: true
+      }
+    });
+    // res.data 包含该记录的数据
+  },
+
+  //更新数据库订单信息
+  updateCheck: function(order) {
+    var that = this;
+    var checkID = "moha";
+    for (var i = 0; i < 6; i++) {
+      checkID += Number.parseInt(Math.random() * 10);
+    }
+    var time = util.formatTime(new Date());
+    db.collection("check").add({
+      data: {
+        _id: checkID,
+        user: app.globalData.user,
+        order: order,
+        time: time,
+        isFinished: false
+      }
+    });
+    // res.data 包含该记录的数据
+  },
+
+  //刷新本地渲染信息
+  updateLocal: function() {
+    var that = this;
+    that.setData({
+      isOrdered: true
+    });
+    app.globalData.isOrdered = true;
+    wx.showModal({
+      title: '你买好了！',
+      content: '去个人中心看看你的订单不？',
+      success: function(res) {
+        if (res.confirm) {
+          wx.navigateTo({
+            url: '../self/self',
+          });
+        }
+      }
     });
   },
 });
