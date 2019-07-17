@@ -12,6 +12,7 @@ Page({
     checkList: []
   },
 
+  //每次页面打开运行
   onLoad: function () {
     checkList = [];
     var that = this;
@@ -24,7 +25,6 @@ Page({
             checkList.push(res.result.data[i]);
           }
         }
-        //app.globalData.checkList = res.result.data;
         that.setData({
           user: app.globalData.user,
           checkList: checkList
@@ -33,6 +33,7 @@ Page({
       .catch(console.error);
   },
 
+  //显示评价弹窗
   showModal(e) {
     this.setData({
       modalName: e.currentTarget.dataset.target
@@ -41,12 +42,14 @@ Page({
     currentOrderID = e.currentTarget.dataset.orderid;
   },
 
+  //隐藏评价弹窗
   hideModal(e) {
     this.setData({
       modalName: null
     });
   },
 
+  //好评操作
   rateGood: function (orderID,checkID) {
     var that = this;
     wx.showLoading({
@@ -73,6 +76,7 @@ Page({
     })
   },
 
+  //差评操作
   rateBad: function (orderID, checkID) {
     var that = this;
     that.setData({

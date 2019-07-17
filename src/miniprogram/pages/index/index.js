@@ -44,7 +44,6 @@ Page({
 
   //获取用户openid
   onGetOpenid: function() {
-    // 调用云函数
     wx.cloud.callFunction({
       name: 'login',
       data: {},
@@ -113,16 +112,6 @@ Page({
 
   },
 
-  //携带FOODID跳转至Food页面
-  toFood: function(e) {
-    var id = e.currentTarget.dataset.id;
-    var name = e.currentTarget.dataset.name;
-    var link = '../food/food?foodID=' + id;
-    wx.navigateTo({
-      url: link,
-    });
-  },
-
   //跳转至给定参数界面
   navigate: function(options) {
     var pageName = options.currentTarget.dataset.pagename
@@ -175,8 +164,6 @@ Page({
       success: function(res) {
         if (res.confirm) {
           that.updateOrder(options.currentTarget.dataset.index);
-        } else if (res.cancel) {
-
         }
       }
     });
