@@ -12,10 +12,21 @@ Page({
     userInfo: {},
     card: false,
     swiperList: [{
-      imageURL: "https://wx2.sinaimg.cn/mw690/006tozhpgy1g4yfsu2vcmj30yg0hk7d4.jpg"
+      imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo-cleaning.jpg"
     }, {
-      imageURL: "https://wx4.sinaimg.cn/mw690/006tozhpgy1g4yfsu22g7j30yg0hkgsb.jpg"
-    }],
+        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo_Catering.jpg"
+      }, {
+        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Schulverplfegung_Sodexo_2.jpg"
+      },
+      {
+        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Patiententransport_Krankenhaus_Sodexo.jpg"
+      },
+      {
+        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/fm-top50-sodexo-promo.jpg"
+      },
+
+
+    ],
     orderList: [],
     isAdmin: false,
     isPrisoner: false

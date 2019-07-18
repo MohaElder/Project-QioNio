@@ -22,7 +22,7 @@
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-sub padding-sm margin-xs radius">
         <swiper catchtap='navigate' data-pagename="article" class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-          <swiper-item wx:for="{{swiperList}}" wx:key>
+          <swiper-item wx:for="{{swiperList}}" wx:key = "imageURL">
             <view class="cu-card case {{isCard?'no-card':''}}">
               <view class="cu-item shadow">
                 <view class="image">
