@@ -3,8 +3,9 @@ const app = getApp();
 var checkList = [];
 var currentOrderID = "";
 var currentCheckID = "";
+var wxbarcode = require('../../utils/index.js');
 
-
+var db = wx.cloud.database();
 Page({
   data: {
     isFilled: false,
@@ -67,6 +68,7 @@ Page({
         wx.showToast({
           title: '你可算评价好了',
         });
+        that.updateLocal();
         
       },
       fail: err => {
@@ -98,6 +100,7 @@ Page({
         wx.showToast({
           title: '你可算评价好了',
         });
+        that.updateLocal();
       },
       fail: err => {
         wx.showToast({
@@ -105,6 +108,32 @@ Page({
         });
       }
     })
+  },
+
+  updateLocal: function(){
+    var that = this;
+    db.collection('check').doc(currentCheckID).update({
+      data: {
+        isRated: true
+      }
+    });
+    for (var i = 0; i < checkList.length; i++) {
+      if (checkList[i]._id == currentCheckID) {
+        checkList[i].isRated = true;
+      }
+    }
+    that.setData({
+      checkList: checkList
+    });
+  },
+
+  showCode: function(options){
+    var checkID = options.currentTarget.dataset.checkid;
+    wxbarcode.qrcode('qrcode', checkID, 420, 420);
+    this.setData({
+      modalName: options.currentTarget.dataset.target
+    });
+
   }
 
 

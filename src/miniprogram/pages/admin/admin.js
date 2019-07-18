@@ -27,9 +27,18 @@ Page({
       .catch(console.error);
   },
 
+
+  scan: function () {
+    var that = this;
+    wx.scanCode({
+      success(res) {
+        that.confirm(res.result);
+      }
+    })
+  },
+
   //完成订单，更新数据库相关数据
-  confirm: function (options) {
-    var checkID = options.currentTarget.dataset.checkid;
+  confirm: function (checkID) {
     var that = this;
     wx.showModal({
       title: 'Info',
@@ -92,4 +101,6 @@ Page({
       checkList: temp
     });
   }
+
+  
 });

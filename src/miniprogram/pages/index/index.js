@@ -230,7 +230,8 @@ Page({
         user: app.globalData.user,
         order: order,
         time: time,
-        isFinished: false
+        isFinished: false,
+        isRated:false
       }
     });
     // res.data 包含该记录的数据

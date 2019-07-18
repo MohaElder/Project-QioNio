@@ -46,3 +46,16 @@ map,
   width: 750rpx;
   height: 300rpx;
 }
+
+.qrcode {
+    height: 420rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.qrcode > canvas {
+    width: 420rpx;
+    height: 420rpx;
+}

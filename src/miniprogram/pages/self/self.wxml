@@ -30,9 +30,9 @@
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-treble padding-sm margin-xs radius"></view>
       <view class="flex-sub padding-sm margin-xs radius">
-        <button wx:if = "{{item.isFinished == true}}" class='cu-btn radius' bindtap="showModal" data-target="Modal" data-orderid = "{{item.order._id}}" data-checkid = "{{item._id}}">评价</button>
-                <button wx:elif = "{{item.isFinished == false}}" class='cu-btn radius' disabled >待完成</button>
-                <button wx:else class='cu-btn radius' disabled>你评价过啦</button>
+        <button wx:if = "{{item.isFinished == true && item.isRated == false}}" class='cu-btn radius' bindtap="showModal" data-target="Modal1" data-orderid = "{{item.order._id}}" data-checkid = "{{item._id}}">评价</button>
+                <button wx:elif = "{{item.isFinished == false}}" class='cu-btn radius bg-green' data-checkid = "{{item._id}}" data-target="Modal2" bindtap='showCode'>订单码</button>
+                <button wx:else class='cu-btn radius' disabled>已评价</button>
       </view>
     </view>
 
@@ -41,7 +41,7 @@
 
 </scroll-view>
 
-<view class="cu-modal {{modalName=='Modal'?'show':''}}">
+<view class="cu-modal {{modalName=='Modal1'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
       <view class="content">评价你的用餐体验</view>
@@ -67,3 +67,20 @@
     </view>
   </view>
 </view>
+
+<view class="cu-modal {{modalName=='Modal2'?'show':''}}">
+  <view class="cu-dialog">
+
+    <view class="cu-bar bg-white">
+      <view class="content">订单码</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+
+    <view class="qrcode" bindtap="hideModal">
+      <canvas canvas-id="qrcode" />
+    </view>
+  </view>
+</view>
+      

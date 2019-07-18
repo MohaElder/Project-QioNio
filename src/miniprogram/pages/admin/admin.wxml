@@ -6,16 +6,24 @@
 
 <scroll-view scroll-y class="scrollPage">
 
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-green margin-tb-sm lg" bindtap='scan'><text class="cuIcon-qrcode"></text> 扫描订单</button>
+</view>
+
   <view class="padding bg-white" wx:for="{{checkList}}" wx:key="name">
     <view class="flex">
       <view class="flex-treble padding-sm margin-xs radius">
         <text class='text-black'>{{item.order.name}}</text>
       </view>
       <view class="flex-sub padding-sm margin-xs radius">
-        <text class='text-xs text-black' wx:if="{{item.isFinished == false}}">未完成</text>
+        <text class='text-xs text-red' wx:if="{{item.isFinished == false}}">未完成</text>
         <text class='text-xs text-black' wx:else>已完成</text>
       </view>
     </view>
+        <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
+      <!--<view class="flex-treble padding-sm margin-xs radius">于 {{item.time}} 订购</view>-->
+      <view class="flex-treble padding-sm margin-xs radius">订单号：{{item._id}}</view>
+  </view>
     <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
       <!--<view class="flex-treble padding-sm margin-xs radius">于 {{item.time}} 订购</view>-->
       <view class="flex-treble padding-sm margin-xs radius">购买者：{{item.user.info.nickName}}</view>
@@ -23,18 +31,7 @@
         <text class='text-price'>{{item.order.price}}</text>
       </view>
     </view>
-    <view class="flex p-xs margin-bottom-sm mb-sm">
-      <view class="flex-treble padding-sm margin-xs radius"></view>
-      <view class="flex-sub padding-sm margin-xs radius">
-        <button class='cu-btn bg-green radius' bindtap="confirm" data-checkid='{{item._id}}'
-          wx:if="{{item.isFinished == false}}">未完成</button>
-        <button class='cu-btn radius' disabled wx:else>已完成</button>
-      </view>
-    </view>
   </view>
 
-    <view class='solid bottom align-center'>
-    <text class = 'text-xl '>滑倒底了，没有订单啦</text>
-</view>
 
 </scroll-view>

@@ -16,7 +16,8 @@ exports.main = async (event, context) => {
       user: true,
       order:true,
       isFinished:true,
-      time:true
+      time:true,
+      isRated:true
     })
       .get()
     tasks.push(promise)
