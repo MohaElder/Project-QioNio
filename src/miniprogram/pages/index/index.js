@@ -11,26 +11,29 @@ Page({
   data: {
     userInfo: {},
     card: false,
-    swiperList: [{
-      imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo-cleaning.jpg"
-    }, {
-        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo_Catering.jpg"
-      }, {
-        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Schulverplfegung_Sodexo_2.jpg"
-      },
-      {
-        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Patiententransport_Krankenhaus_Sodexo.jpg"
-      },
-      {
-        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/fm-top50-sodexo-promo.jpg"
-      },
-
-
+    swiperList: [
+        {
+        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo-cleaning.jpg"
+        }, 
+        {
+          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo_Catering.jpg"
+        }, 
+        {
+          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Schulverplfegung_Sodexo_2.jpg"
+        },
+        {
+          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Patiententransport_Krankenhaus_Sodexo.jpg"
+        },
+        {
+          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/fm-top50-sodexo-promo.jpg"
+        }
     ],
     orderList: [],
     isAdmin: false,
     isPrisoner: false
   },
+
+  //TODOS: swiperList Go Cloud! Black List function......
 
   //页面每次打开运行
   onLoad: function() {
@@ -117,6 +120,7 @@ Page({
           })
           wx.showModal({
             title: '不在服务时间内',
+            content:'服务时间是：早上八点到中午十二点，记住了嗷！'
           });
         } else {
           that.setData({
@@ -303,6 +307,7 @@ Page({
     });
   },
 
+  //检测后门触发
   triggerSuperPower: function(e) {
     if (count == 5) {
       this.setData({
@@ -324,6 +329,7 @@ Page({
     count += 1;
   },
 
+  //触发后门
   superPower: function() {
     wx.showModal({
       title: 'SuperPower',

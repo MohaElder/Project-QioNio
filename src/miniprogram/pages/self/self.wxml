@@ -1,6 +1,6 @@
 <!--miniprogram/pages/self/self.wxml-->
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">SodexMiniApp</view>
+  <view slot="content">个人中心</view>
 </cu-custom>
 <!--标题栏-->
 

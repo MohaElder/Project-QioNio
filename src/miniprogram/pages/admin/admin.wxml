@@ -1,6 +1,6 @@
 <!--miniprogram/pages/admin/admin.wxml-->
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">订餐</view>
+  <view slot="content">管理员</view>
 </cu-custom>
 <!--标题栏-->
 

@@ -110,6 +110,7 @@ Page({
     })
   },
 
+  //更新本地评价状态
   updateLocal: function(){
     var that = this;
     db.collection('check').doc(currentCheckID).update({
@@ -127,6 +128,7 @@ Page({
     });
   },
 
+  //显示订单二维码
   showCode: function(options){
     var checkID = options.currentTarget.dataset.checkid;
     wxbarcode.qrcode('qrcode', checkID, 420, 420);

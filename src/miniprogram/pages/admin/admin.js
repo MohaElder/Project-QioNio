@@ -27,7 +27,7 @@ Page({
       .catch(console.error);
   },
 
-
+  //扫描订单二维码
   scan: function () {
     var that = this;
     wx.scanCode({
@@ -102,6 +102,7 @@ Page({
     });
   },
 
+  //自动拉黑所有当日未完成（未到达领餐）订单
   endToday: function(){
     wx.showModal({
       title: '警告',

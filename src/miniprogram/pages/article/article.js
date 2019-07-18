@@ -24,6 +24,10 @@ Page({
     ],
     md: '# Hello World!'
   },
+
+  //TODOS: 自定义文本编辑器
+  
+  //页面每次打开运行
   onLoad: function () {
     /*
     var that = this;
@@ -42,6 +46,7 @@ Page({
     */
   },
 
+  //渲染Markdown页面
   renderPage: function () {
     var that = this;
     that.setData({
@@ -49,6 +54,7 @@ Page({
     });
   },
 
+  //检测编辑器录入内容
   textareaBInput(e) {
     content = e.detail.value;
   },
