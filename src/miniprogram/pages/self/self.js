@@ -67,6 +67,7 @@ Page({
         wx.showToast({
           title: '你可算评价好了',
         });
+        
       },
       fail: err => {
         wx.showToast({

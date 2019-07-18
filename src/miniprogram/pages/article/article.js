@@ -3,9 +3,29 @@ var content = '';
 
 Page({
   data: {
+    imageList:[
+        "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片1.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片2.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片3.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片4.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片5.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片6.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片7.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片8.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片9.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片10.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片11.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片12.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片13.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片14.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片15.PNG",
+              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片16.PNG",
+
+    ],
     md: '# Hello World!'
   },
   onLoad: function () {
+    /*
     var that = this;
     db.collection('articles').doc('arti001').get({ //建立或者更新数据库信息
       success: function (res) {
@@ -19,6 +39,7 @@ Page({
         console.log("Article Not Found!")
       }
     });
+    */
   },
 
   renderPage: function () {

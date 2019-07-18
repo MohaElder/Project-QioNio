@@ -1,9 +1,13 @@
 <cu-custom bgColor="bg-white" isCustom="{{true}}">
-	<view slot="content">订餐</view>
+  <view slot="content">关于我们</view>
 </cu-custom>
+
+
+<image wx:for = "{{imageList}}" src="{{item}}" style='width:100vw; height:100vh;' mode='widthFix'> </image>
+
 <!--标题栏-->
 
-<view class="container">
+<!--<view class="container">
 	<wemark md="{{md}}" link highlight type="wemark"></wemark>
 </view>
 
@@ -11,4 +15,4 @@
 	<view class="title">文章编辑器</view>
 	<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaBInput" placeholder="输入内容"></textarea>
 </view>
-<button bindtap="renderPage">submit</button>
+<button bindtap="renderPage">submit</button>-->

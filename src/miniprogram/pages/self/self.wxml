@@ -31,6 +31,7 @@
       <view class="flex-treble padding-sm margin-xs radius"></view>
       <view class="flex-sub padding-sm margin-xs radius">
         <button wx:if = "{{item.isFinished == true}}" class='cu-btn radius' bindtap="showModal" data-target="Modal" data-orderid = "{{item.order._id}}" data-checkid = "{{item._id}}">评价</button>
+                <button wx:elif = "{{item.isFinished == false}}" class='cu-btn radius' disabled >待完成</button>
                 <button wx:else class='cu-btn radius' disabled>你评价过啦</button>
       </view>
     </view>

@@ -92,6 +92,10 @@ Page({
       success: function(res) {
         app.globalData.user = res.data;
         app.globalData.isOrdered = res.data.isOrdered;
+        for(var i = 0; i < orderList.length; i++){
+          orderList[i].rate = (orderList[i].goodRateNum / orderList[i].rateNum * 100).toFixed(2);
+          if (orderList[i].rate == 100.00) {orderList[i].rate = "100.0";}
+        };
         that.setData({
           orderList: orderList,
           userInfo: res.data.info,

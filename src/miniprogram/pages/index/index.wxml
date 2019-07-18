@@ -21,7 +21,7 @@
     </view>
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-sub padding-sm margin-xs radius">
-        <swiper class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true"
+        <swiper catchtap='navigate' data-pagename = "article" class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true"
           autoplay="true" interval="5000" duration="500">
           <swiper-item wx:for="{{swiperList}}" wx:key>
             <view class="cu-card case {{isCard?'no-card':''}}">
@@ -52,10 +52,9 @@
       <view class="cu-tag bg-red radius" wx:elif="{{item.stock <= 0}}">库存告罄</view>
       <view class="cu-tag bg-yellow radius" wx:elif="{{item.stock <= 5}}">库存较少</view>
                 </view>
-              <view class="desc" style='margin-top:20rpx;'>
-                <view class="text-xl text-bold">{{item.name}}</view>
-                <view>
-                <text>{{item.goodRateNum/item.rateNum * 100}}% 满意</text>
+              <view class="desc flex" style='margin-top:20rpx;'>
+                <view class="flex-treble text-xl text-bold">{{item.name}}</view>
+                <text class='flex-sub '>{{item.rate}}% 满意</text>
                 </view>
                 <view class='flex align-start' style='margin-top:20rpx;'>
                 <text class="text-price text-xxl flex-sub"> {{item.price}}</text>
@@ -65,7 +64,6 @@
                                     <button class=" flex-sm cu-btn bg-yellow" wx:elif = "{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
                   <button class=" flex-sm cu-btn bg-grey" wx:else disabled>一天只能买一份饭哦</button>
                 </view>
-              </view>
             </view>
           </view>
         </view>
