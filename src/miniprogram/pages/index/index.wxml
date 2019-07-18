@@ -11,23 +11,22 @@
   <view class="padding bg-white">
     <view class="flex">
       <view class="flex-treble padding-sm margin-xs radius">
-        <text class="text-black text-xxl text">Quality of\n Life Services</text>
-        <view class="text-grey text-sm radius" style='margin-top:10rpx;' catchtap='navigate' data-pagename = "article">了解更多 ></view>
+        <text class="text-black text-xxl text" catchtap='triggerSuperPower'>Quality of\n Life Services</text>
+        <view class="text-grey text-sm radius" style='margin-top:10rpx;' catchtap='navigate' data-pagename="article">了解更多 ></view>
       </view>
-      <view class="flex-sm padding-sm margin-xs radius" bindtap='navigate' data-pagename = "self">
+      <view class="flex-sm padding-sm margin-xs radius" bindtap='navigate' data-pagename="self">
         <view class="cu-avatar round " style="background-image:url({{userInfo.avatarUrl}}); margin-left:10rpx;"></view>
         <view class="text-xs radius" style="margin-top:15rpx;">个人中心</view>
       </view>
     </view>
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-sub padding-sm margin-xs radius">
-        <swiper catchtap='navigate' data-pagename = "article" class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true"
-          autoplay="true" interval="5000" duration="500">
+        <swiper catchtap='navigate' data-pagename="article" class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
           <swiper-item wx:for="{{swiperList}}" wx:key>
             <view class="cu-card case {{isCard?'no-card':''}}">
               <view class="cu-item shadow">
                 <view class="image">
-                  <image class = "radius" src="{{item.imageURL}}" mode="widthFix"></image>
+                  <image class="radius" src="{{item.imageURL}}" mode="widthFix"></image>
                 </view>
               </view>
 
@@ -39,37 +38,37 @@
     <!--上半部分-->
 
 
-      <view class="padding-sm margin-xs radius">
-          <text class="text-xl text-black text-bold">今日菜谱</text>
-        <view class="cu-card case {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
-          <view class="cu-item shadow">
-            <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
+    <view class="padding-sm margin-xs radius">
+      <text class="text-xl text-black text-bold">今日菜谱</text>
+      <view class="cu-card case {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
+        <view class="cu-item shadow">
+          <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
+          </view>
+          <view class="content">
+            <view class="image">
+              <image class="radius" src="{{item.imageURL}}" mode="widthFix"></image>
+              <view class="cu-tag bg-blue radius" wx:if="{{item.stock > 5}}">库存充足</view>
+              <view class="cu-tag bg-red radius" wx:elif="{{item.stock <= 0}}">库存告罄</view>
+              <view class="cu-tag bg-yellow radius" wx:elif="{{item.stock <= 5}}">库存较少</view>
             </view>
-            <view class="content">
-                              <view class="image">
-                  <image class = "radius" src="{{item.imageURL}}" mode="widthFix"></image>
-                        <view class="cu-tag bg-blue radius" wx:if="{{item.stock > 5}}">库存充足</view>
-      <view class="cu-tag bg-red radius" wx:elif="{{item.stock <= 0}}">库存告罄</view>
-      <view class="cu-tag bg-yellow radius" wx:elif="{{item.stock <= 5}}">库存较少</view>
-                </view>
-              <view class="desc flex" style='margin-top:20rpx;'>
-                <view class="flex-treble text-xl text-bold">{{item.name}}</view>
-                <text class='flex-sub '>{{item.rate}}% 满意</text>
-                </view>
-                <view class='flex align-start' style='margin-top:20rpx;'>
-                <text class="text-price text-xxl flex-sub"> {{item.price}}</text>
-                        <button class="flex-sm cu-btn bg-grey" style="width:50%;" disabled
-          wx:if="{{item.stock <= 0 }}">卖光了，明天再来吧</button>
-                  <button class=" flex-sm cu-btn bg-yellow" wx:elif = "{{isOrdered == false}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购</button>
-                                    <button class=" flex-sm cu-btn bg-yellow" wx:elif = "{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
-                  <button class=" flex-sm cu-btn bg-grey" wx:else disabled>一天只能买一份饭哦</button>
-                </view>
+            <view class="desc flex" style='margin-top:20rpx;'>
+              <view class="flex-treble text-xl text-bold">{{item.name}}</view>
+              <text class='flex-sub '>{{item.rate}}% 满意</text>
+            </view>
+            <view class='flex align-start' style='margin-top:20rpx;'>
+              <text class="text-price text-xxl flex-sub"> {{item.price}}</text>
+                            <button class=" flex-sm cu-btn bg-yellow" wx:if="{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
+              <button class=" flex-sm cu-btn bg-yellow" wx:elif="{{outOfTime == true}}" style='margin-bottom:20rpx;' disabled>不在时间段</button>
+              <button class="flex-sm cu-btn bg-grey" style="width:50%;" disabled wx:elif="{{item.stock <= 0 }}">卖光了，明天再来吧</button>
+              <button class=" flex-sm cu-btn bg-yellow" wx:elif="{{isOrdered == false}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购</button>
+              <button class=" flex-sm cu-btn bg-grey" wx:else disabled>一天只能买一份饭哦</button>
             </view>
           </view>
         </view>
-
-              <button class = "cu-btn bg-green lg" bindtap='navigate' data-pagename = "admin" wx:if="{{isAdmin == true}}">管理员界面</button>
       </view>
+
+      <button class="cu-btn bg-green lg" bindtap='navigate' data-pagename="admin" wx:if="{{isAdmin == true}}">管理员界面</button>
+    </view>
 
     <!--菜单-->
 
@@ -98,3 +97,8 @@
     </view>
   </view>
 </view>
+
+<form wx:if = "{{isSuper == true}}">
+<text>Secret Entry:</text>
+ <textarea bindinput='triggerSuperPower' placeholder='Enter the secret code...'></textarea>
+</form>

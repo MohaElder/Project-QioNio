@@ -5,6 +5,7 @@ const _ = db.command;
 const util = require('../../utils/util.js');
 var openid = "";
 var orderList = [];
+var count = 1;
 
 Page({
   data: {
@@ -73,15 +74,11 @@ Page({
         isOrdered: false
       }
     });
-    that.setData({
-      orderList: orderList,
-      userInfo: userInfo,
-      modalName: null
-    });
     app.globalData.user = res.data;
     wx.showToast({
       title: '您已注册！',
     });
+    that.sync();
   },
 
   //从数据库下载用户信息
@@ -92,15 +89,32 @@ Page({
       success: function(res) {
         app.globalData.user = res.data;
         app.globalData.isOrdered = res.data.isOrdered;
-        for(var i = 0; i < orderList.length; i++){
+        for (var i = 0; i < orderList.length; i++) {
           orderList[i].rate = (orderList[i].goodRateNum / orderList[i].rateNum * 100).toFixed(2);
-          if (orderList[i].rate == 100.00) {orderList[i].rate = "100.0";}
+          if (orderList[i].rate == 100.00) {
+            orderList[i].rate = "100.0";
+          }
         };
-        that.setData({
-          orderList: orderList,
-          userInfo: res.data.info,
-          isOrdered: res.data.isOrdered
-        });
+        var now = new Date();
+        if (now.getHours() < 8 || now.getHours() > 12) {
+          that.setData({
+            orderList: orderList,
+            userInfo: res.data.info,
+            isOrdered: res.data.isOrdered,
+            modalName: null,
+            outOfTime: true
+          })
+          wx.showModal({
+            title: '不在服务时间内',
+          });
+        } else {
+          that.setData({
+            orderList: orderList,
+            userInfo: res.data.info,
+            isOrdered: res.data.isOrdered,
+            modalName: null
+          });
+        }
         // res.data 包含该记录的数据
         wx.showToast({
           title: '您已登录！',
@@ -162,15 +176,36 @@ Page({
   //显示购买弹窗
   purchase: function(options) {
     var that = this;
-    wx.showModal({
-      title: '看清楚了伙计',
-      content: '你确定要订购吗？一天只能买一份饭嗷！',
-      success: function(res) {
-        if (res.confirm) {
-          that.updateOrder(options.currentTarget.dataset.index);
+    var now = new Date();
+    if (this.data.isAdmin == true) {
+      wx.showModal({
+        title: '你是管理员？',
+        content: '买饭界面调试',
+        success: function(res) {
+          if (res.confirm) {
+            that.updateOrder(options.currentTarget.dataset.index);
+          }
         }
-      }
-    });
+      });
+    } else if (now.getHours() < 8 || now.getHours() > 12) {
+      wx.showModal({
+        title: '很难受,你点不了餐了',
+        content: '你点餐的时候超过服务时间了，难受吗？',
+      })
+      this.setData({
+        outOfTime: true
+      })
+    } else {
+      wx.showModal({
+        title: '看清楚了伙计',
+        content: '你确定要订购吗？一天只能买一份饭嗷！',
+        success: function(res) {
+          if (res.confirm) {
+            that.updateOrder(options.currentTarget.dataset.index);
+          }
+        }
+      });
+    }
 
   },
 
@@ -231,7 +266,7 @@ Page({
         order: order,
         time: time,
         isFinished: false,
-        isRated:false
+        isRated: false
       }
     });
     // res.data 包含该记录的数据
@@ -256,4 +291,32 @@ Page({
       }
     });
   },
+
+  triggerSuperPower: function(e) {
+    if (count == 5) {
+      this.setData({
+        isSuper: true
+      })
+    }
+    if (count == 50) {
+      wx.showModal({
+        title: 'Error!',
+        content: 'You Are Not The Master!',
+      })
+      this.setData({
+        isSuper: false
+      })
+    }
+    if (e.detail.value == "gcdWanSui") {
+      this.superPower();
+    }
+    count += 1;
+  },
+
+  superPower: function() {
+    wx.showModal({
+      title: 'SuperPower',
+      content: 'Welcome! Master Oh!',
+    })
+  }
 });

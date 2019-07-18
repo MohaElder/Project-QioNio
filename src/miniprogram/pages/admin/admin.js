@@ -100,6 +100,24 @@ Page({
     that.setData({
       checkList: temp
     });
+  },
+
+  endToday: function(){
+    wx.showModal({
+      title: '警告',
+      content: '确定结束今天服务？',
+      success: function(res){
+        wx.showModal({
+          title: '警告',
+          content: '真的确定吗？',
+          success: function(res){
+            wx.cloud.callFunction({
+              name:'goToGulag'
+            })
+          }
+        })
+      }
+    })
   }
 
   
