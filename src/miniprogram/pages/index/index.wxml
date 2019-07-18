@@ -67,11 +67,13 @@
             </view>
           </view>
         </view>
+
+              <button class = "cu-btn bg-green lg" bindtap='navigate' data-pagename = "admin" wx:if="{{isAdmin == true}}">管理员界面</button>
       </view>
 
     <!--菜单-->
 
-      <button class = "cu-btn bg-green lg" bindtap='navigate' data-pagename = "admin" wx:if="{{isAdmin == true}}">管理员界面</button>
+
 
   </view>
   <!--Container-->
