@@ -90,7 +90,7 @@
       </view>
       <view class="cu-bar bg-white justify-end">
         <view class="action">
-          <button class="cu-btn line-green text-green" open-type="exit" target="miniProgram">取消</button>
+          <button class="cu-btn line-green text-green" open-type="exit" target="miniProgram" bindtap="hideModal">取消</button>
           <button class="cu-btn bg-green margin-left" open-type="getUserInfo" bindgetuserinfo="register">确定</button>
         </view>
       </view>
