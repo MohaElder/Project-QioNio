@@ -112,8 +112,28 @@ Page({
           title: '警告',
           content: '真的确定吗？',
           success: function(res){
+            var user = {};
             wx.cloud.callFunction({
-              name:'goToGulag'
+              name:'goToGulag',
+              success: function(res){
+                console.log(res)
+                for (var i = 0; i < res.result.data.length; i++) {
+                  db.collection('gulagList').add({
+                    data: ({
+                      _id: res.result.data[i]._openid,
+                      prisonnerID: res.result.data[i]._openid,
+                      user: user
+                    })
+                  })
+                }
+                wx.showModal({
+                  title: '警告',
+                  content: '已拉黑所有未完成订单用户',
+                })
+              },
+              fail: function(res){
+                console.log("Failed!");
+              }
             })
           }
         })
