@@ -13,19 +13,19 @@ Page({
     card: false,
     swiperList: [
         {
-        imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo-cleaning.jpg"
+        imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Sodexo-cleaning.jpg"
         }, 
         {
-          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Sodexo_Catering.jpg"
+          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Sodexo_Catering.jpg"
         }, 
         {
-          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Schulverplfegung_Sodexo_2.jpg"
+          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Schulverplfegung_Sodexo_2.jpg"
         },
         {
-          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/Patiententransport_Krankenhaus_Sodexo.jpg"
+          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Patiententransport_Krankenhaus_Sodexo.jpg"
         },
         {
-          imageURL: "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexPlaceHolder/fm-top50-sodexo-promo.jpg"
+          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/fm-top50-sodexo-promo.jpg"
         }
     ],
     orderList: [],

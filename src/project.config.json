@@ -15,10 +15,10 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.5",
-	"appid": "wxf91954df06159a6d",
+	"appid": "wx21fc9a2f47ee3cb7",
 	"projectname": "SodexMiniapp",
 	"miniprogramRoot": "miniprogram/",
-	"cloudfunctionRoot": "cloudfunctions/",
+  "cloudfunctionRoot":"cloudfunctions/",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

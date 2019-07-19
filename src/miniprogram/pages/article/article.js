@@ -4,22 +4,22 @@ var content = '';
 Page({
   data: {
     imageList:[
-        "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片1.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片2.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片3.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片4.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片5.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片6.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片7.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片8.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片9.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片10.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片11.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片12.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片13.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片14.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片15.PNG",
-              "cloud://algorithmapp-f78261.616c-algorithmapp-f78261/sodexInfo/幻灯片16.PNG",
+        "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片1.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片2.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片3.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片4.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片5.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片6.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片7.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片8.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片9.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片10.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片11.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片12.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片13.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片14.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片15.PNG",
+              "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片16.PNG"
 
     ],
     md: '# Hello World!'
