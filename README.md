@@ -4,7 +4,7 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 ### 扫码体验
-![There's supposed to be an image here](https://raw.githubusercontent.com/hongmaju/light7Local/master/img/productShow/20170518152848.png)
+![There's supposed to be an image here](https://raw.githubusercontent.com/MohaElder/Project-QioNio/master/qrCode.jpg)
 
 # SodexMiniApp
 
