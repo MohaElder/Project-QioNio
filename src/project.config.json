@@ -18,7 +18,7 @@
 	"appid": "wx21fc9a2f47ee3cb7",
 	"projectname": "SodexMiniapp",
 	"miniprogramRoot": "miniprogram/",
-  "cloudfunctionRoot":"cloudfunctions/",
+	"cloudfunctionRoot": "cloudfunctions/",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

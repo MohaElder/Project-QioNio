@@ -6,6 +6,9 @@ const util = require('../../utils/util.js');
 var openid = "";
 var orderList = [];
 var count = 1;
+var gradeChosen = '';
+var classChosen = '';
+var codeChosen = '';
 
 Page({
   data: {

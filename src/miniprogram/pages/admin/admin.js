@@ -83,6 +83,10 @@ Page({
     });
   },
 
+  manualConfirm: function(){
+    
+  },
+
   //判断日期，只显示当日订单
   renderTime: function(){
     var temp = [];
