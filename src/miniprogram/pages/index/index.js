@@ -6,12 +6,15 @@ const util = require('../../utils/util.js');
 var openid = "";
 var orderList = [];
 var count = 1;
-var gradeChosen = '';
+var gradeChosen = 'Class of 2020';
 var classChosen = '';
 var codeChosen = '';
+var validationChosen = '';
 
 Page({
   data: {
+    gradeIndex:0,
+    gradePicker: ['Class of 2020', 'Class of 2021', 'Class of 2022', 'Class of 2023', 'Class of 2024'],
     userInfo: {},
     card: false,
     swiperList: [
@@ -80,22 +83,33 @@ Page({
 
   //用户注册
   register: function(res) {
-    var that = this;
-    var userInfo = res.detail.userInfo;
-    app.globalData.user = userInfo;
-    db.collection('user').add({
-      data: {
-        _id: openid,
-        info: userInfo,
-        orderID: [],
-        isOrdered: false
-      }
-    });
-    app.globalData.user = res.data;
-    wx.showToast({
-      title: '您已注册！',
-    });
-    that.sync();
+    if(gradeChosen != '' && classChosen != '' && codeChosen != '' && validationChosen == 'kando169'){
+      var that = this;
+      var userInfo = res.detail.userInfo;
+      app.globalData.user = userInfo;
+      db.collection('user').add({
+        data: {
+          _id: openid,
+          info: userInfo,
+          orderID: [],
+          isOrdered: false,
+          grade: gradeChosen,
+          classroom: classChosen,
+          code: codeChosen
+        }
+      });
+      app.globalData.user = res.data;
+      wx.showToast({
+        title: '您已注册！',
+      });
+      that.sync();
+    }
+    else{
+      wx.showToast({
+        title: '别想混过去',
+      })
+    }
+    
   },
 
   //从数据库下载用户信息
@@ -338,5 +352,32 @@ Page({
       title: 'SuperPower',
       content: 'Welcome! Master Oh!',
     })
-  }
+  },
+
+  simulateRegister: function(){
+    this.setData({
+      modalName: "DialogModal1"
+    });
+  },
+
+  getClass: function(e){
+    classChosen = e.detail.value;
+  },
+
+
+  getCode: function (e) {
+    codeChosen = e.detail.value;
+  },
+
+  getValidation: function (e) {
+    validationChosen = e.detail.value;
+  },
+
+  PickerChange(e) {
+    this.setData({
+      gradeIndex: e.detail.value
+    })
+    gradeChosen = this.data.gradePicker[e.detail.value];
+  },
+
 });

@@ -22,7 +22,7 @@
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-sub padding-sm margin-xs radius">
         <swiper catchtap='navigate' data-pagename="article" class="screen-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-          <swiper-item wx:for="{{swiperList}}" wx:key = "imageURL">
+          <swiper-item wx:for="{{swiperList}}" wx:key="imageURL">
             <view class="cu-card case {{isCard?'no-card':''}}">
               <view class="cu-item shadow">
                 <view class="image">
@@ -57,7 +57,7 @@
             </view>
             <view class='flex align-start' style='margin-top:20rpx;'>
               <text class="text-price text-xxl flex-sub"> {{item.price}}</text>
-                            <button class=" flex-sm cu-btn bg-yellow" wx:if="{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
+              <button class=" flex-sm cu-btn bg-yellow" wx:if="{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
               <button class=" flex-sm cu-btn bg-yellow" wx:elif="{{outOfTime == true}}" style='margin-bottom:20rpx;' disabled>不在时间段</button>
               <button class="flex-sm cu-btn bg-grey" style="width:50%;" disabled wx:elif="{{item.stock <= 0 }}">卖光了，明天再来吧</button>
               <button class=" flex-sm cu-btn bg-yellow" wx:elif="{{isOrdered == false}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购</button>
@@ -68,6 +68,7 @@
       </view>
 
       <button class="cu-btn bg-green lg" bindtap='navigate' data-pagename="admin" wx:if="{{isAdmin == true}}">管理员界面</button>
+      <button class="cu-btn bg-green lg" bindtap='simulateRegister' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>模拟注册</button>
     </view>
 
     <!--菜单-->
@@ -76,7 +77,6 @@
 
   </view>
   <!--Container-->
-
   <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
     <view class="cu-dialog">
       <view class="cu-bar bg-white justify-end">
@@ -85,20 +85,56 @@
           <text class="cuIcon-close text-red"></text>
         </view>
       </view>
+
       <view class="padding-xl">
         第一次打开小程序需要注册嗷
       </view>
       <view class="cu-bar bg-white justify-end">
         <view class="action">
-          <button class="cu-btn line-green text-green" open-type="exit" target="miniProgram" bindtap="hideModal">取消</button>
-          <button class="cu-btn bg-green margin-left" open-type="getUserInfo" bindgetuserinfo="register">确定</button>
+          <form>
+          
+            <view class="cu-form-group">
+            
+              <view class="title">年级</view>
+		<picker  bindchange="PickerChange" value="{{gradeIndex}}"
+		 range="{{gradePicker}}">
+			<view class="picker">
+				{{gradePicker[gradeIndex]}}
+			</view>
+		</picker>
+              </view>
+          
+            <view class="cu-form-group">
+            
+              <view class="title">班级</view>
+            
+              <input placeholder="还有你的班级也是" bindinput='getClass' type='number'></input>
+              </view>
+          
+            <view class="cu-form-group">
+            
+              <view class="title">学号</view>
+            
+              <input placeholder="把你的学号也给我交了" bindinput='getCode'></input>
+              </view>
+          
+            <view class="cu-form-group">
+            
+              <view class="title">代码</view>
+            
+              <input placeholder="最后输入你手上的代码" bindinput='getValidation'></input>
+              </view>
+          </form>
         </view>
+      </view>
+      <view class="padding-xl">
+        <button class='cu-btn bg-green lg' bindgetuserinfo='register'>注册</button>
       </view>
     </view>
   </view>
 </view>
 
-<form wx:if = "{{isSuper == true}}">
-<text>Secret Entry:</text>
- <textarea bindinput='triggerSuperPower' placeholder='Enter the secret code...'></textarea>
+<form wx:if="{{isSuper == true}}">
+  <text>Secret Entry:</text>
+  <textarea bindinput='triggerSuperPower' placeholder='Enter the secret code...'></textarea>
 </form>
