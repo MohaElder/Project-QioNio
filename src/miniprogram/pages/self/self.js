@@ -34,7 +34,7 @@ Page({
       .catch(console.error);
   },
 
-  //显示评价弹窗
+  //显示弹窗
   showModal(e) {
     this.setData({
       modalName: e.currentTarget.dataset.target
@@ -43,8 +43,9 @@ Page({
     currentOrderID = e.currentTarget.dataset.orderid;
   },
 
-  //隐藏评价弹窗
+  //隐藏弹窗
   hideModal(e) {
+    wxbarcode.qrcode('qrcode', 'FreedomIsNotFree', 0, 0);
     this.setData({
       modalName: null
     });
@@ -133,9 +134,8 @@ Page({
     var checkID = options.currentTarget.dataset.checkid;
     wxbarcode.qrcode('qrcode', checkID, 420, 420);
     this.setData({
-      modalName: options.currentTarget.dataset.target
+      modalName: "Modal2"
     });
-
   }
 
 

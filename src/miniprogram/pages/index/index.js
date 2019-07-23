@@ -1,4 +1,4 @@
-//index.js
+  //index.js
 const app = getApp();
 const db = wx.cloud.database();
 const _ = db.command;
@@ -7,10 +7,9 @@ var openid = "";
 var orderList = [];
 var count = 1;
 var gradeChosen = 'Class of 2020';
-var classChosen = '';
+var classChosen = 0;
 var codeChosen = '';
 var validationChosen = '';
-
 Page({
   data: {
     gradeIndex:0,
@@ -83,7 +82,7 @@ Page({
 
   //用户注册
   register: function(res) {
-    if(gradeChosen != '' && classChosen != '' && codeChosen != '' && validationChosen == 'kando169'){
+    if(classChosen != ''&& codeChosen != '' && validationChosen == 'kando169' && classChosen > 0 && classChosen < 11){
       var that = this;
       var userInfo = res.detail.userInfo;
       app.globalData.user = userInfo;
@@ -110,6 +109,36 @@ Page({
       })
     }
     
+  },
+
+  //模拟弹出注册页面
+  simulateRegister: function () {
+    this.setData({
+      modalName: "DialogModal1"
+    });
+  },
+
+  //获取班级
+  getClass: function (e) {
+    classChosen = e.detail.value;
+  },
+
+  //获取学号
+  getCode: function (e) {
+    codeChosen = e.detail.value;
+  },
+
+  //获取校验码
+  getValidation: function (e) {
+    validationChosen = e.detail.value;
+  },
+
+  //获取年级
+  PickerChange(e) {
+    this.setData({
+      gradeIndex: e.detail.value
+    })
+    gradeChosen = this.data.gradePicker[e.detail.value];
   },
 
   //从数据库下载用户信息
@@ -334,13 +363,13 @@ Page({
     if (count == 50) {
       wx.showModal({
         title: 'Error!',
-        content: 'You Are Not The Master!',
+        content: 'FAILED ATEMPT, REJECT',
       })
       this.setData({
         isSuper: false
       })
     }
-    if (e.detail.value == "gcdWanSui") {
+    if (e.detail.value == "youyishuoyi") {
       this.superPower();
     }
     count += 1;
@@ -351,33 +380,20 @@ Page({
     wx.showModal({
       title: 'SuperPower',
       content: 'Welcome! Master Oh!',
+      success: function(res){
+        if(res.confirm){
+          wx.navigateTo({
+            url: '../superAdmin/superAdmin',
+          })
+        }
+      }
     })
   },
 
-  simulateRegister: function(){
-    this.setData({
-      modalName: "DialogModal1"
-    });
-  },
-
-  getClass: function(e){
-    classChosen = e.detail.value;
-  },
-
-
-  getCode: function (e) {
-    codeChosen = e.detail.value;
-  },
-
-  getValidation: function (e) {
-    validationChosen = e.detail.value;
-  },
-
-  PickerChange(e) {
-    this.setData({
-      gradeIndex: e.detail.value
+  simulateSuperAdmin: function(){
+    wx.navigateTo({
+      url: '../superAdmin/superAdmin',
     })
-    gradeChosen = this.data.gradePicker[e.detail.value];
-  },
+  }
 
 });

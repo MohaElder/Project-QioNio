@@ -41,3 +41,21 @@
 
 
 </scroll-view>
+
+<view class="cu-modal {{modalName=='Modal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white">
+      <view class="content">手动模式</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+            <view class="cu-form-group">
+            
+              <view class="title">订单号</view>
+            
+              <input placeholder="mohaxxxxx" bindinput='getCheckID'></input>
+              </view>
+              <button type='primary' catchtap='confirm'>确认</button>
+  </view>
+</view>

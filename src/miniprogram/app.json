@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/self/self",
     "pages/admin/admin",
-    "pages/article/article"
+    "pages/article/article",
+    "pages/superAdmin/superAdmin"
   ],
   "window": {
     "backgroundTextStyle": "light",

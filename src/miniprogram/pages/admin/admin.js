@@ -2,6 +2,7 @@
 const app = getApp();
 var checkList = [];
 const db = wx.cloud.database();
+var checkID = '';
 
 Page({
 
@@ -32,13 +33,24 @@ Page({
     var that = this;
     wx.scanCode({
       success(res) {
-        that.confirm(res.result);
+        checkID = res.result;
+        that.confirm();
       }
     })
   },
 
+  getCheckID: function (e){
+    checkID = e.detail.value;
+  },
+
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    });
+  },
+
   //完成订单，更新数据库相关数据
-  confirm: function (checkID) {
+  confirm: function () {
     var that = this;
     wx.showModal({
       title: 'Info',
@@ -65,6 +77,12 @@ Page({
                     });
                   }
                   wx.hideLoading();
+                  wx.showToast({
+                    title: '完成订单啦！'
+                  })
+                  they.setData({
+                    modalName:null
+                  })
                 },
                 fail: err => {
                   wx.showToast({
@@ -84,7 +102,9 @@ Page({
   },
 
   manualConfirm: function(){
-    
+    this.setData({
+      modalName: "Modal1"
+    })
   },
 
   //判断日期，只显示当日订单

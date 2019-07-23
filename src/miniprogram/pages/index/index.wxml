@@ -69,6 +69,7 @@
 
       <button class="cu-btn bg-green lg" bindtap='navigate' data-pagename="admin" wx:if="{{isAdmin == true}}">管理员界面</button>
       <button class="cu-btn bg-green lg" bindtap='simulateRegister' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>模拟注册</button>
+            <button class="cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超级管理员</button>
     </view>
 
     <!--菜单-->
@@ -85,50 +86,37 @@
           <text class="cuIcon-close text-red"></text>
         </view>
       </view>
-
       <view class="padding-xl">
         第一次打开小程序需要注册嗷
       </view>
       <view class="cu-bar bg-white justify-end">
         <view class="action">
           <form>
-          
             <view class="cu-form-group">
-            
               <view class="title">年级</view>
-		<picker  bindchange="PickerChange" value="{{gradeIndex}}"
-		 range="{{gradePicker}}">
-			<view class="picker">
-				{{gradePicker[gradeIndex]}}
-			</view>
-		</picker>
-              </view>
-          
+              <picker bindchange="PickerChange" value="{{gradeIndex}}" range="{{gradePicker}}">
+                <view class="picker">
+                  {{gradePicker[gradeIndex]}}
+                </view>
+              </picker>
+            </view>
             <view class="cu-form-group">
-            
               <view class="title">班级</view>
-            
-              <input placeholder="还有你的班级也是" bindinput='getClass' type='number'></input>
-              </view>
-          
+              <input placeholder="IB的1A和1B都填写1哦" bindinput='getClass' type='number'></input>
+            </view>
             <view class="cu-form-group">
-            
               <view class="title">学号</view>
-            
               <input placeholder="把你的学号也给我交了" bindinput='getCode'></input>
-              </view>
-          
+            </view>
             <view class="cu-form-group">
-            
               <view class="title">代码</view>
-            
               <input placeholder="最后输入你手上的代码" bindinput='getValidation'></input>
-              </view>
+            </view>
           </form>
         </view>
       </view>
       <view class="padding-xl">
-        <button class='cu-btn bg-green lg' bindgetuserinfo='register'>注册</button>
+        <button class='cu-btn bg-green lg' bindgetuserinfo='register' open-type="getUserInfo">注册</button>
       </view>
     </view>
   </view>

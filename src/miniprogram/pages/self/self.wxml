@@ -27,6 +27,9 @@
         <text class='text-price'>{{item.order.price}}</text>
       </view>
     </view>
+        <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
+      <view class="flex-treble padding-sm margin-xs radius">订单号：{{item._id}}</view>
+    </view>
     <view class="flex p-xs margin-bottom-sm mb-sm">
       <view class="flex-treble padding-sm margin-xs radius"></view>
       <view class="flex-sub padding-sm margin-xs radius">
@@ -52,15 +55,13 @@
     <view class="padding bg-white">
       <view class="flex">
         <view class="flex-sub padding-sm margin-xs radius">
-          <view class="action" bindtap="hideModal">
-            <text class="cuIcon-like" wx:if="{{!isFilled}}" bindtap='rateGood'></text>
-            <text class="cuIcon-check" wx:else></text>
+          <view bindtap="hideModal">
+<text class='iconfont icon-aixin' style='font-size: 50px; color:red;' bindtap='rateGood'></text>
           </view>
         </view>
         <view class="flex-sub padding-sm margin-xs radius">
           <view class="action" bindtap="hideModal">
-            <text class="cuIcon-bad" wx:if="{{!isFilled}}" bindtap='rateBad'></text>
-            <text class="cuIcon-check" wx:else></text>
+            <text class='iconfont icon-buganxingqu' style='font-size: 50px; color:grey;' bindtap='rateBad'></text>
           </view>
         </view>
       </view>
@@ -70,14 +71,12 @@
 
 <view class="cu-modal {{modalName=='Modal2'?'show':''}}">
   <view class="cu-dialog">
-
     <view class="cu-bar bg-white">
       <view class="content">订单码</view>
       <view class="action" bindtap="hideModal">
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-
     <view class="qrcode" bindtap="hideModal">
       <canvas canvas-id="qrcode" />
     </view>
