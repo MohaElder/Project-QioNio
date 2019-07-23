@@ -1,8 +1,3 @@
-<cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">关于我们</view>
-</cu-custom>
-
-
 <image wx:for = "{{imageList}}" src="{{item}}" style='width:100vw; height:100vh;' mode='widthFix'> </image>
 
 <!--标题栏-->

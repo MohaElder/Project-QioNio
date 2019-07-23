@@ -16,23 +16,7 @@ Page({
     gradePicker: ['Class of 2020', 'Class of 2021', 'Class of 2022', 'Class of 2023', 'Class of 2024'],
     userInfo: {},
     card: false,
-    swiperList: [
-        {
-        imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Sodexo-cleaning.jpg"
-        }, 
-        {
-          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Sodexo_Catering.jpg"
-        }, 
-        {
-          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Schulverplfegung_Sodexo_2.jpg"
-        },
-        {
-          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/Patiententransport_Krankenhaus_Sodexo.jpg"
-        },
-        {
-          imageURL: "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexPlaceHolder/fm-top50-sodexo-promo.jpg"
-        }
-    ],
+    swiperList: [],
     orderList: [],
     isAdmin: false,
     isPrisoner: false
@@ -47,6 +31,7 @@ Page({
     })
     this.getOrderList();
     this.onGetOpenid();
+    this.getSwiperPics();
     wx.hideLoading();
   },
 
@@ -94,7 +79,9 @@ Page({
           isOrdered: false,
           grade: gradeChosen,
           classroom: classChosen,
-          code: codeChosen
+          code: codeChosen,
+          isPrisoner: false,
+          isAdmin: false
         }
       });
       app.globalData.user = res.data;
@@ -109,6 +96,20 @@ Page({
       })
     }
     
+  },
+
+  getSwiperPics: function(){
+    console.log("getting swiper pics now");
+    var that = this;
+    wx.cloud.callFunction({
+      name: 'getPlaceHolders'
+    })
+      .then(res => {
+        that.setData({
+          swiperList:res.result.data
+        })
+      })
+      .catch(console.error);
   },
 
   //模拟弹出注册页面
@@ -144,7 +145,6 @@ Page({
   //从数据库下载用户信息
   sync: function() {
     var that = this;
-    //var Time = util.formatTime(new Date());
     db.collection('user').doc(openid).get({ //建立或者更新数据库信息
       success: function(res) {
         app.globalData.user = res.data;
@@ -156,7 +156,7 @@ Page({
           }
         };
         var now = new Date();
-        if (now.getHours() < 8 || now.getHours() > 12) {
+        if (now.getHours() < 0 || now.getHours() > 100) {
           that.setData({
             orderList: orderList,
             userInfo: res.data.info,
@@ -248,7 +248,7 @@ Page({
           }
         }
       });
-    } else if (now.getHours() < 8 || now.getHours() > 12) {
+    } else if (now.getHours() < 0 || now.getHours() > 100) {
       wx.showModal({
         title: '很难受,你点不了餐了',
         content: '你点餐的时候超过服务时间了，难受吗？',
@@ -394,6 +394,13 @@ Page({
     wx.navigateTo({
       url: '../superAdmin/superAdmin',
     })
+  },
+
+  showCreditList: function(){
+    this.setData({
+      modalName: "Modal3"
+    })
+
   }
 
 });

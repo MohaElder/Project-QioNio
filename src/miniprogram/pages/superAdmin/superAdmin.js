@@ -17,12 +17,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this;
+    wx.cloud.callFunction({
+      name: 'getCheck'
+    })
+      .then(res => {
+        that.setData({
+          checkList:res.result.data
+        })
+      })
+      .catch(console.error);
+    
+    wx.cloud.callFunction({
+      name: 'getUsers'
+    })
+      .then(res => {
+        that.setData({
+          userList: res.result.data
+        })
+      })
+      .catch(console.error);
   },
 
-  showNewFood: function(){
+  showModal: function(options){
     this.setData({
-      modalName: "DialogModal1"
+      modalName: options.currentTarget.dataset.modalname
     })
   },
 
@@ -54,10 +73,10 @@ Page({
 
   DelImg(e) {
     wx.showModal({
-      title: '召唤师',
-      content: '确定要删除这段回忆吗？',
-      cancelText: '再看看',
-      confirmText: '再见',
+      title: 'warning',
+      content: 'Delete Pic?',
+      cancelText: 'Cancel',
+      confirmText: 'Confirm',
       success: res => {
           this.setData({
             selectedImage: ''
@@ -87,6 +106,11 @@ Page({
     for (var i = 0; i < 6; i++) {
       imageID += Number.parseInt(Math.random() * 10);
     }
+    imageID += ".png";
+    var foodID = "mofood";
+    for (var i = 0; i < 6; i++) {
+      foodID += Number.parseInt(Math.random() * 10);
+    }
     wx.cloud.uploadFile({
       cloudPath: 'foodPics/' + imageID,
       filePath: this.data.selectedImage[0], // 文件路径
@@ -95,6 +119,7 @@ Page({
         console.log(res.fileID)
         db.collection('order').add({
           data: {
+            _id: foodID,
             name: foodName,
             price: foodPrice,
             stock: foodStock,
@@ -115,6 +140,71 @@ Page({
         // handle error
       }
     })
-  }
-  
+  },
+
+  addCover: function () {
+    var that = this;
+    wx.showLoading({
+      title: '正在上传图片',
+    })
+    var imageID = "momage";
+    for (var i = 0; i < 6; i++) {
+      imageID += Number.parseInt(Math.random() * 10);
+    }
+    imageID += ".png";
+    wx.cloud.uploadFile({
+      cloudPath: 'sodexPlaceHolder/' + imageID,
+      filePath: this.data.selectedImage[0], // 文件路径
+      success: res => {
+        // get resource ID
+        console.log(res.fileID)
+        db.collection('sodexPlaceHolder').add({
+          data: {
+            url:res.fileID
+          },
+          success: function (res) {
+            wx.hideLoading();
+            that.hideModal();
+            wx.showToast({
+              title: '已上传',
+            })
+          }
+        });
+      },
+      fail: err => {
+        // handle error
+      }
+    })
+  },
+
+  // ListTouch触摸开始
+  ListTouchStart(e) {
+    this.setData({
+      ListTouchStart: e.touches[0].pageX
+    })
+  },
+
+  // ListTouch计算方向
+  ListTouchMove(e) {
+    this.setData({
+      ListTouchDirection: e.touches[0].pageX - this.data.ListTouchStart > 0 ? 'right' : 'left'
+    })
+  },
+
+  // ListTouch计算滚动
+  ListTouchEnd(e) {
+    if (this.data.ListTouchDirection == 'left') {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    } else {
+      this.setData({
+        modalName: null
+      })
+    }
+    this.setData({
+      ListTouchDirection: null
+    })
+  },
+
 })

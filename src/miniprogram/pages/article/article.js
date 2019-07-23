@@ -22,7 +22,7 @@ Page({
               "cloud://sodexmp-ihd7h.736f-sodexmp-ihd7h/sodexInfo/幻灯片16.PNG"
 
     ],
-    md: '# Hello World!'
+    //md: '# Hello World!'
   },
 
   //TODOS: 自定义文本编辑器

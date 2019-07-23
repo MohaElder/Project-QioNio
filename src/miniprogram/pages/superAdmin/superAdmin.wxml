@@ -1,67 +1,122 @@
-<!--miniprogram/pages/superAdmin/superAdmin.wxml-->
-<cu-custom bgColor="bg-white" isCustom="{{true}}">
-  <view slot="content">Nuclear Power Page</view>
-</cu-custom>
-<!--标题栏-->
-
-<button bindtap='showNewFood'>新建菜品</button>
-<button>上传首页图</button>
-<button>显示所有订单</button>
-<button>显示所有用户</button>
+<button bindtap='showModal' data-modalname="DialogModal1">新建菜品</button>
+<button bindtap='showModal' data-modalname="DialogModal2">上传首页图</button>
+<button bindtap='showModal' data-modalname="DialogModal3">显示所有订单</button>
 <button>更改菜品库存</button>
-<button>拉黑用户</button>
-<button>添加管理员</button>
-<button>删库跑路</button>
 
-  <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
-    <view class="cu-dialog">
-      <view class="cu-bar bg-white justify-end">
-        <view class="content">New Food</view>
-        <view class="action" bindtap="hideModal">
-          <text class="cuIcon-close text-red"></text>
-        </view>
+<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">New Food</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
       </view>
-      <view class="padding-xl">
-        Create New Food
+    </view>
+    <view class="padding-xl">
+      新建菜品
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <form>
+          <view class="cu-form-group">
+            <view class="title">名称</view>
+            <input placeholder="" bindinput='getName'></input>
+          </view>
+          <view class="cu-form-group">
+            <view class="title">价格</view>
+            <input placeholder="" bindinput='getPrice' type='number'></input>
+          </view>
+          <view class="cu-form-group">
+            <view class="title">库存</view>
+            <input placeholder="" bindinput='getStock' type='number'></input>
+          </view>
+          <view class="cu-bar bg-white margin-top">
+            <view class="action">
+              封面上传
+            </view>
+          </view>
+          <view class="cu-form-group">
+            <view class="grid col-4 grid-square flex-sub">
+              <view class="bg-img" bindtap="ViewImage" data-url="{{selectedImage}}">
+                <image src='{{selectedImage}}' mode='aspectFill'></image>
+                <view class="cu-tag bg-red" catchtap="DelImg">
+                  <text class="cuIcon-close"></text>
+                </view>
+              </view>
+              <view class="solids" bindtap="ChooseImage" wx:if="{{selectedImage == ''}}">
+                <text class="cuIcon-cameraadd"></text>
+              </view>
+            </view>
+          </view>
+        </form>
       </view>
-      <view class="cu-bar bg-white justify-end">
-        <view class="action">
-          <form>
-            <view class="cu-form-group">
-              <view class="title">名称</view>
-              <input placeholder="" bindinput='getName' type='number'></input>
-            </view>
-            <view class="cu-form-group">
-              <view class="title">价格</view>
-              <input placeholder="" bindinput='getPrice'></input>
-            </view>
-            <view class="cu-form-group">
-              <view class="title">库存</view>
-              <input placeholder="" bindinput='getStock'></input>
-            </view>
-	<view class="cu-bar bg-white margin-top">
-		<view class="action">
-			封面上传
-		</view>
-	</view>
-	<view class="cu-form-group">
-		<view class="grid col-4 grid-square flex-sub">
-			<view class="bg-img" bindtap="ViewImage" data-url="{{selectedImage}}">
-				<image src='{{selectedImage}}' mode='aspectFill'></image>
-				<view class="cu-tag bg-red" catchtap="DelImg">
-					<text class="cuIcon-close"></text>
-				</view>
-			</view>
-			<view class="solids" bindtap="ChooseImage" wx:if="{{selectedImage == ''}}">
-				<text class="cuIcon-cameraadd"></text>
-			</view>
-		</view>
-	</view>
-          </form>
-        </view>
+    </view>
+    <view class="padding-xl">
+      <button class='cu-btn bg-green lg' bindtap='addFood'>提交</button>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='DialogModal2'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">New Food</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
       </view>
-      <view class="padding-xl">
-        <button class='cu-btn bg-green lg' bindtap='addFood'>建立</button>
+    </view>
+    <view class="padding-xl">
+      上传封面
+    </view>
+    <view class="cu-bar bg-white">
+      <view class="action">
+        <form>
+          <view class="cu-form-group">
+            <view class="bg-img" bindtap="ViewImage" data-url="{{selectedImage}}">
+              <image src='{{selectedImage}}' mode='aspectFill'></image>
+              <view class="solids" bindtap="ChooseImage" wx:if="{{selectedImage == ''}}">
+                <text class="cuIcon-cameraadd"></text>
+              </view>
+            </view>
+          </view>
+        </form>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <button class='cu-btn bg-green lg' bindtap='addCover'>提交</button>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='DialogModal3'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">所有订单</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-sm" wx:for="{{checkList}}">
+      name:{{item.user.info.nickName}} \n checkID: {{item._id}} \n food: {{item.order.name}} \n isFinished: {{item.isFinished}} \n isRated: {{item.isRated}}
+    </view>
+  </view>
+</view>
+
+<view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{userList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
+      <view class="cu-avatar round lg" style="background-image:url({{item.info.avatarUrl}});"></view>
+      <view class="content">
+        <view class="text-grey">{{item.info.nickName}}</view>
+        <view class="text-gray text-sm">{{item.code}}</view>
+        <view class="text-gray text-sm">{{item.grade}} {{item.classroom}}班</view>
+      </view>
+            <view class="action">
+        <view class="text-grey text-xs bg-red" wx:if = "{{item.isPrisoner}}">Prisoner</view>
+        <view class="cu-tag round bg-green sm" wx:elif = "{{item.isAdmin}}">Admin</view>
+      </view>
+      <view class="move">
+        <view class="bg-grey" catchtap=''>拉黑</view>
+        <view class="bg-red" catchtap=''>删除</view>
+        <view class="bg-green" catchtap=''>升级</view>
       </view>
     </view>
   </view>
