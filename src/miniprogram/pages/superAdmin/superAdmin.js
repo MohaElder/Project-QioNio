@@ -18,25 +18,36 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    var checkList = [];
+    var userList = [];
+    var orderList = [];
     wx.cloud.callFunction({
       name: 'getCheck'
     })
       .then(res => {
-        that.setData({
-          checkList:res.result.data
+          checkList = res.result.data;
+        wx.cloud.callFunction({
+          name: 'getUsers'
         })
+          .then(res => {
+            userList = res.result.data;
+            wx.cloud.callFunction({
+              name: 'getOrder'
+            })
+              .then(res => {
+                orderList = res.result.data;
+                that.setData({
+                  checkList: checkList,
+                  userList: userList,
+                  orderList: orderList
+                })
+              })
+              .catch(console.error);
+          })
+          .catch(console.error);
       })
       .catch(console.error);
-    
-    wx.cloud.callFunction({
-      name: 'getUsers'
-    })
-      .then(res => {
-        that.setData({
-          userList: res.result.data
-        })
-      })
-      .catch(console.error);
+
   },
 
   showModal: function(options){
@@ -206,5 +217,31 @@ Page({
       ListTouchDirection: null
     })
   },
+
+  toGulag: function(){
+
+  },
+
+  deleteUser: function(){
+
+  },
+  
+  promoteUser: function(){
+
+  },
+
+  deleteCheck: function(){
+
+  },
+
+  changeStock: function(){
+
+  },
+
+  onPullDownRefresh: function () {
+    wx.reLaunch({
+      url: '../superAdmin/superAdmin',
+    })
+  }
 
 })

@@ -136,6 +136,12 @@ Page({
     this.setData({
       modalName: "Modal2"
     });
+  },
+
+  onPullDownRefresh: function () {
+    wx.reLaunch({
+      url: '../self/self',
+    })
   }
 
 

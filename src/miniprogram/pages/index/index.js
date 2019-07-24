@@ -400,7 +400,12 @@ Page({
     this.setData({
       modalName: "Modal3"
     })
+  },
 
+  onPullDownRefresh: function(){
+    wx.reLaunch({
+      url: '../index/index',
+    })
   }
 
 });

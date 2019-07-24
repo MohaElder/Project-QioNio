@@ -7,7 +7,7 @@
     "pages/superAdmin/superAdmin"
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "SHSIDSodex",
     "navigationBarTextStyle": "black"
