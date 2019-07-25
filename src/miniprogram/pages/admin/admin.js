@@ -19,7 +19,10 @@ Page({
   onLoad: function (options) {
     checkList = [];
     wx.cloud.callFunction({
-        name: 'getCheck'
+      name: 'getDB',
+      data: {
+        dbName: "check"
+      }
       })
       .then(res => {
         checkList = res.result.data;
@@ -144,6 +147,9 @@ Page({
                   success: function (res) {
                     console.log(res)
                     for (var i = 0; i < res.result.data.length; i++) {
+                      wx.cloud.callFunction({
+                        
+                      })
                       db.collection('gulagList').add({
                         data: ({
                           _id: res.result.data[i]._openid,

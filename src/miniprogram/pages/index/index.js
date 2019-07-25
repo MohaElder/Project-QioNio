@@ -38,7 +38,10 @@ Page({
   //获取菜谱
   getOrderList: function() {
     wx.cloud.callFunction({
-        name: 'getOrder'
+      name: 'getDB',
+      data: {
+        dbName: "order"
+      }
       })
       .then(res => {
         orderList = res.result.data;
@@ -102,7 +105,10 @@ Page({
     console.log("getting swiper pics now");
     var that = this;
     wx.cloud.callFunction({
-      name: 'getPlaceHolders'
+      name: 'getDB',
+      data:{
+        dbName: "sodexPlaceHolder"
+      }
     })
       .then(res => {
         that.setData({

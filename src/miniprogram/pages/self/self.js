@@ -18,7 +18,10 @@ Page({
     checkList = [];
     var that = this;
     wx.cloud.callFunction({
-        name: 'getCheck'
+      name: 'getDB',
+      data: {
+        dbName: "check"
+      }
       })
       .then(res => {
         for (var i = 0; i < res.result.data.length; i++) {

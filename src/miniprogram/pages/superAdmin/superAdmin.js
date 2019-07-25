@@ -22,17 +22,26 @@ Page({
     var userList = [];
     var orderList = [];
     wx.cloud.callFunction({
-      name: 'getCheck'
+      name: 'getDB',
+      data: {
+        dbName: "check"
+      }
     })
       .then(res => {
           checkList = res.result.data;
         wx.cloud.callFunction({
-          name: 'getUsers'
+          name: 'getDB',
+          data: {
+            dbName: "user"
+          }
         })
           .then(res => {
             userList = res.result.data;
             wx.cloud.callFunction({
-              name: 'getOrder'
+              name: 'getDB',
+              data: {
+                dbName: "order"
+              }
             })
               .then(res => {
                 orderList = res.result.data;
