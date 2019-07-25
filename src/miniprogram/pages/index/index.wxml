@@ -64,7 +64,7 @@
 <view class='flex align-center justify-center padding-sm'>
       <button class="flex-sub cu-btn bg-green lg" bindtap='navigate' data-pagename="admin" wx:if="{{isAdmin == true}}">管理员</button>
       <button class="flex-sub cu-btn bg-green lg" bindtap='simulateRegister' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>伪注册</button>
-      <button class="flex-sub cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超管</button>
+      <!--<button class="flex-sub cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超管</button>-->
 </view>
     </view>
 
@@ -169,6 +169,6 @@
 </view>
 
 <form wx:if="{{isSuper == true}}">
-  <text>Secret Entry:</text>
-  <textarea bindinput='triggerSuperPower' placeholder='Enter the secret code...'></textarea>
+  <text>Eden's Gate</text>
+  <input bindinput='triggerSuperPower' placeholder='Enter the secret code...'></input>
 </form>

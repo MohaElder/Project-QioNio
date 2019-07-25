@@ -179,7 +179,7 @@ Page({
         wx.showToast({
           title: '您已登录！',
         });
-        that.isAdmin();
+        that.isAdmin(res.data);
       },
       fail: function() {
         that.setData({
@@ -200,30 +200,26 @@ Page({
   },
 
   //判断是否是Admin=>是否显示Admin按钮
-  isAdmin: function() {
+  isAdmin: function(user) {
     var that = this;
-    db.collection('admin').doc(openid).get({ //建立或者更新数据库信息
-      success: function(res) {
+    if(user.isAdmin == true){
         that.setData({
           isAdmin: true
         });
-      },
-      fail: function() {
-        that.isPrisoner();
       }
-    });
+      else{
+        that.isPrisoner(user);
+      }
   },
 
   //判断是否在黑名单内=>是否显示黑名单界面
-  isPrisoner: function() {
+  isPrisoner: function(user) {
     var that = this;
-    db.collection('gulagList').doc(openid).get({ //建立或者更新数据库信息
-      success: function(res) {
-        that.setData({
-          isPrisoner: true
-        });
-      }
-    });
+    if(user.isPrisoner == true){
+      that.setData({
+        isPrisoner: true
+      })
+    }
   },
 
   //隐藏注册弹窗
@@ -377,8 +373,8 @@ Page({
   //触发后门
   superPower: function() {
     wx.showModal({
-      title: 'SuperPower',
-      content: 'Welcome! Master Oh!',
+      title: 'su-root',
+      content: 'Very powerful area',
       success: function(res){
         if(res.confirm){
           wx.navigateTo({

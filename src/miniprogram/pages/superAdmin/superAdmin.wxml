@@ -1,3 +1,6 @@
+<view class='flex margin-left padding-sm'>
+<text class='text-sl text-blacl text-bold'>能力越大 \n 责任越大</text>
+</view>
 
 <view class='flex align-center justify-center padding-sm'>
 <button class = "cu-btn bg-green flex-sub" bindtap='showModal' data-modalname="DialogModal2">上传首页图</button>
@@ -70,6 +73,7 @@
       </view>
       <view class="move">
         <view class="bg-yellow" catchtap='showModal' data-modalname = "modal3" data-id = "{{item._id}}">更改库存</view>
+                <view class="bg-red" catchtap='deleteOrder' data-id = "{{item._id}}">删除</view>
       </view>
     </view>
   </view>
@@ -174,7 +178,7 @@
       <view class="action">
         <form>
           <view class="cu-form-group">
-            <input placeholder='stock number' bindinput='getStock' bind></input>
+            <input placeholder='stock number' bindinput='getStock'></input>
           </view>
         </form>
       </view>

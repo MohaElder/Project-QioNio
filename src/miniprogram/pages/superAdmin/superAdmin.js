@@ -249,6 +249,9 @@ Page({
       wx.showToast({
         title: 'Deleted!',
       })
+      wx.reLaunch({
+        url: '../superAdmin/superAdmin',
+      })
     }).catch (console.error);
   },
   
@@ -287,7 +290,7 @@ Page({
     }).catch(console.error);
   },
 
-  changeStock: function(currentOrderID){
+  changeStock: function(){
     console.log(currentOrderID)
     wx.cloud.callFunction({
       name: 'updateDB',
@@ -299,6 +302,22 @@ Page({
     }).then(res => {
       wx.showToast({
         title: 'Changed!',
+      })
+      wx.reLaunch({
+        url: '../superAdmin/superAdmin',
+      })
+    }).catch(console.error);
+  },
+
+  deleteOrder: function(options){
+    wx.cloud.callFunction({
+      name: 'deleteOrder',
+      data: {
+        id: options.currentTarget.dataset.id
+      }
+    }).then(res => {
+      wx.showToast({
+        title: 'Deleted!',
       })
       wx.reLaunch({
         url: '../superAdmin/superAdmin',
