@@ -99,7 +99,6 @@ Page({
   },
 
   getSwiperPics: function(){
-    console.log("getting swiper pics now");
     var that = this;
     wx.cloud.callFunction({
       name: 'getPlaceHolders'

@@ -3,7 +3,7 @@ const db = wx.cloud.database();
 var foodName = '';
 var foodPrice = 0;
 var foodStock = 0;
-
+var currentOrderID = '';
 Page({
 
   /**
@@ -51,6 +51,7 @@ Page({
   },
 
   showModal: function(options){
+    currentOrderID = options.currentTarget.dataset.id;
     this.setData({
       modalName: options.currentTarget.dataset.modalname
     })
@@ -218,24 +219,91 @@ Page({
     })
   },
 
-  toGulag: function(){
+  toGulag: function(options){
+    wx.cloud.callFunction({
+      name: 'updateDB',
+      data: {
+        dbName: "user",
+        id: options.currentTarget.dataset.id,
+        isAdmin: false,
+        isPrisoner:true
+      }
+    }).then(res => {
+      wx.showToast({
+        title: 'Gulagged!',
+      })
+      wx.reLaunch({
+        url: '../superAdmin/superAdmin',
+      })
+    }).catch(console.error);
 
   },
 
-  deleteUser: function(){
-
+  deleteUser: function(options){
+    wx.cloud.callFunction({
+      name: 'deleteUser',
+      data:{
+        id: options.currentTarget.dataset.id
+      }
+    }).then(res => {
+      wx.showToast({
+        title: 'Deleted!',
+      })
+    }).catch (console.error);
   },
   
-  promoteUser: function(){
-
+  promoteUser: function(options){
+    wx.cloud.callFunction({
+      name: 'updateDB',
+      data: {
+        dbName: "user",
+        id: options.currentTarget.dataset.id,
+        isAdmin: true,
+        isPrisoner: false
+      }
+    }).then(res => {
+      wx.showToast({
+        title: 'Promoted!',
+      })
+      wx.reLaunch({
+        url: '../superAdmin/superAdmin',
+      })
+    }).catch(console.error);
   },
 
-  deleteCheck: function(){
-
+  deleteCheck: function(options){
+    wx.cloud.callFunction({
+      name: 'deleteCheck',
+      data: {
+        id: options.currentTarget.dataset.id
+      }
+    }).then(res => {
+      wx.showToast({
+        title: 'Deleted!',
+      })
+      wx.reLaunch({
+        url: '../superAdmin/superAdmin',
+      })
+    }).catch(console.error);
   },
 
-  changeStock: function(){
-
+  changeStock: function(currentOrderID){
+    console.log(currentOrderID)
+    wx.cloud.callFunction({
+      name: 'updateDB',
+      data: {
+        dbName: "order",
+        id: currentOrderID,
+        stock:foodStock
+      }
+    }).then(res => {
+      wx.showToast({
+        title: 'Changed!',
+      })
+      wx.reLaunch({
+        url: '../superAdmin/superAdmin',
+      })
+    }).catch(console.error);
   },
 
   onPullDownRefresh: function () {
