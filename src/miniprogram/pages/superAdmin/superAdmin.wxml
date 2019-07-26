@@ -1,3 +1,6 @@
+<view class='flex margin-left padding-sm'>
+<text class='text-sl text-blacl text-bold'>能力越大 \n 责任越大</text>
+</view>
 
 <view class='flex align-center justify-center padding-sm'>
 <button class = "cu-btn bg-green flex-sub" bindtap='showModal' data-modalname="DialogModal2">上传首页图</button>
@@ -7,7 +10,76 @@
 <button class = "cu-btn bg-green flex-sub" bindtap='showModal' data-modalname="DialogModal1">新建菜品</button>
 </view>
 
-<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-orange "></text> 用户列表
+    </view>
+  </view>
+  <view class="cu-list menu-avatar">
+      <view class="cu-item {{modalName=='move-box1-'+ index?'move-cur':''}}" wx:for="{{userList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box1-{{index}}">
+        <view class="cu-avatar round lg" style="background-image:url({{item.info.avatarUrl}});"></view>
+        <view class="content">
+          <view class="text-grey">{{item.info.nickName}}</view>
+          <view class="text-gray text-sm">{{item.code}}</view>
+          <view class="text-gray text-sm">{{item.grade}} {{item.classroom}}班</view>
+        </view>
+              <view class="action">
+          <view class="cu-tag round bg-red sm" wx:if = "{{item.isPrisoner}}">Prisoner</view>
+          <view class="cu-tag round bg-green sm" wx:elif = "{{item.isAdmin}}">Admin</view>
+        </view>
+        <view class="move">
+          <view class="bg-grey" catchtap='toGulag' data-id = '{{item._id}}'>拉黑</view>
+          <view class="bg-red" catchtap='deleteUser' data-id = '{{item._id}}'>删除</view>
+          <view class="bg-green" catchtap='promoteUser' data-id = '{{item._id}}'>升级</view>
+        </view>
+      </view>
+    </view>
+
+<view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-blue "></text> 订单列表
+    </view>
+  </view>
+<view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box2-'+ index?'move-cur':''}}" wx:for="{{checkList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box2-{{index}}">
+      <view class="cu-avatar round lg" style="background-image:url({{item.order.imageURL}});"></view>
+      <view class="content">
+        <view class="text-grey">{{item.order.name}}</view>
+        <view class="text-gray text-sm">订餐人： {{item.user.info.nickName}}</view>
+        <view class="text-gray text-sm">{{item._id}}</view>
+      </view>
+            <view class="action">
+        <view class="cu-tag round bg-green sm" wx:if = "{{item.isFinished}}">已购买</view>
+        <view class="cu-tag round bg-blue sm" wx:if = "{{item.isRated}}">已评价</view>
+      </view>
+      <view class="move">
+        <view class="bg-red" catchtap='deleteCheck' data-id = '{{item._id}}'>删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-cyan "></text> 菜品列表
+    </view>
+  </view>
+<view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box3-'+ index?'move-cur':''}}" wx:for="{{orderList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box3-{{index}}">
+      <view class="cu-avatar round lg" style="background-image:url({{item.imageURL}});"></view>
+      <view class="content">
+        <view class="text-grey">{{item.name}}</view>
+        <view class="text-gray text-sm">库存：{{item.stock}}</view>
+        <view class="text-gray text-sm">{{item._id}}</view>
+      </view>
+      <view class="move">
+        <view class="bg-yellow" catchtap='showModal' data-modalname = "modal3" data-id = "{{item._id}}">更改库存</view>
+                <view class="bg-red" catchtap='deleteOrder' data-id = "{{item._id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+
+  <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
       <view class="content">New Food</view>
@@ -91,69 +163,28 @@
   </view>
 </view>
 
-  <view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-orange "></text> 用户列表
+<view class="cu-modal {{modalName=='modal3'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">Change Stock</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      输入你的库存
+    </view>
+    <view class="cu-bar bg-white">
+      <view class="action">
+        <form>
+          <view class="cu-form-group">
+            <input placeholder='stock number' bindinput='getStock'></input>
+          </view>
+        </form>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <button class='cu-btn bg-green lg' bindtap='changeStock'>提交</button>
     </view>
   </view>
-  <view class="cu-list menu-avatar">
-      <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{userList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
-        <view class="cu-avatar round lg" style="background-image:url({{item.info.avatarUrl}});"></view>
-        <view class="content">
-          <view class="text-grey">{{item.info.nickName}}</view>
-          <view class="text-gray text-sm">{{item.code}}</view>
-          <view class="text-gray text-sm">{{item.grade}} {{item.classroom}}班</view>
-        </view>
-              <view class="action">
-          <view class="text-grey text-xs bg-red" wx:if = "{{item.isPrisoner}}">Prisoner</view>
-          <view class="cu-tag round bg-green sm" wx:elif = "{{item.isAdmin}}">Admin</view>
-        </view>
-        <view class="move">
-          <view class="bg-grey" catchtap=''>拉黑</view>
-          <view class="bg-red" catchtap=''>删除</view>
-          <view class="bg-green" catchtap=''>升级</view>
-        </view>
-      </view>
-    </view>
-
-<view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-blue "></text> 订单列表
-    </view>
-  </view>
-<view class="cu-list menu-avatar">
-    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{checkList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
-      <view class="cu-avatar round lg" style="background-image:url({{item.order.imageURL}});"></view>
-      <view class="content">
-        <view class="text-grey">{{item.order.name}}</view>
-        <view class="text-gray text-sm">订餐人： {{item.user.info.nickName}}</view>
-        <view class="text-gray text-sm">{{item._id}}</view>
-      </view>
-            <view class="action">
-        <view class="cu-tag round bg-green sm" wx:if = "{{item.isFinished}}">已购买</view>
-        <view class="cu-tag round bg-blue sm" wx:if = "{{item.isRated}}">已评价</view>
-      </view>
-      <view class="move">
-        <view class="bg-red" catchtap=''>删除</view>
-      </view>
-    </view>
-  </view>
-
-  <view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-blue "></text> 菜品列表
-    </view>
-  </view>
-<view class="cu-list menu-avatar">
-    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{orderList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}">
-      <view class="cu-avatar round lg" style="background-image:url({{item.imageURL}});"></view>
-      <view class="content">
-        <view class="text-grey">{{item.name}}</view>
-        <view class="text-gray text-sm">库存：{{item.stock}}</view>
-        <view class="text-gray text-sm">{{item._id}}</view>
-      </view>
-      <view class="move">
-        <view class="bg-yellow" catchtap=''>更改库存</view>
-      </view>
-    </view>
-  </view>
+</view>
