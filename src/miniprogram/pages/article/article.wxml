@@ -1,4 +1,4 @@
-<image wx:for = "{{imageList}}" src="{{item}}" style='width:100vw; height:100vh;' mode='widthFix'> </image>
+<image wx:for = "{{imageList}}" src="{{item}}" style='width:100vw; height:100vh;' mode='widthFix' wx:key = ""> </image>
 
 <!--标题栏-->
 

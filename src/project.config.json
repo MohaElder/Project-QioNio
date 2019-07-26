@@ -11,10 +11,18 @@
 		"newFeature": true,
 		"nodeModules": true,
 		"autoAudits": true,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"enhance": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.5",
+	"libVersion": "2.7.7",
 	"appid": "wx21fc9a2f47ee3cb7",
 	"projectname": "SodexMiniapp",
 	"miniprogramRoot": "miniprogram/",

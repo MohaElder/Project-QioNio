@@ -141,27 +141,25 @@ Page({
             content: '真的确定吗？',
             success: function (res) {
               if (res.confirm) {
-                var user = {};
-                wx.cloud.callFunction({
-                  name: 'goToGulag',
+                db.collection('check').where({
+                  isFinished: false,
+                }).get({
                   success: function (res) {
-                    console.log(res)
-                    for (var i = 0; i < res.result.data.length; i++) {
+                    for (var i = 0; i < res.data.length; i++) {
                       wx.cloud.callFunction({
-                        
-                      })
-                      db.collection('gulagList').add({
-                        data: ({
-                          _id: res.result.data[i]._openid,
-                          prisonnerID: res.result.data[i]._openid,
-                          user: user
+                        name: 'updateDB',
+                        data: {
+                          dbName: "user",
+                          id: res.data[i]._openid,
+                          isPrisoner: true
+                        }
+                      }).then(res => {
+                        wx.showModal({
+                          title: '警告',
+                          content: '已拉黑所有未完成订单用户',
                         })
-                      })
+                      }).catch(console.error);
                     }
-                    wx.showModal({
-                      title: '警告',
-                      content: '已拉黑所有未完成订单用户',
-                    })
                   },
                   fail: function (res) {
                     console.log("Failed!");

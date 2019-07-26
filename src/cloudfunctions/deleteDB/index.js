@@ -4,15 +4,12 @@ const db = cloud.database()
 const _ = db.command
 exports.main = async (event, context) => {
   try {
-    return await db.collection('check').where({
-      isFinished: false,
-    }).get()
-  } catch (e) {
+    return await db.collection(event.dbName).doc(event.id).remove()
+  }
+  catch (e) {
     console.error(e)
   }
 }
-      
-    
 
 
 

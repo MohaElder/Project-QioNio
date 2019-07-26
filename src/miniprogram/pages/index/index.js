@@ -280,23 +280,18 @@ Page({
       title: '正在调制孟婆汤',
     })
     wx.cloud.callFunction({
-      name: 'updateOrder',
+      name: 'updateDB',
       data: {
-        foodID: orderTemp._id,
+        dbName: "order",
+        id: orderTemp._id,
         stock: orderTemp.stock - 1
-      },
-      success: res => {
-        that.updateUser(orderTemp);
-        that.updateCheck(orderTemp);
-        that.updateLocal();
-        wx.hideLoading();
-      },
-      fail: err => {
-        wx.showToast({
-          title: '出大问题',
-        });
       }
-    });
+    }).then(res => {
+      that.updateUser(orderTemp);
+      that.updateCheck(orderTemp);
+      that.updateLocal();
+      wx.hideLoading();
+    }).catch(console.error);
   },
 
   //更新数据库用户信息

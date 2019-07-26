@@ -21,6 +21,10 @@ Page({
     var checkList = [];
     var userList = [];
     var orderList = [];
+    var swiperList = [];
+    wx.showLoading({
+      title: '准备所有信息',
+    })
     wx.cloud.callFunction({
       name: 'getDB',
       data: {
@@ -45,11 +49,22 @@ Page({
             })
               .then(res => {
                 orderList = res.result.data;
-                that.setData({
-                  checkList: checkList,
-                  userList: userList,
-                  orderList: orderList
+                wx.cloud.callFunction({
+                  name: 'getDB',
+                  data: {
+                    dbName: "sodexPlaceHolder"
+                  }
                 })
+                  .then(res => {
+                    swiperList =  res.result.data;
+                    that.setData({
+                      checkList: checkList,
+                      userList: userList,
+                      orderList: orderList,
+                      swiperList: swiperList
+                    })
+                    wx.hideLoading();
+                  })
               })
               .catch(console.error);
           })
@@ -250,8 +265,9 @@ Page({
 
   deleteUser: function(options){
     wx.cloud.callFunction({
-      name: 'deleteUser',
+      name: 'deleteDB',
       data:{
+        dbName:'user',
         id: options.currentTarget.dataset.id
       }
     }).then(res => {
@@ -285,8 +301,9 @@ Page({
 
   deleteCheck: function(options){
     wx.cloud.callFunction({
-      name: 'deleteCheck',
+      name: 'deleteDB',
       data: {
+        dbName:'check',
         id: options.currentTarget.dataset.id
       }
     }).then(res => {
@@ -320,8 +337,9 @@ Page({
 
   deleteOrder: function(options){
     wx.cloud.callFunction({
-      name: 'deleteOrder',
+      name: 'deleteDB',
       data: {
+        dbName:'order',
         id: options.currentTarget.dataset.id
       }
     }).then(res => {
@@ -332,6 +350,29 @@ Page({
         url: '../superAdmin/superAdmin',
       })
     }).catch(console.error);
+  },
+
+  deleteCover: function (options) {
+    wx.cloud.callFunction({
+      name: 'deleteDB',
+      data: {
+        dbName: 'sodexPlaceHolder',
+        id: options.currentTarget.dataset.id
+      }
+    }).then(res => {
+      wx.showToast({
+        title: 'Deleted!',
+      })
+      wx.reLaunch({
+        url: '../superAdmin/superAdmin',
+      })
+    }).catch(console.error);
+  },
+
+  goBack: function(){
+    wx.navigateTo({
+      url: '../index/index',
+    })
   },
 
   onPullDownRefresh: function () {
