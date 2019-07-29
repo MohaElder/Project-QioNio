@@ -63,8 +63,9 @@
       </view>
 <view class='flex align-center justify-center padding-sm'>
       <button class="flex-sub cu-btn bg-green lg" bindtap='navigate' data-pagename="admin" wx:if="{{isAdmin == true}}">管理员</button>
+      <!--
       <button class="flex-sub cu-btn bg-green lg" bindtap='simulateRegister' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>伪注册</button>
-      <!--<button class="flex-sub cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超管</button>-->
+      <button class="flex-sub cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超管</button>-->
 </view>
     </view>
 
@@ -133,26 +134,26 @@
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-    <view class="padding-xl bg-white text-cyan">
-      对这个小程序做出极大贡献的人
+    <view class="padding-xl bg-white">
+      帮助这个小程序走向现实的人👇
     </view>
     <view class="cu-bar bg-white justify-center align-center">
       <view class="padding-xs flex align-center">
-        <view class="padding-sm text-bold">
+        <view class="padding-sm">
           谢泽阳 - 测试
         </view>
       </view>
     </view>
     <view class="cu-bar bg-white justify-center align-center">
       <view class="padding-xs flex align-center">
-        <view class="padding-sm text-bold">
+        <view class="padding-sm">
           俞妮 - 给予UI，用户操作逻辑建议以及测试
         </view>
       </view>
     </view>
     <view class="cu-bar bg-white justify-center align-center">
       <view class="padding-xs flex align-center">
-        <view class="padding-sm text-bold">
+        <view class="padding-sm">
           何怡乐 - 给予UI建议以及测试
         </view>
       </view>
@@ -160,11 +161,10 @@
     <view class="cu-bar bg-white justify-center align-center">
       <view class="padding-xs flex align-center">
         <view class="padding-xl text-cyan">
-          今日滴水之恩，他日涌泉相报 - 翁安志
+          滴水之恩，当涌泉相报
         </view>
       </view>
     </view>
-
   </view>
 </view>
 

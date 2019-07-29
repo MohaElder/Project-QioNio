@@ -82,29 +82,6 @@
     </view>
   </view>
 
-<view class="cu-bar bg-white solid-bottom margin-top">
-    <view class="action">
-      <text class="cuIcon-title text-blue "></text> 订单列表
-    </view>
-  </view>
-<view class="cu-list menu-avatar">
-    <view class="cu-item {{modalName=='move-box2-'+ index?'move-cur':''}}" wx:for="{{checkList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box2-{{index}}">
-      <view class="cu-avatar round lg" style="background-image:url({{item.order.imageURL}});"></view>
-      <view class="content">
-        <view class="text-grey">{{item.order.name}}</view>
-        <view class="text-gray text-sm">订餐人： {{item.user.info.nickName}}</view>
-        <view class="text-gray text-sm">{{item._id}}</view>
-      </view>
-            <view class="action">
-        <view class="cu-tag round bg-green sm" wx:if = "{{item.isFinished}}">已购买</view>
-        <view class="cu-tag round bg-blue sm" wx:if = "{{item.isRated}}">已评价</view>
-      </view>
-      <view class="move">
-        <view class="bg-red" catchtap='deleteCheck' data-id = '{{item._id}}'>删除</view>
-      </view>
-    </view>
-  </view>
-
   <view class="cu-bar bg-white solid-bottom margin-top">
     <view class="action">
       <text class="cuIcon-title text-purple "></text> 封面列表
