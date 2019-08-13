@@ -32,7 +32,6 @@ Page({
     this.getOrderList();
     this.onGetOpenid();
     this.getSwiperPics();
-    wx.hideLoading();
   },
 
   //获取菜谱
@@ -111,8 +110,9 @@ Page({
     })
       .then(res => {
         that.setData({
-          swiperList:res.result.data
+          swiperList:res.result.data,
         })
+        wx.hideLoading()
       })
       .catch(console.error);
   },
@@ -228,10 +228,17 @@ Page({
     }
   },
 
-  //隐藏注册弹窗
-  hideModal(e) {
+  showModal: function () {
     this.setData({
-      modalName: null
+      isBlur: true,
+      modalName: "language"
+    })
+  },
+
+  hideModal(value) {
+    this.setData({
+      modalName: null,
+      isBlur: false,
     });
   },
 
@@ -239,7 +246,12 @@ Page({
   purchase: function(options) {
     var that = this;
     var now = new Date();
+    this.setData({
+      modalName: "purchase",
+
+    })
     if (this.data.isAdmin == true) {
+      /*
       wx.showModal({
         title: '你是管理员？',
         content: '买饭界面调试',
@@ -249,6 +261,7 @@ Page({
           }
         }
       });
+      */
     } else if (now.getHours() < 0 || now.getHours() > 100) {
       wx.showModal({
         title: '很难受,你点不了餐了',

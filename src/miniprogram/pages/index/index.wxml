@@ -4,9 +4,9 @@
 </view>
 <view wx:else>
   <view class="padding bg-white">
-    <view class="flex">
+    <view class="flex animated fadeInDown" >
       <view class="flex-treble padding-sm margin-xs radius">
-        <text class="text-black text-xxl text" catchtap='triggerSuperPower'>Quality of\n Life Services</text>
+        <text class="text-black text-xxl text " catchtap='triggerSuperPower'>Quality of\n Life Services</text>
         <view class="text-grey text-sm radius" style='margin-top:10rpx;' catchtap='navigate' data-pagename="article">了解更多 ></view>
       </view>
       <view class="flex-sm padding-sm margin-xs radius" bindtap='navigate' data-pagename="self">
@@ -33,7 +33,7 @@
     <!--上半部分-->
 
 
-    <view class="padding-sm margin-xs radius">
+    <view class="padding-sm margin-xs radius animated slideInUp">
       <text class="text-xl text-black text-bold">今日菜谱</text>
       <view class="cu-card case {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
         <view class="cu-item shadow">
@@ -79,6 +79,17 @@
     </view>
   </view>
 
+<view class="cu-modal {{modalName=='purchase'?'show':''}}">
+  <view class="cu-dialog" style='background-color: #1C1C1C; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);'>
+    <view class="cu-bar justify-end">
+      <view class="content text-white">订单确认</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <button class="cu-btn">AAA</button>
+  </view>
+</view>
 
   <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
     <view class="cu-dialog">
