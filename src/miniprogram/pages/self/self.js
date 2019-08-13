@@ -8,6 +8,7 @@ var wxbarcode = require('../../utils/index.js');
 var db = wx.cloud.database();
 Page({
   data: {
+    isBlur:false,
     isFilled: false,
     user: {},
     checkList: []
@@ -50,7 +51,8 @@ Page({
   hideModal(e) {
     wxbarcode.qrcode('qrcode', 'FreedomIsNotFree', 0, 0);
     this.setData({
-      modalName: null
+      modalName: null,
+      isBlur:false
     });
   },
 
@@ -137,6 +139,7 @@ Page({
     var checkID = options.currentTarget.dataset.checkid;
     wxbarcode.qrcode('qrcode', checkID, 420, 420);
     this.setData({
+      isBlur:true,
       modalName: "Modal2"
     });
   },

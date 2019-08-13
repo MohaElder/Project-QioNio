@@ -59,3 +59,8 @@ map,
     width: 420rpx;
     height: 420rpx;
 }
+
+.blur{
+    filter:blur(5px);
+    -webkit-filter:blur(5px);
+}
