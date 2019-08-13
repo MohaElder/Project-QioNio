@@ -1,5 +1,6 @@
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";
+@import "utils/animate.wxss";
 
 @font-face {font-family: "iconfont";
   src: url('iconfont.eot?t=1563859906077#iefix') format('embedded-opentype'), /* IE6-IE8 */

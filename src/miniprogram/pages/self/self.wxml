@@ -1,11 +1,11 @@
-<scroll-view scroll-y class="scrollPage">
+<scroll-view scroll-y class="scrollPage {{isBlur? 'blur' : ''}}">
   <view class="UCenter-bg">
     <view class="cu-avatar xl round" style="background-image:url({{user.info.avatarUrl}});"></view>
     <view class="text-xl" style='margin-top:20rpx;'>{{user.info.nickName}}</view>
     <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
   </view>
 
-  <view class="padding bg-white" wx:for="{{checkList}}" wx:key="name">
+  <view class="padding bg-white animated zoomInDown" wx:for="{{checkList}}" wx:key="name">
     <view class="flex">
       <view class="flex-treble padding-sm margin-xs radius">
         <text class='text-black'>{{item.order.name}}</text>
