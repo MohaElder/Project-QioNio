@@ -145,6 +145,9 @@ Page({
                   isFinished: false,
                 }).get({
                   success: function (res) {
+                    wx.showLoading({
+                      title: '拉黑中',
+                    })
                     for (var i = 0; i < res.data.length; i++) {
                       wx.cloud.callFunction({
                         name: 'updateDB',
@@ -154,6 +157,7 @@ Page({
                           isPrisoner: true
                         }
                       }).then(res => {
+                        wx.hideLoading()
                         wx.showModal({
                           title: '警告',
                           content: '已拉黑所有未完成订单用户',

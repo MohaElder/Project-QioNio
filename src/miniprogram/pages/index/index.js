@@ -24,8 +24,6 @@ Page({
     isPrisoner: false
   },
 
-  //TODOS: swiperList Go Cloud! Black List function......
-
   //页面每次打开运行
   onLoad: function() {
     wx.showLoading({
@@ -123,7 +121,7 @@ Page({
   //模拟弹出注册页面
   simulateRegister: function () {
     this.setData({
-      modalName: "DialogModal1"
+      modalName: "registerModal"
     });
   },
 
@@ -192,7 +190,7 @@ Page({
       },
       fail: function() {
         that.setData({
-          modalName: "DialogModal1"
+          modalName: "registerModal"
         });
       }
     });
@@ -231,13 +229,7 @@ Page({
     }
   },
 
-  showModal: function () {
-    this.setData({
-      isBlur: true,
-      modalName: "language"
-    })
-  },
-
+  //隐藏弹窗
   hideModal(value) {
     this.setData({
       modalName: null,
@@ -245,6 +237,7 @@ Page({
     });
   },
 
+  //确认触发购买函数
   confirmPurchase: function(){
     this.updateOrder(currentFoodIndex);
     this.setData({
@@ -397,6 +390,7 @@ Page({
     })
   },
 
+  //跳转至个人中心
   toSelf: function(){
     this.setData({
       modalName:null

@@ -147,6 +147,10 @@ Page({
     for (var i = 0; i < 6; i++) {
       foodID += Number.parseInt(Math.random() * 10);
     }
+    this.uploadFood(imageID,foodID);
+  },
+
+  uploadFood: function(imageID,foodID){
     wx.cloud.uploadFile({
       cloudPath: 'foodPics/' + imageID,
       filePath: this.data.selectedImage[0], // 文件路径
@@ -159,11 +163,11 @@ Page({
             name: foodName,
             price: foodPrice,
             stock: foodStock,
-            imageURL:res.fileID,
+            imageURL: res.fileID,
             goodRateNum: 0,
             rateNum: 0
           },
-          success: function(res){
+          success: function (res) {
             wx.hideLoading();
             that.hideModal();
             wx.showToast({

@@ -82,7 +82,7 @@
   </view>
 
 
-  <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+  <view class="cu-modal {{modalName=='registerModal'?'show':''}}">
     <view class="cu-dialog bg-white">
       <view class="cu-bar bg-white justify-end">
         <view class="content">注册</view>
@@ -130,7 +130,7 @@
 <view class="cu-modal {{modalName=='Modal3'?'show':''}}">
   <view class="cu-dialog" bindtap="hideModal">
     <view class="cu-bar bg-white justify-end">
-      <view class="content">感谢名单</view>
+      <view class="content">❤感谢名单</view>
       <view class="action">
         <text class="cuIcon-close text-red"></text>
       </view>
