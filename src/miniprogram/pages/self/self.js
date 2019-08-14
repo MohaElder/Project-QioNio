@@ -59,7 +59,8 @@ Page({
   //显示弹窗
   showModal(e) {
     this.setData({
-      modalName: e.currentTarget.dataset.target
+      modalName: e.currentTarget.dataset.target,
+      isBlur:true
     });
     currentCheckID = e.currentTarget.dataset.checkid;
     currentOrderID = e.currentTarget.dataset.orderid;
