@@ -8,12 +8,9 @@
   ],
   "window": {
     "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "fffcf7",
     "navigationBarTitleText": "SHSIDSodex",
     "navigationBarTextStyle": "black"
-  },
-  "usingComponents": {
-    "cu-custom": "/colorui/components/cu-custom"
   },
   "sitemapLocation": "sitemap.json"
 }

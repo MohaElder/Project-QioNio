@@ -10,6 +10,8 @@ var gradeChosen = 'Class of 2020';
 var classChosen = 0;
 var codeChosen = '';
 var validationChosen = '';
+var currentFoodIndex = 0;
+
 Page({
   data: {
     gradeIndex:0,
@@ -69,7 +71,8 @@ Page({
 
   //用户注册
   register: function(res) {
-    if(classChosen != ''&& codeChosen != '' && validationChosen == 'kando169' && classChosen > 0 && classChosen < 11){
+    var secretCode = '11-1=2';
+    if(classChosen != ''&& codeChosen != '' && validationChosen == secretCode && classChosen > 0 && classChosen < 11 && codeChosen.substr(0,1) == 'G'){
       var that = this;
       var userInfo = res.detail.userInfo;
       app.globalData.user = userInfo;
@@ -242,27 +245,23 @@ Page({
     });
   },
 
+  confirmPurchase: function(){
+    this.updateOrder(currentFoodIndex);
+    this.setData({
+      modalName:null
+    })
+  },
+
   //显示购买弹窗
   purchase: function(options) {
     var that = this;
     var now = new Date();
-    this.setData({
-      modalName: "purchase",
-
-    })
     if (this.data.isAdmin == true) {
-      /*
-      wx.showModal({
-        title: '你是管理员？',
-        content: '买饭界面调试',
-        success: function(res) {
-          if (res.confirm) {
-            that.updateOrder(options.currentTarget.dataset.index);
-          }
-        }
-      });
-      */
-    } else if (now.getHours() < 0 || now.getHours() > 100) {
+      currentFoodIndex = options.currentTarget.dataset.index;
+      this.setData({
+        modalName: "purchase"
+      })
+    } else if (now.getHours() < 8 || now.getHours() > 12) {
       wx.showModal({
         title: '很难受,你点不了餐了',
         content: '你点餐的时候超过服务时间了，难受吗？',
@@ -271,15 +270,10 @@ Page({
         outOfTime: true
       })
     } else {
-      wx.showModal({
-        title: '看清楚了伙计',
-        content: '你确定要订购吗？一天只能买一份饭嗷！',
-        success: function(res) {
-          if (res.confirm) {
-            that.updateOrder(options.currentTarget.dataset.index);
-          }
-        }
-      });
+      currentFoodIndex = options.currentTarget.dataset.index;
+      this.setData({
+        modalName: "purchase"
+      })
     }
 
   },
@@ -346,20 +340,10 @@ Page({
   updateLocal: function() {
     var that = this;
     that.setData({
-      isOrdered: true
+      isOrdered: true,
+      modalName: "purchaseDone"
     });
     app.globalData.isOrdered = true;
-    wx.showModal({
-      title: '你买好了！',
-      content: '去个人中心看看你的订单不？',
-      success: function(res) {
-        if (res.confirm) {
-          wx.navigateTo({
-            url: '../self/self',
-          });
-        }
-      }
-    });
   },
 
   //检测后门触发
@@ -399,18 +383,30 @@ Page({
     })
   },
 
+  //模拟后门
   simulateSuperAdmin: function(){
     wx.navigateTo({
       url: '../superAdmin/superAdmin',
     })
   },
 
+  //显示感谢名单
   showCreditList: function(){
     this.setData({
       modalName: "Modal3"
     })
   },
 
+  toSelf: function(){
+    this.setData({
+      modalName:null
+    })
+    wx.navigateTo({
+      url: '../self/self',
+    });
+  },
+
+  //下拉刷新
   onPullDownRefresh: function(){
     wx.reLaunch({
       url: '../index/index',

@@ -7,11 +7,11 @@
     <view class="flex animated fadeInDown" >
       <view class="flex-treble padding-sm margin-xs radius">
         <text class="text-black text-xxl text " catchtap='triggerSuperPower'>Quality of\n Life Services</text>
-        <view class="text-grey text-sm radius" style='margin-top:10rpx;' catchtap='navigate' data-pagename="article">了解更多 ></view>
+        <view class="text-blue text-sm radius" style='margin-top:10rpx;' catchtap='navigate' data-pagename="article">了解更多 ></view>
       </view>
       <view class="flex-sm padding-sm margin-xs radius" bindtap='navigate' data-pagename="self">
         <view class="cu-avatar round " style="background-image:url({{userInfo.avatarUrl}}); margin-left:10rpx;"></view>
-        <view class="text-xs radius" style="margin-top:15rpx;">个人中心</view>
+        <view class="text-xs radius text-black" style="margin-top:15rpx;">个人中心</view>
       </view>
     </view>
     <view class="flex p-xs margin-bottom-sm mb-sm">
@@ -52,10 +52,10 @@
             </view>
             <view class='flex align-start' style='margin-top:20rpx;'>
               <text class="text-price text-xxl flex-sub"> {{item.price}}</text>
-              <button class=" flex-sm cu-btn bg-yellow" wx:if="{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
-              <button class=" flex-sm cu-btn bg-yellow" wx:elif="{{outOfTime == true}}" style='margin-bottom:20rpx;' disabled>不在时间段</button>
+              <button class=" flex-sm cu-btn bg-green" wx:if="{{isAdmin == true}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购(As Admin)</button>
+              <button class=" flex-sm cu-btn bg-red" wx:elif="{{outOfTime == true}}" style='margin-bottom:20rpx;' disabled>不在时间段</button>
               <button class="flex-sm cu-btn bg-grey" style="width:50%;" disabled wx:elif="{{item.stock <= 0 }}">卖光了，明天再来吧</button>
-              <button class=" flex-sm cu-btn bg-yellow" wx:elif="{{isOrdered == false}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购</button>
+              <button class=" flex-sm cu-btn bg-green" wx:elif="{{isOrdered == false}}" bindtap='purchase' data-index="{{index}}" style='margin-bottom:20rpx;'>订购</button>
               <button class=" flex-sm cu-btn bg-grey" wx:else disabled>一天只能买一份饭哦</button>
             </view>
           </view>
@@ -65,7 +65,8 @@
       <button class="flex-sub cu-btn bg-green lg" bindtap='navigate' data-pagename="admin" wx:if="{{isAdmin == true}}">管理员</button>
       <!--
       <button class="flex-sub cu-btn bg-green lg" bindtap='simulateRegister' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>伪注册</button>
-      <button class="flex-sub cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超管</button>-->
+      <button class="flex-sub cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超管</button>
+      -->
 </view>
     </view>
 
@@ -80,20 +81,9 @@
     </view>
   </view>
 
-<view class="cu-modal {{modalName=='purchase'?'show':''}}">
-  <view class="cu-dialog" style='background-color: #1C1C1C; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);'>
-    <view class="cu-bar justify-end">
-      <view class="content text-white">订单确认</view>
-      <view class="action" bindtap="hideModal">
-        <text class="cuIcon-close text-red"></text>
-      </view>
-    </view>
-    <button class="cu-btn">AAA</button>
-  </view>
-</view>
 
   <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
-    <view class="cu-dialog">
+    <view class="cu-dialog bg-white">
       <view class="cu-bar bg-white justify-end">
         <view class="content">注册</view>
         <view class="action" bindtap="hideModal">
@@ -103,7 +93,7 @@
       <view class="padding-xl">
         第一次打开小程序需要注册嗷
       </view>
-      <view class="cu-bar bg-white justify-end">
+      <view class="cu-bar bg-white justify-center">
         <view class="action">
           <form>
             <view class="cu-form-group">
@@ -174,6 +164,46 @@
         <view class="padding-xl text-cyan">
           滴水之恩，当涌泉相报
         </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='purchase'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">看清楚了伙计</view>
+      <view class="action">
+        <text class="cuIcon-close text-red" catchtap="hideModal"></text>
+      </view>
+    </view>
+    <view class="padding-xl bg-white">
+      你确定要订购吗？一天只能买一份饭嗷！
+    </view>
+    <view class="cu-bar bg-white justify-center align-center">
+      <view class="padding-xs flex">
+          <button class= "cu-btn bg-red round" style="margin-right:50px;" bindtap="hideModal">那没事了</button>
+          <button class = "cu-btn bg-green round" bindtap="confirmPurchase">买买买</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='purchaseDone'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">买好了嗷！</view>
+      <view class="action">
+        <text class="cuIcon-close text-red" catchtap="hideModal"></text>
+      </view>
+    </view>
+    <view class="padding-xl bg-white">
+      你要去个人中心看看你的订单不？
+    </view>
+    <view class="cu-bar bg-white justify-center align-center">
+      <view class="padding-xs flex">
+          <button class= "cu-btn bg-red round" style="margin-right:50px;" bindtap="hideModal">不了</button>
+          <button class = "cu-btn bg-green round" bindtap="toSelf">好啊</button>
       </view>
     </view>
   </view>

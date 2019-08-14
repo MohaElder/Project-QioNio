@@ -4,18 +4,35 @@ var checkList = [];
 var currentOrderID = "";
 var currentCheckID = "";
 var wxbarcode = require('../../utils/index.js');
-
+var count = 0;
 var db = wx.cloud.database();
+
 Page({
   data: {
     isBlur:false,
     isFilled: false,
     user: {},
-    checkList: []
+    checkList: [],
+    selectedImageUrl:"https://wx2.sinaimg.cn/mw690/006tozhpgy1g5yyrdsiffj31hc0u0b2f.jpg",
+    artworks:[
+      "https://wx3.sinaimg.cn/mw690/006tozhpgy1g5yystak22j31hc0u0npu.jpg",
+      "https://wx2.sinaimg.cn/mw690/006tozhpgy1g5yyrdsiffj31hc0u0b2f.jpg",
+      "https://wx1.sinaimg.cn/mw690/006tozhpgy1g5yyrbdd4xj31hc0u0qv8.jpg",
+      "https://wx3.sinaimg.cn/mw690/006tozhpgy1g5yyrb45nxj31hc0u0kjo.jpg",
+      "https://wx2.sinaimg.cn/mw690/006tozhpgy1g5yyrcdmbrj31900u01l3.jpg",
+      "https://wx1.sinaimg.cn/mw690/006tozhpgy1g5yyrcer6fj31900u0u12.jpg",
+      "https://wx3.sinaimg.cn/mw690/006tozhpgy1g5yyrd3bzgj31900u07wo.jpg",
+      "https://wx3.sinaimg.cn/mw690/006tozhpgy1g5yyrbfefkj31hc0u0b2d.jpg",
+      "https://wx3.sinaimg.cn/mw690/006tozhpgy1g5yyrbfefkj31hc0u0b2d.jpg",
+      "https://wx1.sinaimg.cn/mw690/006tozhpgy1g5yyrpiinxj31hc0u0hdw.jpg"
+    ]
   },
 
   //每次页面打开运行
   onLoad: function () {
+    wx.showLoading({
+      title: '正在打发土地爷',
+    });
     checkList = [];
     var that = this;
     wx.cloud.callFunction({
@@ -34,6 +51,7 @@ Page({
           user: app.globalData.user,
           checkList: checkList
         });
+        wx.hideLoading();
       })
       .catch(console.error);
   },
@@ -148,6 +166,25 @@ Page({
     wx.reLaunch({
       url: '../self/self',
     })
+  },
+
+  onShow: function(){
+    this.setBackgroundImage();
+  },
+
+  setBackgroundImage: function(){
+    var artworks = this.data.artworks;
+    this.setData({
+      selectedImageUrl: artworks[Math.floor((Math.random() * artworks.length))]
+    })
+  },
+
+  roll: function(){
+    count += 1;
+    if(count ==3){
+      count = 0;
+      this.setBackgroundImage();
+    }
   }
 
 

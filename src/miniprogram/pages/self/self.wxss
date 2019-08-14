@@ -1,5 +1,10 @@
+page {  
+  display: block;  
+  min-height: 100%;  
+  background-color: #fffcf7;  
+} 
+
 .UCenter-bg {
-  background-image: url(https://wx2.sinaimg.cn/mw690/006tozhpgy1g03uqei7xcj31dc0wwtwh.jpg);
   background-size: cover;
   height: 550rpx;
   display: flex;

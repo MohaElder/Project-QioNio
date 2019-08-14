@@ -1,7 +1,7 @@
 <scroll-view scroll-y class="scrollPage {{isBlur? 'blur' : ''}}">
-  <view class="UCenter-bg">
+  <view class="UCenter-bg animated fadeInDown" style="background-image: url({{selectedImageUrl}});" catchtap="roll">
     <view class="cu-avatar xl round" style="background-image:url({{user.info.avatarUrl}});"></view>
-    <view class="text-xl" style='margin-top:20rpx;'>{{user.info.nickName}}</view>
+    <view class="text-xl text-white" style='margin-top:20rpx;'>{{user.info.nickName}}</view>
     <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
   </view>
 
@@ -15,13 +15,13 @@
         <text class='text-xs text-black' wx:else>待完成</text>
       </view>
     </view>
-    <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
+    <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom text-black">
       <view class="flex-treble padding-sm margin-xs radius">于 {{item.time}} 订购</view>
       <view class="flex-sub padding-sm margin-xs radius">
         <text class='text-price'>{{item.order.price}}</text>
       </view>
     </view>
-        <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom">
+        <view class="flex p-xs margin-bottom-sm mb-sm solid-bottom text-black">
       <view class="flex-treble padding-sm margin-xs radius">订单号：{{item._id}}</view>
     </view>
     <view class="flex p-xs margin-bottom-sm mb-sm">
@@ -50,12 +50,12 @@
       <view class="flex">
         <view class="flex-sub padding-sm margin-xs radius">
           <view bindtap="hideModal">
-<text class='iconfont icon-aixin' style='font-size: 50px; color:red;' bindtap='rateGood'></text>
+<text class='iconfont icon-aixin' style='font-size: 50px; color:#945458;' bindtap='rateGood'></text>
           </view>
         </view>
         <view class="flex-sub padding-sm margin-xs radius">
           <view class="action" bindtap="hideModal">
-            <text class='iconfont icon-buganxingqu' style='font-size: 50px; color:grey;' bindtap='rateBad'></text>
+            <text class='iconfont icon-buganxingqu' style='font-size: 50px; color:#6c6263;' bindtap='rateBad'></text>
           </view>
         </view>
       </view>
@@ -64,14 +64,14 @@
 </view>
 
 <view class="cu-modal {{modalName=='Modal2'?'show':''}}">
-  <view class="cu-dialog">
-    <view class="cu-bar bg-white">
-      <view class="content">订单码</view>
+  <view class="cu-dialog bg-white">
+    <view class="cu-bar">
+      <view class="content text-black">订单码</view>
       <view class="action" bindtap="hideModal">
         <text class="cuIcon-close text-red"></text>
       </view>
     </view>
-    <view class="qrcode" bindtap="hideModal">
+    <view class="qrcode text-black" bindtap="hideModal">
       <canvas canvas-id="qrcode" />
     </view>
   </view>
