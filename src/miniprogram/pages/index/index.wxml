@@ -6,7 +6,7 @@
   <view class="padding bg-white">
     <view class="flex animated fadeInDown" >
       <view class="flex-treble padding-sm margin-xs radius">
-        <text class="text-black text-xxl text " catchtap='triggerSuperPower'>Quality of\n Life Services</text>
+        <text class="text-black text-xxl text " catchtap='roll'>Quality of\n Life Services</text>
         <view class="text-blue text-sm radius" style='margin-top:10rpx;' catchtap='navigate' data-pagename="article">了解更多 ></view>
       </view>
       <view class="flex-sm padding-sm margin-xs radius" bindtap='navigate' data-pagename="self">
@@ -34,14 +34,14 @@
 
 
     <view class="padding-sm margin-xs radius animated slideInUp">
-      <text class="text-xl text-black text-bold">今日菜谱</text>
+      <text class="text-xl text-black text-bold" catchtap = "showSaySomeThing">今日菜谱</text>
       <view class="cu-card case {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
         <view class="cu-item shadow">
           <view class="text" style='margin-top:20rpx; margin-bottom:20rpx;'>
           </view>
           <view class="content">
             <view class="image">
-              <image class="radius" src="{{item.imageURL}}" mode="widthFix"></image>
+              <image class="radius" src="{{item.imageURL}}" mode="widthFix" ></image>
               <view class="cu-tag bg-blue radius" wx:if="{{item.stock > 5}}">库存充足</view>
               <view class="cu-tag bg-red radius" wx:elif="{{item.stock <= 0}}">库存告罄</view>
               <view class="cu-tag bg-yellow radius" wx:elif="{{item.stock <= 5}}">库存较少</view>
@@ -73,14 +73,38 @@
     <!--菜单-->
   </view>
 
-  <view class="padding-xs flex align-center bg-white" bindtap='showCreditList'>
+  <view class="padding-xs flex align-center bg-white" catchtap='showCreditList'>
     <view class="flex-sub text-center">
       <view class="solid-top text-xs padding">
-        <text class="text-gray">Powered By QioNio - A basic yet complete O2O solution \n \n <text class='text-green text-bold'>感谢名单</text></text>
+        <text class="text-gray" >Powered By QioNio - A basic yet complete O2O solution \n \n <text class='text-green text-bold'>感谢名单</text></text>
       </view>
     </view>
   </view>
 
+  <view class="cu-modal {{modalName=='axiomModal'?'show':''}}">
+    <view class="cu-dialog bg-white">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">想说点什么嘛</view>
+        <view class="action" bindtap="hideModal">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="cu-bar bg-white justify-center">
+        <view class="action">
+          <form>
+            <view class="cu-form-group">
+              <view class="title">我想说</view>
+              <input placeholder="在这里输入......" bindinput='getSaying'></input>
+            </view>
+          </form>
+        </view>
+      </view>
+      <view class="padding-xl">
+        <button class='cu-btn bg-green lg' bindgetuserinfo='saySomething' open-type="getUserInfo">说好啦</button>
+      </view>
+    </view>
+  </view>
+</view>
 
   <view class="cu-modal {{modalName=='registerModal'?'show':''}}">
     <view class="cu-dialog bg-white">
@@ -124,7 +148,7 @@
       </view>
     </view>
   </view>
-</view>
+
 
 
 <view class="cu-modal {{modalName=='Modal3'?'show':''}}">
@@ -210,6 +234,10 @@
 </view>
 
 <form wx:if="{{isSuper == true}}">
+<view class="cu-form-group">
+<view class="title">
   <text>Eden's Gate</text>
-  <input bindinput='triggerSuperPower' placeholder='Enter the secret code...'></input>
+</view>
+  <input bindinput='superpowerCodeValidation' placeholder='Enter the secret code...'></input>
+</view>
 </form>

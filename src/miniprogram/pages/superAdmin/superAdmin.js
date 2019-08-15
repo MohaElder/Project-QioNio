@@ -22,6 +22,8 @@ Page({
     var userList = [];
     var orderList = [];
     var swiperList = [];
+    var sayingsList = [];
+    var axiomsList = [];
     wx.showLoading({
       title: '准备所有信息',
     })
@@ -56,14 +58,34 @@ Page({
                   }
                 })
                   .then(res => {
-                    swiperList =  res.result.data;
-                    that.setData({
-                      checkList: checkList,
-                      userList: userList,
-                      orderList: orderList,
-                      swiperList: swiperList
+                    swiperList = res.result.data;
+                    wx.cloud.callFunction({
+                      name: 'getDB',
+                      data: {
+                        dbName: "sayings"
+                      }
                     })
-                    wx.hideLoading();
+                      .then(res => {
+                        sayingsList = res.result.data;
+                        wx.cloud.callFunction({
+                          name: 'getDB',
+                          data: {
+                            dbName: "axioms"
+                          }
+                        })
+                          .then(res => {
+                            axiomsList = res.result.data;
+                            that.setData({
+                              checkList: checkList,
+                              userList: userList,
+                              orderList: orderList,
+                              swiperList: swiperList,
+                              sayingsList:sayingsList,
+                              axiomsList:axiomsList
+                            })
+                            wx.hideLoading();
+                          })
+                      })
                   })
               })
               .catch(console.error);
@@ -85,6 +107,48 @@ Page({
     this.setData({
       modalName: null
     })
+  },
+
+  deleteAxiom: function(options){
+    wx.cloud.callFunction({
+      name: 'deleteDB',
+      data: {
+        dbName: 'axioms',
+        id: options.currentTarget.dataset.id
+      }
+    }).catch(console.error);
+    wx.showToast({
+      title: '删除成功！',
+    })
+  },
+
+  goToAxiom:function(options){
+    wx.showLoading({
+      title: '正在移入精选',
+    })
+    for(var i = 0; i < this.data.sayingsList.length; i++){
+      if (this.data.sayingsList[i]._id == options.currentTarget.dataset.id){
+        db.collection('axioms').add({
+          data: {
+            text: this.data.sayingsList[i].text
+          },
+          success: function (res) {
+            wx.hideLoading();
+            wx.showToast({
+              title: '已移入精选',
+            })
+            wx.cloud.callFunction({
+              name: 'deleteDB',
+              data: {
+                dbName: 'sayings',
+                id: options.currentTarget.dataset.id
+              }
+            }).catch(console.error);
+          }
+        })
+      }
+    }
+
   },
 
   ChooseImage() {

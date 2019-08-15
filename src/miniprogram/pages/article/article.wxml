@@ -1,13 +1,3 @@
-<image wx:for = "{{imageList}}" src="{{item}}" style='width:100vw; height:100vh;' mode='widthFix' wx:key = ""> </image>
+<image class = "animated zoomInDown" wx:for = "{{imageList}}" src="{{item}}" style='width:100vw; height:100vh;' mode='widthFix' wx:key = ""> </image>
 
 <!--标题栏-->
-
-<!--<view class="container">
-	<wemark md="{{md}}" link highlight type="wemark"></wemark>
-</view>
-
-<view class="cu-form-group align-start">
-	<view class="title">文章编辑器</view>
-	<textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaBInput" placeholder="输入内容"></textarea>
-</view>
-<button bindtap="renderPage">submit</button>-->

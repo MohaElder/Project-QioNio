@@ -41,7 +41,7 @@
 <view class="cu-modal {{modalName=='Modal1'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">
-      <view class="content">评价你的用餐体验</view>
+      <view class="content">你这顿吃的怎么样？</view>
       <view class="action" bindtap="hideModal">
         <text class="cuIcon-close text-red"></text>
       </view>

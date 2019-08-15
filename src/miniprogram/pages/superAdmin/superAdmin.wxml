@@ -98,6 +98,38 @@
     </view>
   </view>
 
+  <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-purple "></text> 大家说的话
+    </view>
+  </view>
+<view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box5-'+ index?'move-cur':''}}" wx:for="{{sayingsList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box5-{{index}}">
+      <view class="content">
+        <view class="text-grey">{{item.text}}</view>
+      </view>
+      <view class="move">
+                <view class="bg-yellow" catchtap='goToAxiom' data-id = "{{item._id}}">移入精选</view>
+      </view>
+    </view>
+  </view>
+
+    <view class="cu-bar bg-white solid-bottom margin-top">
+    <view class="action">
+      <text class="cuIcon-title text-purple "></text> Axioms
+    </view>
+  </view>
+<view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box6-'+ index?'move-cur':''}}" wx:for="{{axiomsList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box6-{{index}}">
+      <view class="content">
+        <view class="text-grey">{{item.text}}</view>
+      </view>
+            <view class="move">
+                <view class="bg-yellow" catchtap='deleteAxiom' data-id = "{{item._id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
   <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
   <view class="cu-dialog">
     <view class="cu-bar bg-white justify-end">

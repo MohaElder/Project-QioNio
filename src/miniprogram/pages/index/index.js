@@ -9,6 +9,7 @@ var count = 1;
 var gradeChosen = 'Class of 2020';
 var classChosen = 0;
 var codeChosen = '';
+var sayingChosen = '';
 var validationChosen = '';
 var currentFoodIndex = 0;
 
@@ -48,6 +49,7 @@ Page({
       })
       .catch(console.error);
   },
+
 
   //获取用户openid
   onGetOpenid: function() {
@@ -123,6 +125,11 @@ Page({
     this.setData({
       modalName: "registerModal"
     });
+  },
+
+  //获取学号
+  getSaying: function (e) {
+    sayingChosen = e.detail.value;
   },
 
   //获取班级
@@ -205,6 +212,53 @@ Page({
       url: link,
     });
   },
+  
+  showAxiom: function () {
+    var axiom = [];
+    wx.cloud.callFunction({
+      name: 'getDB',
+      data: {
+        dbName: "axioms"
+      }
+    })
+      .then(res => {
+        axiom = res.result.data;
+        console.log(axiom)
+        wx.showModal({
+          title: '你居然发现我了诶',
+          content: axiom[Math.floor((Math.random() * axiom.length))].text,
+        })
+      })
+      .catch(console.error);
+
+  },
+
+  roll: function () {
+    count += 1;
+    if (count == 3) {
+      count = 0;
+      this.showAxiom();
+    }
+  },
+
+  saySomething: function(){
+    wx.showLoading({
+      title: '正在记小本本',
+    })
+    db.collection("sayings").add({
+      data: {
+        text:sayingChosen,
+      }
+    })
+      this.setData({
+        modalName: null
+      })
+      wx.hideLoading()
+      wx.showToast({
+        title: '我知道啦！',
+      })
+
+  },
 
   //判断是否是Admin=>是否显示Admin按钮
   isAdmin: function(user) {
@@ -243,6 +297,17 @@ Page({
     this.setData({
       modalName:null
     })
+  },
+
+  showSaySomeThing: function(){
+    count += 1;
+    if (count == 3) {
+      count = 0;
+      this.setData({
+        modalName: "axiomModal"
+      })
+    }
+
   },
 
   //显示购买弹窗
@@ -340,7 +405,7 @@ Page({
   },
 
   //检测后门触发
-  triggerSuperPower: function(e) {
+  triggerSuperPower: function() {
     if (count == 5) {
       this.setData({
         isSuper: true
@@ -355,17 +420,20 @@ Page({
         isSuper: false
       })
     }
-    if (e.detail.value == "youyishuoyi") {
+    count += 1;
+  },
+
+  superpowerCodeValidation: function(e){
+    if (e.detail.value == "youyishuoyiba,woaizhongguo") {
       this.superPower();
     }
-    count += 1;
   },
 
   //触发后门
   superPower: function() {
     wx.showModal({
       title: 'su-root',
-      content: 'Very powerful area',
+      content: 'no rm-f here',
       success: function(res){
         if(res.confirm){
           wx.navigateTo({
@@ -386,8 +454,18 @@ Page({
   //显示感谢名单
   showCreditList: function(){
     this.setData({
-      modalName: "Modal3"
+      modalName: "Modal3",
     })
+    count += 1;
+    console.log(count)
+    if (count == 3) {
+      count = 0;
+      this.setData({
+        isSuper:true
+      })
+      this.triggerSuperPower()
+    }
+
   },
 
   //跳转至个人中心
