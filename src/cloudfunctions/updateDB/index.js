@@ -8,7 +8,8 @@ exports.main = async (event, context) => {
       data: {
       isAdmin:event.isAdmin,
       isPrisoner: event.isPrisoner,
-      stock: event.stock
+      stock: event.stock,
+      isAlarmed: event.isAlarmed
       }
     })
   } catch (e) {

@@ -1,11 +1,22 @@
+import lottie from 'lottie-miniapp';
+
 //index.js
 const app = getApp();
+//请求lottie的路径。注意开启downloadFile域名并且返回格式是json
+const animationData = require('../../utils/rainbowCat.js');
+const canvasContext = wx.createCanvasContext('test-canvas')
+
 var checkList = [];
 var currentOrderID = "";
 var currentCheckID = "";
 var wxbarcode = require('../../utils/index.js');
 var count = 0;
 var db = wx.cloud.database();
+
+canvasContext.canvas = {
+  width: 150,
+  height: 150
+};
 
 Page({
   data: {
@@ -65,6 +76,7 @@ Page({
             checkList.push(res.result.data[i]);
           }
         }
+        checkList.reverse();
         that.setData({
           user: app.globalData.user,
           checkList: checkList
@@ -72,6 +84,17 @@ Page({
         wx.hideLoading();
       })
       .catch(console.error);
+
+    lottie.loadAnimation({
+      renderer: 'canvas', // 只支持canvas
+      loop: true,
+      autoplay: true,
+      animationData: animationData,
+      rendererSettings: {
+        context: canvasContext,
+        clearCanvas: true
+      }
+    });
   },
 
   //显示弹窗
@@ -181,16 +204,19 @@ Page({
     });
   },
 
+  //下拉刷新
   onPullDownRefresh: function () {
     wx.reLaunch({
       url: '../self/self',
     })
   },
 
+  //每次显示页面运行函数
   onShow: function(){
     this.setBackgroundImage();
   },
 
+  //设置个人主页背景
   setBackgroundImage: function(){
     var artworks = this.data.artworks;
     this.setData({
@@ -198,12 +224,20 @@ Page({
     })
   },
 
+  //更改个人主页背景
   roll: function(){
     count += 1;
     if(count ==3){
       count = 0;
       this.setBackgroundImage();
     }
+  },
+
+  //播放猫咪叫声
+  miao: function () {
+    const backgroundAudioManager = wx.getBackgroundAudioManager();
+    backgroundAudioManager.title = 'MIAO!!!'
+    backgroundAudioManager.src = 'http://downsc.chinaz.net/Files/DownLoad/sound1/201807/10310.mp3'
   }
 
 

@@ -3,6 +3,7 @@ const db = wx.cloud.database();
 var foodName = '';
 var foodPrice = 0;
 var foodStock = 0;
+var chosenText = '';
 var currentOrderID = '';
 Page({
 
@@ -10,13 +11,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    selectedImage:''
+    selectedImage: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this;
     var checkList = [];
     var userList = [];
@@ -27,52 +28,53 @@ Page({
     wx.showLoading({
       title: '准备所有信息',
     })
+    //TODO: Make it much more elegant
     wx.cloud.callFunction({
-      name: 'getDB',
-      data: {
-        dbName: "check"
-      }
-    })
+        name: 'getDB',
+        data: {
+          dbName: "check"
+        }
+      })
       .then(res => {
-          checkList = res.result.data;
+        checkList = res.result.data;
         wx.cloud.callFunction({
-          name: 'getDB',
-          data: {
-            dbName: "user"
-          }
-        })
+            name: 'getDB',
+            data: {
+              dbName: "user"
+            }
+          })
           .then(res => {
             userList = res.result.data;
             wx.cloud.callFunction({
-              name: 'getDB',
-              data: {
-                dbName: "order"
-              }
-            })
+                name: 'getDB',
+                data: {
+                  dbName: "order"
+                }
+              })
               .then(res => {
                 orderList = res.result.data;
                 wx.cloud.callFunction({
-                  name: 'getDB',
-                  data: {
-                    dbName: "sodexPlaceHolder"
-                  }
-                })
+                    name: 'getDB',
+                    data: {
+                      dbName: "sodexPlaceHolder"
+                    }
+                  })
                   .then(res => {
                     swiperList = res.result.data;
                     wx.cloud.callFunction({
-                      name: 'getDB',
-                      data: {
-                        dbName: "sayings"
-                      }
-                    })
+                        name: 'getDB',
+                        data: {
+                          dbName: "sayings"
+                        }
+                      })
                       .then(res => {
                         sayingsList = res.result.data;
                         wx.cloud.callFunction({
-                          name: 'getDB',
-                          data: {
-                            dbName: "axioms"
-                          }
-                        })
+                            name: 'getDB',
+                            data: {
+                              dbName: "axioms"
+                            }
+                          })
                           .then(res => {
                             axiomsList = res.result.data;
                             that.setData({
@@ -80,8 +82,8 @@ Page({
                               userList: userList,
                               orderList: orderList,
                               swiperList: swiperList,
-                              sayingsList:sayingsList,
-                              axiomsList:axiomsList
+                              sayingsList: sayingsList,
+                              axiomsList: axiomsList
                             })
                             wx.hideLoading();
                           })
@@ -96,20 +98,20 @@ Page({
 
   },
 
-  showModal: function(options){
+  showModal: function(options) {
     currentOrderID = options.currentTarget.dataset.id;
     this.setData({
       modalName: options.currentTarget.dataset.modalname
     })
   },
 
-  hideModal: function(){
+  hideModal: function() {
     this.setData({
       modalName: null
     })
   },
 
-  deleteAxiom: function(options){
+  deleteAxiom: function(options) {
     wx.cloud.callFunction({
       name: 'deleteDB',
       data: {
@@ -122,17 +124,17 @@ Page({
     })
   },
 
-  goToAxiom:function(options){
+  goToAxiom: function(options) {
     wx.showLoading({
       title: '正在移入精选',
     })
-    for(var i = 0; i < this.data.sayingsList.length; i++){
-      if (this.data.sayingsList[i]._id == options.currentTarget.dataset.id){
+    for (var i = 0; i < this.data.sayingsList.length; i++) {
+      if (this.data.sayingsList[i]._id == options.currentTarget.dataset.id) {
         db.collection('axioms').add({
           data: {
             text: this.data.sayingsList[i].text
           },
-          success: function (res) {
+          success: function(res) {
             wx.hideLoading();
             wx.showToast({
               title: '已移入精选',
@@ -178,26 +180,30 @@ Page({
       cancelText: 'Cancel',
       confirmText: 'Confirm',
       success: res => {
-          this.setData({
-            selectedImage: ''
-          })
-        }
+        this.setData({
+          selectedImage: ''
+        })
+      }
     })
   },
 
-  getName: function(e){
+  getName: function(e) {
     foodName = e.detail.value;
   },
-  
-  getStock: function (e) {
+
+  getStock: function(e) {
     foodStock = e.detail.value;
   },
 
-  getPrice: function (e) {
+  getPrice: function(e) {
     foodPrice = e.detail.value;
   },
 
-  addFood: function(){  
+  getText: function(e) {
+    chosenText = e.detail.value;
+  },
+
+  addFood: function() {
     var that = this;
     wx.showLoading({
       title: '正在新建菜品',
@@ -211,16 +217,15 @@ Page({
     for (var i = 0; i < 6; i++) {
       foodID += Number.parseInt(Math.random() * 10);
     }
-    this.uploadFood(imageID,foodID);
+    this.uploadFood(imageID, foodID);
   },
 
-  uploadFood: function(imageID,foodID){
+  uploadFood: function(imageID, foodID) {
     wx.cloud.uploadFile({
       cloudPath: 'foodPics/' + imageID,
       filePath: this.data.selectedImage[0], // 文件路径
       success: res => {
         // get resource ID
-        console.log(res.fileID)
         db.collection('order').add({
           data: {
             _id: foodID,
@@ -231,7 +236,7 @@ Page({
             goodRateNum: 0,
             rateNum: 0
           },
-          success: function (res) {
+          success: function(res) {
             wx.hideLoading();
             that.hideModal();
             wx.showToast({
@@ -246,7 +251,7 @@ Page({
     })
   },
 
-  addCover: function () {
+  addCover: function() {
     var that = this;
     wx.showLoading({
       title: '正在上传图片',
@@ -261,12 +266,11 @@ Page({
       filePath: this.data.selectedImage[0], // 文件路径
       success: res => {
         // get resource ID
-        console.log(res.fileID)
         db.collection('sodexPlaceHolder').add({
           data: {
-            url:res.fileID
+            url: res.fileID
           },
-          success: function (res) {
+          success: function(res) {
             wx.hideLoading();
             that.hideModal();
             wx.showToast({
@@ -277,6 +281,43 @@ Page({
       },
       fail: err => {
         // handle error
+      }
+    })
+  },
+
+  addAlarm: function() {
+    var that = this;
+    db.collection('emergencyMessages').add({
+      data: {
+        content: chosenText
+      },
+      success: function(res) {
+        wx.cloud.callFunction({
+          name: 'getDB',
+          data: {
+            dbName: "user"
+          }
+        })
+          .then(res => {
+            for(var i = 0; i< res.result.data.length; i++){
+              wx.cloud.callFunction({
+                name: 'updateDB',
+                data: {
+                  dbName: "user",
+                  id:res.result.data[i]._id,
+                  isAlarmed: false
+                }
+              })
+            }
+          }).then(res => {
+            wx.hideLoading();
+            wx.showToast({
+              title: '全局通知已推送',
+            })
+            that.setData({
+              modalName: null
+            })
+          })
       }
     })
   },
@@ -311,14 +352,14 @@ Page({
     })
   },
 
-  toGulag: function(options){
+  toGulag: function(options) {
     wx.cloud.callFunction({
       name: 'updateDB',
       data: {
         dbName: "user",
         id: options.currentTarget.dataset.id,
         isAdmin: false,
-        isPrisoner:true
+        isPrisoner: true
       }
     }).then(res => {
       wx.showToast({
@@ -331,11 +372,11 @@ Page({
 
   },
 
-  deleteUser: function(options){
+  deleteUser: function(options) {
     wx.cloud.callFunction({
       name: 'deleteDB',
-      data:{
-        dbName:'user',
+      data: {
+        dbName: 'user',
         id: options.currentTarget.dataset.id
       }
     }).then(res => {
@@ -345,10 +386,10 @@ Page({
       wx.reLaunch({
         url: '../superAdmin/superAdmin',
       })
-    }).catch (console.error);
+    }).catch(console.error);
   },
-  
-  promoteUser: function(options){
+
+  promoteUser: function(options) {
     wx.cloud.callFunction({
       name: 'updateDB',
       data: {
@@ -367,11 +408,11 @@ Page({
     }).catch(console.error);
   },
 
-  deleteCheck: function(options){
+  deleteCheck: function(options) {
     wx.cloud.callFunction({
       name: 'deleteDB',
       data: {
-        dbName:'check',
+        dbName: 'check',
         id: options.currentTarget.dataset.id
       }
     }).then(res => {
@@ -384,14 +425,13 @@ Page({
     }).catch(console.error);
   },
 
-  changeStock: function(){
-    console.log(currentOrderID)
+  changeStock: function() {
     wx.cloud.callFunction({
       name: 'updateDB',
       data: {
         dbName: "order",
         id: currentOrderID,
-        stock:foodStock
+        stock: foodStock
       }
     }).then(res => {
       wx.showToast({
@@ -403,11 +443,11 @@ Page({
     }).catch(console.error);
   },
 
-  deleteOrder: function(options){
+  deleteOrder: function(options) {
     wx.cloud.callFunction({
       name: 'deleteDB',
       data: {
-        dbName:'order',
+        dbName: 'order',
         id: options.currentTarget.dataset.id
       }
     }).then(res => {
@@ -420,7 +460,7 @@ Page({
     }).catch(console.error);
   },
 
-  deleteCover: function (options) {
+  deleteCover: function(options) {
     wx.cloud.callFunction({
       name: 'deleteDB',
       data: {
@@ -437,13 +477,13 @@ Page({
     }).catch(console.error);
   },
 
-  goBack: function(){
+  goBack: function() {
     wx.navigateTo({
       url: '../index/index',
     })
   },
 
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     wx.reLaunch({
       url: '../superAdmin/superAdmin',
     })

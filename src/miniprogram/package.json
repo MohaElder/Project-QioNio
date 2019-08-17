@@ -1,0 +1,22 @@
+{
+  "name": "miniprogram",
+  "version": "1.0.0",
+  "description": "lol",
+  "main": "app.js",
+  "dependencies": {
+    "lottie-miniapp": "^1.8.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "console.log(\"AAA\")"
+  },
+  "repository": {
+    "type": "git",
+    "url": "aa"
+  },
+  "keywords": [
+    "sa"
+  ],
+  "author": "ss",
+  "license": "ISC"
+}

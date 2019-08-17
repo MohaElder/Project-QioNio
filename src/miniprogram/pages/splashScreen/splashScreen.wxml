@@ -1,0 +1,17 @@
+<!--miniprogram/pages/splashScreen/splashScreen.wxml-->
+
+
+
+<view class='bg'>
+　　<image src='{{emergencyPic}}' class='full'></image>
+</view>
+
+<!-->
+<view class="bg-img" style="background-image: url('https://eroducate.oss-cn-beijing.aliyuncs.com/Assets/transparent.png');height: 414rpx;">
+  <view class="padding-xl text-white">
+<view class="loading-warp">
+<canvas class = "canvas-mask" id="test-canvas" canvas-id="test-canvas"></canvas>
+</view>
+  </view>
+</view>
+-->

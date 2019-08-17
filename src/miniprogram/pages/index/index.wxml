@@ -32,7 +32,6 @@
     </view>
     <!--上半部分-->
 
-
     <view class="padding-sm margin-xs radius animated slideInUp">
       <text class="text-xl text-black text-bold" catchtap = "showSaySomeThing">今日菜谱</text>
       <view class="cu-card case {{isCard?'no-card':''}}" wx:for="{{orderList}}" wx:key="name">
@@ -63,15 +62,15 @@
       </view>
 <view class='flex align-center justify-center padding-sm'>
       <button class="flex-sub cu-btn bg-green lg" bindtap='navigate' data-pagename="admin" wx:if="{{isAdmin == true}}">管理员</button>
-      <!--
-      <button class="flex-sub cu-btn bg-green lg" bindtap='simulateRegister' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>伪注册</button>
-      <button class="flex-sub cu-btn bg-green lg" bindtap='simulateSuperAdmin' data-pagename="admin" wx:if="{{isAdmin == true}}" style='margin-left:20rpx;'>超管</button>
-      -->
 </view>
     </view>
 
     <!--菜单-->
-  </view>
+
+    <canvas style= "width: 300px; height: 100px;" id="index-canvas" canvas-id="index-canvas"></canvas>
+    
+  </view> 
+
 
   <view class="padding-xs flex align-center bg-white" catchtap='showCreditList'>
     <view class="flex-sub text-center">

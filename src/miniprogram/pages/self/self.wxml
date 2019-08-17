@@ -76,4 +76,5 @@
     </view>
   </view>
 </view>
-      
+
+<canvas catchtap="miao" id="test-canvas" canvas-id="test-canvas"></canvas>

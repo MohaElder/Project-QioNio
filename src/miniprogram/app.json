@@ -4,7 +4,8 @@
     "pages/self/self",
     "pages/admin/admin",
     "pages/article/article",
-    "pages/superAdmin/superAdmin"
+    "pages/superAdmin/superAdmin",
+    "pages/splashScreen/splashScreen"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -12,5 +13,8 @@
     "navigationBarTitleText": "SHSIDSodex",
     "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+    "requiredBackgroundModes": [
+      "audio"
+    ]
 }

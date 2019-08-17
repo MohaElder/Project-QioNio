@@ -3,11 +3,15 @@
 </view>
 
 <view class='flex align-center justify-center padding-sm'>
+<button class = "cu-btn bg-green flex-sub" bindtap='showModal' data-modalname="DialogModal1">新建菜品</button>
+</view>
+
+<view class='flex align-center justify-center padding-sm'>
 <button class = "cu-btn bg-green flex-sub" bindtap='showModal' data-modalname="DialogModal2">上传首页图</button>
 </view>
 
 <view class='flex align-center justify-center padding-sm'>
-<button class = "cu-btn bg-green flex-sub" bindtap='showModal' data-modalname="DialogModal1">新建菜品</button>
+<button class = "cu-btn bg-green flex-sub" bindtap='showModal' data-modalname="newMessage">推送全局通知</button>
 </view>
 
 <view class='flex align-center justify-center padding-sm'>
@@ -236,6 +240,32 @@
     </view>
     <view class="padding-xl">
       <button class='cu-btn bg-green lg' bindtap='changeStock'>提交</button>
+    </view>
+  </view>
+</view>
+
+<view class="cu-modal {{modalName=='newMessage'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">全局通知推送</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view class="padding-xl">
+      警告：全局通知将会通知所有下一次打开小程序的用户
+    </view>
+    <view class="cu-bar bg-white">
+      <view class="action">
+        <form>
+          <view class="cu-form-group">
+            <input placeholder='通知内容' bindinput='getText'></input>
+          </view>
+        </form>
+      </view>
+    </view>
+    <view class="padding-xl">
+      <button class='cu-btn bg-green lg' bindtap='addAlarm'>推送</button>
     </view>
   </view>
 </view>

@@ -1,8 +1,14 @@
-  //index.js
+import lottie from 'lottie-miniapp';
+
+//index.js
 const app = getApp();
 const db = wx.cloud.database();
 const _ = db.command;
 const util = require('../../utils/util.js');
+
+var currentFoodIndex = 0; //食物列表位置
+
+//表单参数 Todo：更改为Form形式
 var openid = "";
 var orderList = [];
 var count = 1;
@@ -11,11 +17,19 @@ var classChosen = 0;
 var codeChosen = '';
 var sayingChosen = '';
 var validationChosen = '';
-var currentFoodIndex = 0;
+
+//请求lottie的路径。注意开启downloadFile域名并且返回格式是json
+const animationData = require('../../utils/tappingDude.js');
+const canvasContext = wx.createCanvasContext('index-canvas')
+
+canvasContext.canvas = {
+  width: 80,
+  height: 80
+};
 
 Page({
   data: {
-    gradeIndex:0,
+    gradeIndex: 0,
     gradePicker: ['Class of 2020', 'Class of 2021', 'Class of 2022', 'Class of 2023', 'Class of 2024'],
     userInfo: {},
     card: false,
@@ -33,15 +47,26 @@ Page({
     this.getOrderList();
     this.onGetOpenid();
     this.getSwiperPics();
+
+    lottie.loadAnimation({
+      renderer: 'canvas', // 只支持canvas
+      loop: true,
+      autoplay: true,
+      animationData: animationData,
+      rendererSettings: {
+        context: canvasContext,
+        clearCanvas: true
+      }
+    });
   },
 
   //获取菜谱
   getOrderList: function() {
     wx.cloud.callFunction({
-      name: 'getDB',
-      data: {
-        dbName: "order"
-      }
+        name: 'getDB',
+        data: {
+          dbName: "order"
+        }
       })
       .then(res => {
         orderList = res.result.data;
@@ -50,6 +75,24 @@ Page({
       .catch(console.error);
   },
 
+
+  //获取封面图片
+  getSwiperPics: function () {
+    var that = this;
+    wx.cloud.callFunction({
+      name: 'getDB',
+      data: {
+        dbName: "sodexPlaceHolder"
+      }
+    })
+      .then(res => {
+        that.setData({
+          swiperList: res.result.data,
+        })
+        wx.hideLoading()
+      })
+      .catch(console.error);
+  },
 
   //获取用户openid
   onGetOpenid: function() {
@@ -70,9 +113,9 @@ Page({
   },
 
   //用户注册
-  register: function(res) {
+  register: function (res) {
     var secretCode = '11-1=2';
-    if(classChosen != ''&& codeChosen != '' && validationChosen == secretCode && classChosen > 0 && classChosen < 11 && codeChosen.substr(0,1) == 'G'){
+    if (classChosen != '' && codeChosen != '' && validationChosen == secretCode && classChosen > 0 && classChosen < 11 && codeChosen.substr(0, 1) == 'G') {
       var that = this;
       var userInfo = res.detail.userInfo;
       app.globalData.user = userInfo;
@@ -86,7 +129,8 @@ Page({
           classroom: classChosen,
           code: codeChosen,
           isPrisoner: false,
-          isAdmin: false
+          isAdmin: false,
+          isAlarmed:false
         }
       });
       app.globalData.user = res.data;
@@ -94,65 +138,90 @@ Page({
         title: '您已注册！',
       });
       that.sync();
-    }
-    else{
+    } else {
       wx.showToast({
         title: '别想混过去',
       })
     }
-    
+
   },
 
-  getSwiperPics: function(){
-    var that = this;
-    wx.cloud.callFunction({
-      name: 'getDB',
-      data:{
-        dbName: "sodexPlaceHolder"
-      }
-    })
-      .then(res => {
-        that.setData({
-          swiperList:res.result.data,
-        })
-        wx.hideLoading()
+  //以下为表单函数
+    //获取班级
+    getClass: function (e) {
+      classChosen = e.detail.value;
+    },
+
+    //获取学号
+    getCode: function (e) {
+      codeChosen = e.detail.value;
+    },
+
+    //获取校验码
+    getValidation: function (e) {
+      validationChosen = e.detail.value;
+    },
+
+    //获取年级
+    PickerChange(e) {
+      this.setData({
+        gradeIndex: e.detail.value
       })
-      .catch(console.error);
+      gradeChosen = this.data.gradePicker[e.detail.value];
+    },
+  //以上为表单函数
+
+  //判断是否是Admin=>是否显示Admin按钮
+  isAdmin: function (user) {
+    var that = this;
+    if (user.isAdmin == true) {
+      that.setData({
+        isAdmin: true
+      });
+    } else {
+      that.isPrisoner(user);
+    }
   },
 
-  //模拟弹出注册页面
-  simulateRegister: function () {
-    this.setData({
-      modalName: "registerModal"
-    });
+  //判断是否在黑名单内=>是否显示黑名单界面
+  isPrisoner: function (user) {
+    var that = this;
+    if (user.isPrisoner == true) {
+      that.setData({
+        isPrisoner: true
+      })
+    }
   },
 
-  //获取学号
-  getSaying: function (e) {
-    sayingChosen = e.detail.value;
-  },
+  //检查全局推送状态
+  checkEmergency: function(user) {
+    var that = this;
+    console.log(user)
+    wx.hideLoading()
+    if(user.isAlarmed == false){
+      wx.cloud.callFunction({
+        name: 'getDB',
+        data: {
+          dbName: "emergencyMessages"
+        }
+      })
+        .then(res => {
+          console.log(res.result.data)
+          wx.showModal({
+            title: 'NOTIFICATION',
+            content: res.result.data[res.result.data.length-1].content,
+          })
+          wx.cloud.callFunction({
+            name: 'updateDB',
+            data: {
+              dbName: "user",
+              id: openid,
+              isAlarmed: true
+            }
+          })
+        })
+    }
 
-  //获取班级
-  getClass: function (e) {
-    classChosen = e.detail.value;
-  },
-
-  //获取学号
-  getCode: function (e) {
-    codeChosen = e.detail.value;
-  },
-
-  //获取校验码
-  getValidation: function (e) {
-    validationChosen = e.detail.value;
-  },
-
-  //获取年级
-  PickerChange(e) {
-    this.setData({
-      gradeIndex: e.detail.value
-    })
-    gradeChosen = this.data.gradePicker[e.detail.value];
   },
 
   //从数据库下载用户信息
@@ -179,7 +248,7 @@ Page({
           })
           wx.showModal({
             title: '不在服务时间内',
-            content:'服务时间是：早上八点到中午十二点，记住了嗷！'
+            content: '服务时间是：早上八点到中午十二点，记住了嗷！'
           });
         } else {
           that.setData({
@@ -194,6 +263,7 @@ Page({
           title: '您已登录！',
         });
         that.isAdmin(res.data);
+        that.checkEmergency(res.data);
       },
       fail: function() {
         that.setData({
@@ -212,28 +282,9 @@ Page({
       url: link,
     });
   },
-  
-  showAxiom: function () {
-    var axiom = [];
-    wx.cloud.callFunction({
-      name: 'getDB',
-      data: {
-        dbName: "axioms"
-      }
-    })
-      .then(res => {
-        axiom = res.result.data;
-        console.log(axiom)
-        wx.showModal({
-          title: '你居然发现我了诶',
-          content: axiom[Math.floor((Math.random() * axiom.length))].text,
-        })
-      })
-      .catch(console.error);
 
-  },
-
-  roll: function () {
+  //随机选择贴心语句
+  roll: function() {
     count += 1;
     if (count == 3) {
       count = 0;
@@ -241,99 +292,37 @@ Page({
     }
   },
 
-  saySomething: function(){
+  //获取输入的贴心语句
+  getSaying: function (e) {
+    sayingChosen = e.detail.value;
+  },
+  
+  //上传贴心语句
+  saySomething: function() {
     wx.showLoading({
       title: '正在记小本本',
     })
     db.collection("sayings").add({
       data: {
-        text:sayingChosen,
+        text: sayingChosen,
       }
     })
-      this.setData({
-        modalName: null
-      })
-      wx.hideLoading()
-      wx.showToast({
-        title: '我知道啦！',
-      })
-
-  },
-
-  //判断是否是Admin=>是否显示Admin按钮
-  isAdmin: function(user) {
-    var that = this;
-    if(user.isAdmin == true){
-        that.setData({
-          isAdmin: true
-        });
-      }
-      else{
-        that.isPrisoner(user);
-      }
-  },
-
-  //判断是否在黑名单内=>是否显示黑名单界面
-  isPrisoner: function(user) {
-    var that = this;
-    if(user.isPrisoner == true){
-      that.setData({
-        isPrisoner: true
-      })
-    }
-  },
-
-  //隐藏弹窗
-  hideModal(value) {
     this.setData({
-      modalName: null,
-      isBlur: false,
-    });
+      modalName: null
+    })
+    wx.hideLoading()
+    wx.showToast({
+      title: '我知道啦！',
+    })
+
   },
 
   //确认触发购买函数
-  confirmPurchase: function(){
+  confirmPurchase: function() {
     this.updateOrder(currentFoodIndex);
     this.setData({
-      modalName:null
+      modalName: null
     })
-  },
-
-  showSaySomeThing: function(){
-    count += 1;
-    if (count == 3) {
-      count = 0;
-      this.setData({
-        modalName: "axiomModal"
-      })
-    }
-
-  },
-
-  //显示购买弹窗
-  purchase: function(options) {
-    var that = this;
-    var now = new Date();
-    if (this.data.isAdmin == true) {
-      currentFoodIndex = options.currentTarget.dataset.index;
-      this.setData({
-        modalName: "purchase"
-      })
-    } else if (now.getHours() < 8 || now.getHours() > 12) {
-      wx.showModal({
-        title: '很难受,你点不了餐了',
-        content: '你点餐的时候超过服务时间了，难受吗？',
-      })
-      this.setData({
-        outOfTime: true
-      })
-    } else {
-      currentFoodIndex = options.currentTarget.dataset.index;
-      this.setData({
-        modalName: "purchase"
-      })
-    }
-
   },
 
   //更新数据库菜谱（仓库）信息
@@ -404,7 +393,7 @@ Page({
     app.globalData.isOrdered = true;
   },
 
-  //检测后门触发
+  //检测超管触发
   triggerSuperPower: function() {
     if (count == 5) {
       this.setData({
@@ -423,19 +412,24 @@ Page({
     count += 1;
   },
 
-  superpowerCodeValidation: function(e){
+  //检测超管命令
+  superpowerCodeValidation: function(e) {
     if (e.detail.value == "youyishuoyiba,woaizhongguo") {
       this.superPower();
+    } else if (e.detail.value == "114514") {
+      const backgroundAudioManager = wx.getBackgroundAudioManager();
+      backgroundAudioManager.title = 'YaLiMaSuNe';
+      backgroundAudioManager.src = 'https://eroducate.oss-cn-beijing.aliyuncs.com/Assets/yarimasune.wav'
     }
   },
 
-  //触发后门
+  //触发超管
   superPower: function() {
     wx.showModal({
       title: 'su-root',
       content: 'no rm-f here',
-      success: function(res){
-        if(res.confirm){
+      success: function(res) {
+        if (res.confirm) {
           wx.navigateTo({
             url: '../superAdmin/superAdmin',
           })
@@ -444,34 +438,92 @@ Page({
     })
   },
 
-  //模拟后门
-  simulateSuperAdmin: function(){
-    wx.navigateTo({
-      url: '../superAdmin/superAdmin',
-    })
+  //显示购买弹窗
+  purchase: function (options) {
+    var that = this;
+    var now = new Date();
+    if (this.data.isAdmin == true) {
+      currentFoodIndex = options.currentTarget.dataset.index;
+      this.setData({
+        modalName: "purchase"
+      })
+    } else if (now.getHours() < 8 || now.getHours() > 12) {
+      wx.showModal({
+        title: '很难受,你点不了餐了',
+        content: '你点餐的时候超过服务时间了，难受吗？',
+      })
+      this.setData({
+        outOfTime: true
+      })
+    } else {
+      currentFoodIndex = options.currentTarget.dataset.index;
+      this.setData({
+        modalName: "purchase"
+      })
+    }
+
+  },
+
+  //显示贴心语句
+  showAxiom: function() {
+    var axiom = [];
+    wx.cloud.callFunction({
+        name: 'getDB',
+        data: {
+          dbName: "axioms"
+        }
+      })
+      .then(res => {
+        axiom = res.result.data;
+        wx.showModal({
+          title: '你居然发现我了诶',
+          content: axiom[Math.floor((Math.random() * axiom.length))].text,
+        })
+      })
+      .catch(console.error);
+
   },
 
   //显示感谢名单
-  showCreditList: function(){
+  showCreditList: function() {
     this.setData({
       modalName: "Modal3",
     })
     count += 1;
-    console.log(count)
     if (count == 3) {
       count = 0;
       this.setData({
-        isSuper:true
+        isSuper: true
       })
       this.triggerSuperPower()
     }
 
   },
 
-  //跳转至个人中心
-  toSelf: function(){
+  //显示贴心语句上传弹窗
+  showSaySomeThing: function() {
+    count += 1;
+    if (count == 3) {
+      count = 0;
+      this.setData({
+        modalName: "axiomModal"
+      })
+    }
+
+  },
+
+  //隐藏弹窗
+  hideModal(value) {
     this.setData({
-      modalName:null
+      modalName: null,
+      isBlur: false,
+    });
+  },
+
+  //跳转至个人中心
+  toSelf: function() {
+    this.setData({
+      modalName: null
     })
     wx.navigateTo({
       url: '../self/self',
@@ -479,7 +531,7 @@ Page({
   },
 
   //下拉刷新
-  onPullDownRefresh: function(){
+  onPullDownRefresh: function() {
     wx.reLaunch({
       url: '../index/index',
     })
