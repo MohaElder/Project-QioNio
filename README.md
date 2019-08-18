@@ -37,13 +37,16 @@ QioNio is a basic yet complete O2O solution that allows the user to quickly buil
 4. NEZHA Global Message Component 哪吒全局消息推送模块
 
 ### TAOTYE Food Ordering Component 饕餮订餐模块
+饕餮订餐模块集成了提交订单，完成订单以及评价订单三个核心功能。在此基础上还拥有订餐限制时段以及双重完成订单方式等特性。
 
 ### FENGSHEN User Management Component 封神榜用户管理模块
+封神榜用户管理模块集成了用户身份类别，一次注册后可无感登录以及注册表单验证三个核心功能。在此基础上还提供接口支持其他模块方便快捷地调用。
 
 ### YUDI Admin Component 玉帝管理员模块
+玉帝管理员模块集成了管理各大模块后台以及显示所有数据库信息两个核心功能。在此基础上还支持更新首页图片，推送全局通知，新建菜单等操作。
 
 ### NEZHA Global Message Component 哪吒全局消息推送模块
-
+哪吒全局消息推送模块支持管理员一键推送信息给所有下一次打开小程序的用户。
 
 ## Dependencies 依赖
 Color Ui: https://github.com/weilanwl/ColorUI
